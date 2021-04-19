@@ -24,3 +24,7 @@ variable "tags" {
 variable "create_outbound_web_rules" {
   default = 1
 }
+
+variable "cr_log_retention_days" {
+  default = 14
+}
