@@ -29,3 +29,16 @@ output "role_arn" {
 output "sg_outbound_id" {
   value = aws_security_group.outbound.id
 }
+
+output "lb_logs_bucket" {
+  value = module.s3_lb_logs_bucket.s3_bucket_name
+}
+
+# KMS Key
+output "kms_arn" {
+  value = aws_kms_key.kms.arn
+}
+
+output "kms_id" {
+  value = aws_kms_key.kms.id
+}

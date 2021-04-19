@@ -20,3 +20,7 @@ variable "tags" {
   type    = map(string)
   default = {}
 }
+
+variable "create_outbound_web_rules" {
+  default = 1
+}
