@@ -24,3 +24,40 @@ resource "aws_efs_file_system" "default" {
     }
   }
 }
+
+resource "aws_security_group" "efs" {
+  count       = var.create ? 1 : 0
+  name        = format("%s-efs", local.common_name)
+  description = "EFS Security Group"
+  vpc_id      = local.vpc_id
+  tags        = local.tags
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_security_group_rule" "egress" {
+  count             = var.create ? 1 : 0
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = join("", aws_security_group.efs.*.id)
+}
+
+resource "aws_efs_mount_target" "default" {
+  count           = var.create && length(local.subnet_ids) > 0 ? length(local.subnet_ids) : 0
+  file_system_id  = join("", aws_efs_file_system.default.*.id)
+  subnet_id       = local.subnet_ids[count.index]
+  security_groups = [join("", aws_security_group.efs.*.id)]
+}
+
+resource "aws_efs_access_point" "default" {
+  file_system_id = join("", aws_efs_file_system.default.*.id)
+  tags           = local.tags
+  root_directory {
+    path = "/${local.common_name}"
+  }
+}
