@@ -4,7 +4,7 @@ remote_state {
   config = {
     encrypt = true
     bucket  = "${get_env("TG_REMOTE_STATE_BUCKET", "")}"
-    key     = "${path_relative_to_include()}/terraform.tfstate"
+    key     = "jitbit/${path_relative_to_include()}/terraform.tfstate"
     region  = "${get_env("TG_REGION", "")}"
     dynamodb_table = "${get_env("TG_ENVIRONMENT_IDENTIFIER", "")}-lock-table"
   }

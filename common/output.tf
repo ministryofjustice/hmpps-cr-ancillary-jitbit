@@ -50,3 +50,7 @@ output "log_group" {
     kms_id         = aws_cloudwatch_log_group.logs.kms_key_id
   }
 }
+
+output "tags" {
+  value = local.tags
+}

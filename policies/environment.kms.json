@@ -44,6 +44,21 @@
             "Resource": "*"
         },
         {
+            "Sid": "Enable IAM User Permissions",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::${account_id}:root"
+            },
+            "Action": [
+                "kms:Encrypt*",
+                "kms:Decrypt*",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+                "kms:Describe*"
+            ],
+            "Resource": "*"
+        },
+        {
             "Sid": "Allow Describe Key access",
             "Effect": "Allow",
             "Principal": {
