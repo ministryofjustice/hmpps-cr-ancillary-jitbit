@@ -57,6 +57,7 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 .idea/httpRequests
+.vscode
 
 inspec_profiles/**/terraform.json
 
@@ -71,3 +72,4 @@ utils
 .env
 docker-run.sh
 run.sh
+work_dir
