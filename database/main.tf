@@ -11,3 +11,13 @@ data "terraform_remote_state" "common" {
   }
 }
 
+#-------------------------------------------------------------
+## Getting the rds db password
+#-------------------------------------------------------------
+data "aws_ssm_parameter" "db_user" {
+  name = "${var.cr_jitbit_rds_config["credentials_ssm_path"]}/user"
+}
+
+data "aws_ssm_parameter" "db_password" {
+  name = "${var.cr_jitbit_rds_config["credentials_ssm_path"]}/password"
+}
