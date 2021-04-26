@@ -97,9 +97,3 @@ output "this_db_instance_domain_iam_role_name" {
   description = "The name of the IAM role to be used when making API calls to the Directory Service. "
   value       = local.this_db_instance_domain_iam_role_name
 }
-
-output "this_db_instance_master_password" {
-  description = "The master password"
-  value       = local.this_db_instance_master_password
-  sensitive   = true
-}

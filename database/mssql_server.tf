@@ -109,7 +109,7 @@ module "db_instance" {
   identifier = format("%s-db", local.common_name)
 
   engine            = local.cr_jitbit_rds_options["engine"]
-  engine_version    = local.cr_jitbit_rds_options["major_engine_version"]
+  engine_version    = local.cr_jitbit_rds_options["engine_version"]
   instance_class    = local.cr_jitbit_rds_options["instance_class"]
   allocated_storage = local.cr_jitbit_rds_options["allocated_storage"]
   storage_type      = local.cr_jitbit_rds_options["storage_type"]
