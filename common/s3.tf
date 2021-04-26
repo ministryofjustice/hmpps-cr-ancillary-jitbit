@@ -24,3 +24,11 @@ module "s3alb_logs_policy" {
   s3_bucket_id = module.s3_lb_logs_bucket.s3_bucket_name
   policyfile   = data.template_file.s3alb_logs_policy.rendered
 }
+
+module "s3bucket-logs" {
+  source         = "../modules/s3/s3bucket_without_policy"
+  s3_bucket_name = "${local.common_name}-s3-logs"
+  acl            = "log-delivery-write"
+  tags           = local.tags
+  versioning     = false
+}
