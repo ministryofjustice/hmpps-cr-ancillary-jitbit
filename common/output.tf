@@ -58,3 +58,11 @@ output "log_group" {
 output "tags" {
   value = local.tags
 }
+
+output "bastion_cidr_ranges" {
+  value = [
+    local.bastion_cidr_ranges["az1"],
+    local.bastion_cidr_ranges["az2"],
+    local.bastion_cidr_ranges["az3"]
+  ]
+}

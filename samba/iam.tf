@@ -1,12 +1,14 @@
 data "template_file" "iam" {
-  template = file("../policies/samba_instance.json")
+  template = file("../policies/storage_instance.json")
 
-  vars = {}
+  vars = {
+    storage_bucket_arn = module.s3bucket.s3_bucket_arn
+  }
 }
 
 module "iam-app-role" {
   source     = "../modules/iam/iam_role"
-  rolename   = "${local.common_name}-samba"
+  rolename   = "${local.common_name}-storage-inst"
   policyfile = "ec2_lambda.json"
 }
 

@@ -6,8 +6,7 @@
       "Principal": {
         "Service": [
           "ec2.amazonaws.com",
-          "lambda.amazonaws.com",
-          "states.amazonaws.com"
+          "storagegateway.amazonaws.com"
         ]
       },
       "Effect": "Allow",

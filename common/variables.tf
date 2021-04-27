@@ -28,3 +28,11 @@ variable "create_outbound_web_rules" {
 variable "cr_log_retention_days" {
   default = 14
 }
+
+variable "bastion_remote_state_bucket_name" {
+  description = "Terraform remote state bucket name for bastion vpc"
+}
+
+variable "bastion_role_arn" {
+  description = "arn to use for bastion terraform"
+}

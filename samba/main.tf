@@ -39,30 +39,12 @@ data "aws_ssm_parameter" "storage_ami" {
   name = "/aws/service/storagegateway/ami/FILE_S3/latest"
 }
 
-data "aws_ami" "ami" {
-  most_recent = true
+#-------------------------------------------------------------
+### Getting guest password
+#-------------------------------------------------------------
 
-  filter {
-    name   = "name"
-    values = ["HMPPS Base Docker Centos*"]
-  }
-
-  filter {
-    name   = "architecture"
-    values = ["x86_64"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  filter {
-    name   = "root-device-type"
-    values = ["ebs"]
-  }
-
-  owners = [data.terraform_remote_state.common.outputs.account_id, "895523100917"] # MOJ
+data "aws_ssm_parameter" "storage_password" {
+  name = "/cr-ancillary/jitbit/aws/storage/gateway/guest"
 }
 
 #-------------------------------------------------------------
@@ -76,4 +58,11 @@ data "terraform_remote_state" "vpc" {
     key    = "vpc/terraform.tfstate"
     region = var.region
   }
+}
+
+#-------------------------------------------------------------
+### Getting the vpc details
+#-------------------------------------------------------------
+data "aws_availability_zones" "available" {
+  state = "available"
 }
