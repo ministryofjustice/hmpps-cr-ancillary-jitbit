@@ -66,3 +66,12 @@ output "bastion_cidr_ranges" {
     local.bastion_cidr_ranges["az3"]
   ]
 }
+
+output "domain_info" {
+  value = {
+    external_domain    = local.external_domain
+    external_domain_id = local.external_domain_id
+    public_acm_arn     = local.public_acm_arn
+    private_domain     = local.private_domain
+  }
+}

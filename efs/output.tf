@@ -37,3 +37,13 @@ output "security_group_name" {
   value       = join("", aws_security_group.efs.*.name)
   description = "EFS Security Group name"
 }
+
+output "jitbit_efs_configs" {
+  value = var.jitbit_efs_configs
+}
+
+output "access_points" {
+  value = {
+    data = aws_efs_access_point.data.id
+  }
+}

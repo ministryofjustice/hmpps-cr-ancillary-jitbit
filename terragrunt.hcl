@@ -21,7 +21,8 @@ terraform {
 
     optional_var_files = [
       "${get_parent_terragrunt_dir()}/env_configs/${get_env("TG_COMMON_DIRECTORY", "")}/common.tfvars",
-      "${get_parent_terragrunt_dir()}/env_configs/${get_env("TG_ENVIRONMENT_NAME", "")}/${get_env("TG_ENVIRONMENT_NAME", "")}.tfvars"
+      "${get_parent_terragrunt_dir()}/env_configs/${get_env("TG_ENVIRONMENT_NAME", "")}/${get_env("TG_ENVIRONMENT_NAME", "")}.tfvars",
+      "${get_parent_terragrunt_dir()}/configs/jitbit.tfvars",
     ]
   }
 

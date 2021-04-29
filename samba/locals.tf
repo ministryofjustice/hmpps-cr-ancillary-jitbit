@@ -1,6 +1,6 @@
 locals {
   jitbit_samba_configs = merge(var.jitbit_samba_configs, var.jitbit_samba_overrides)
-  ami_id               = data.aws_ssm_parameter.storage_ami.value #data.aws_ami.ami.id
+  ami_id               = data.aws_ami.ami.id # data.aws_ssm_parameter.storage_ami.value
   tags                 = data.terraform_remote_state.common.outputs.tags
   kms_key_arn          = data.terraform_remote_state.common.outputs.kms_arn
   common_name          = data.terraform_remote_state.common.outputs.common_name
@@ -14,7 +14,17 @@ locals {
   cidr_block           = data.terraform_remote_state.common.outputs.private_cidr_block
   vpc_cidr_block       = data.terraform_remote_state.common.outputs.vpc_cidr_block
   bastion_cidr_ranges  = data.terraform_remote_state.common.outputs.bastion_cidr_ranges
-  storage_password     = data.aws_ssm_parameter.storage_password.value
-  log_group_arn        = data.terraform_remote_state.common.outputs.log_group["log_group_arn"]
-  zone_ids             = ["${var.region}a", "${var.region}b", "${var.region}c"]
+  # storage_password      = data.aws_ssm_parameter.storage_password.value
+  log_group_arn         = data.terraform_remote_state.common.outputs.log_group["log_group_arn"]
+  log_group_name        = data.terraform_remote_state.common.outputs.log_group["log_group_name"]
+  external_domain       = data.terraform_remote_state.common.outputs.domain_info["external_domain"]
+  public_acm_arn        = data.terraform_remote_state.common.outputs.domain_info["public_acm_arn"]
+  private_domain        = data.terraform_remote_state.common.outputs.domain_info["private_domain"]
+  app_name              = "jitbit"
+  efs_security_group_id = data.terraform_remote_state.efs.outputs.security_group_id
+  efs_dns_name          = data.terraform_remote_state.efs.outputs.dns_name
+  samba_share           = local.jitbit_samba_configs["samba_share"]
+  jitbit_efs_configs    = data.terraform_remote_state.efs.outputs.jitbit_efs_configs
+  samba_ssm_user        = local.jitbit_samba_configs["samba_ssm_user"]
+  samba_ssm_password    = local.jitbit_samba_configs["samba_ssm_password"]
 }

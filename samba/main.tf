@@ -12,6 +12,19 @@ data "terraform_remote_state" "common" {
 }
 
 #-------------------------------------------------------------
+### Getting the common details
+#-------------------------------------------------------------
+data "terraform_remote_state" "efs" {
+  backend = "s3"
+
+  config = {
+    bucket = var.remote_state_bucket_name
+    key    = "jitbit/efs/terraform.tfstate"
+    region = var.region
+  }
+}
+
+#-------------------------------------------------------------
 ### S3 service name
 #-------------------------------------------------------------
 data "aws_vpc_endpoint_service" "s3" {
@@ -39,13 +52,40 @@ data "aws_ssm_parameter" "storage_ami" {
   name = "/aws/service/storagegateway/ami/FILE_S3/latest"
 }
 
+data "aws_ami" "ami" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["HMPPS Base Docker Centos*"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  owners = [local.account_id, "895523100917"] # MOJ
+}
+
+
 #-------------------------------------------------------------
-### Getting guest password
+### Getting SSM creds
 #-------------------------------------------------------------
 
-data "aws_ssm_parameter" "storage_password" {
-  name = "/cr-ancillary/jitbit/aws/storage/gateway/guest"
-}
+# data "aws_ssm_parameter" "storage_password" {
+#   name = "/cr-ancillary/jitbit/aws/storage/gateway/guest"
+# }
 
 #-------------------------------------------------------------
 ### Getting the vpc details
@@ -58,11 +98,4 @@ data "terraform_remote_state" "vpc" {
     key    = "vpc/terraform.tfstate"
     region = var.region
   }
-}
-
-#-------------------------------------------------------------
-### Getting the vpc details
-#-------------------------------------------------------------
-data "aws_availability_zones" "available" {
-  state = "available"
 }

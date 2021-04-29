@@ -8,6 +8,10 @@ locals {
   region              = var.region
   role_arn            = var.role_arn
   bastion_cidr_ranges = data.terraform_remote_state.bastion_remote_vpc.outputs.bastion_public_cidr
+  external_domain     = data.terraform_remote_state.vpc.outputs.strategic_public_zone_name
+  external_domain_id  = data.terraform_remote_state.vpc.outputs.strategic_public_zone_id
+  public_acm_arn      = data.terraform_remote_state.vpc.outputs.strategic_public_ssl_arn
+  private_domain      = data.terraform_remote_state.vpc.outputs.private_zone_name
   tags = merge(
     var.tags,
     {

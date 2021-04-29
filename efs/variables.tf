@@ -40,3 +40,18 @@ variable "transition_to_ia" {
   description = "Indicates how long it takes to transition files to the IA storage class. Valid values: AFTER_7_DAYS, AFTER_14_DAYS, AFTER_30_DAYS, AFTER_60_DAYS and AFTER_90_DAYS"
   default     = ""
 }
+
+variable "jitbit_efs_configs" {
+  type = map
+  default = {
+    group_gid   = 2000
+    user_uid    = 2000
+    permissions = 755
+    data_dir    = "data"
+  }
+}
+
+variable "jitbit_efs_overrides" {
+  type    = map
+  default = {}
+}

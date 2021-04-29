@@ -47,6 +47,24 @@ resource "aws_security_group_rule" "egress" {
   security_group_id = join("", aws_security_group.efs.*.id)
 }
 
+resource "aws_security_group_rule" "self_in" {
+  security_group_id = join("", aws_security_group.efs.*.id)
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = -1
+  self              = true
+}
+
+resource "aws_security_group_rule" "self_out" {
+  security_group_id = join("", aws_security_group.efs.*.id)
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = -1
+  self              = true
+}
+
 resource "aws_efs_mount_target" "default" {
   count           = var.create && length(local.subnet_ids) > 0 ? length(local.subnet_ids) : 0
   file_system_id  = join("", aws_efs_file_system.default.*.id)
@@ -54,10 +72,25 @@ resource "aws_efs_mount_target" "default" {
   security_groups = [join("", aws_security_group.efs.*.id)]
 }
 
-resource "aws_efs_access_point" "default" {
+resource "aws_efs_access_point" "data" {
   file_system_id = join("", aws_efs_file_system.default.*.id)
-  tags           = local.tags
+  tags = merge(
+    local.tags,
+    {
+      "Name" = local.common_name
+    }
+  )
   root_directory {
-    path = "/${local.common_name}"
+    path = "/${local.jitbit_efs_configs["data_dir"]}"
+    creation_info {
+      owner_gid   = local.jitbit_efs_configs["group_gid"]
+      owner_uid   = local.jitbit_efs_configs["user_uid"]
+      permissions = local.jitbit_efs_configs["permissions"]
+    }
+  }
+
+  posix_user {
+    gid = local.jitbit_efs_configs["group_gid"]
+    uid = local.jitbit_efs_configs["user_uid"]
   }
 }

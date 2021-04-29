@@ -8,7 +8,7 @@ data "template_file" "kms" {
 }
 
 resource "aws_kms_key" "kms" {
-  description             = "${local.common_name}"
+  description             = local.common_name
   deletion_window_in_days = 14
   is_enabled              = true
   enable_key_rotation     = true

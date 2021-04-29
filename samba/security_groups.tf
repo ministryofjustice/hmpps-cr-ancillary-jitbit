@@ -37,6 +37,72 @@ resource "aws_security_group" "lb" {
   }
 }
 
+
+# LB Rules
+resource "aws_security_group_rule" "lb_to_samba" {
+  security_group_id        = aws_security_group.lb.id
+  from_port                = 445
+  to_port                  = 445
+  protocol                 = "tcp"
+  type                     = "egress"
+  description              = "lb to samba"
+  source_security_group_id = aws_security_group.gateway.id
+}
+
+
+resource "aws_security_group_rule" "samba_from_lb" {
+  security_group_id        = aws_security_group.gateway.id
+  from_port                = 445
+  to_port                  = 445
+  protocol                 = "tcp"
+  type                     = "ingress"
+  description              = "samba from lb"
+  source_security_group_id = aws_security_group.lb.id
+}
+
+resource "aws_security_group_rule" "lb_to_samba_111" {
+  security_group_id        = aws_security_group.lb.id
+  from_port                = 111
+  to_port                  = 111
+  protocol                 = "tcp"
+  type                     = "egress"
+  description              = "lb to samba"
+  source_security_group_id = aws_security_group.gateway.id
+}
+
+
+resource "aws_security_group_rule" "samba_from_lb_111" {
+  security_group_id        = aws_security_group.gateway.id
+  from_port                = 111
+  to_port                  = 111
+  protocol                 = "tcp"
+  type                     = "ingress"
+  description              = "samba from lb"
+  source_security_group_id = aws_security_group.lb.id
+}
+
+# EFS Rules
+resource "aws_security_group_rule" "nfs_2049_out" {
+  security_group_id        = aws_security_group.gateway.id
+  from_port                = 2049
+  to_port                  = 2049
+  protocol                 = "tcp"
+  type                     = "egress"
+  description              = "efs"
+  source_security_group_id = local.efs_security_group_id
+}
+
+resource "aws_security_group_rule" "nfs_2049_in" {
+  security_group_id        = local.efs_security_group_id
+  from_port                = 2049
+  to_port                  = 2049
+  protocol                 = "tcp"
+  type                     = "ingress"
+  description              = "efs"
+  source_security_group_id = aws_security_group.gateway.id
+}
+
+# Storage rules
 resource "aws_security_group" "storage_endpoint" {
   name        = format("%s-storage-endpoint", local.common_name)
   description = "Storage lb Security Group"
@@ -74,96 +140,7 @@ resource "aws_security_group_rule" "self_out" {
 }
 
 
-resource "aws_security_group_rule" "http" {
-  security_group_id = aws_security_group.gateway.id
-  from_port         = 80
-  to_port           = 80
-  protocol          = "tcp"
-  type              = "ingress"
-  description       = "http"
-  cidr_blocks       = [local.vpc_cidr_block, "81.134.202.29/32"]
-}
-
-resource "aws_security_group_rule" "https" {
-  security_group_id = aws_security_group.gateway.id
-  from_port         = 443
-  to_port           = 443
-  protocol          = "tcp"
-  type              = "egress"
-  description       = "http"
-  cidr_blocks       = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group_rule" "nfs_tcp" {
-  security_group_id = aws_security_group.gateway.id
-  from_port         = 2049
-  to_port           = 2049
-  protocol          = "tcp"
-  type              = "ingress"
-  description       = "nfs"
-  cidr_blocks       = local.cidr_block
-}
-
-resource "aws_security_group_rule" "nfsv1_tcp" {
-  security_group_id = aws_security_group.gateway.id
-  from_port         = 111
-  to_port           = 111
-  protocol          = "tcp"
-  type              = "ingress"
-  description       = "nfs"
-  cidr_blocks       = local.cidr_block
-}
-
-resource "aws_security_group_rule" "nfsv3_tcp" {
-  security_group_id = aws_security_group.gateway.id
-  from_port         = 20048
-  to_port           = 20048
-  protocol          = "tcp"
-  type              = "ingress"
-  description       = "nfs rule 2"
-  cidr_blocks       = local.cidr_block
-}
-
-resource "aws_security_group_rule" "nfs_udp" {
-  security_group_id = aws_security_group.gateway.id
-  from_port         = 2049
-  to_port           = 2049
-  protocol          = "udp"
-  type              = "ingress"
-  description       = "nfs"
-  cidr_blocks       = local.cidr_block
-}
-
-resource "aws_security_group_rule" "nfsv1_udp" {
-  security_group_id = aws_security_group.gateway.id
-  from_port         = 111
-  to_port           = 111
-  protocol          = "udp"
-  type              = "ingress"
-  description       = "nfs"
-  cidr_blocks       = local.cidr_block
-}
-
-resource "aws_security_group_rule" "nfsv3_udp" {
-  security_group_id = aws_security_group.gateway.id
-  from_port         = 20048
-  to_port           = 20048
-  protocol          = "udp"
-  type              = "ingress"
-  description       = "nfs rule 2"
-  cidr_blocks       = local.cidr_block
-}
-
-resource "aws_security_group_rule" "dns" {
-  security_group_id = aws_security_group.gateway.id
-  type              = "egress"
-  from_port         = "53"
-  to_port           = "53"
-  protocol          = "udp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  description       = "dns"
-}
-
+# Bastion access
 resource "aws_security_group_rule" "bastion" {
   security_group_id = aws_security_group.gateway.id
   type              = "ingress"
@@ -174,63 +151,153 @@ resource "aws_security_group_rule" "bastion" {
   description       = "ssh"
 }
 
-resource "aws_security_group_rule" "ssh" {
-  security_group_id = aws_security_group.gateway.id
-  type              = "egress"
-  from_port         = "22"
-  to_port           = "22"
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  description       = "ssh"
-}
+# resource "aws_security_group_rule" "http" {
+#   security_group_id = aws_security_group.gateway.id
+#   from_port         = 80
+#   to_port           = 80
+#   protocol          = "tcp"
+#   type              = "ingress"
+#   description       = "http"
+#   cidr_blocks       = [local.vpc_cidr_block, "81.134.202.29/32"]
+# }
 
-resource "aws_security_group_rule" "ntp" {
-  security_group_id = aws_security_group.gateway.id
-  type              = "egress"
-  from_port         = "123"
-  to_port           = "123"
-  protocol          = "udp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  description       = "ntp"
-}
+# resource "aws_security_group_rule" "https" {
+#   security_group_id = aws_security_group.gateway.id
+#   from_port         = 443
+#   to_port           = 443
+#   protocol          = "tcp"
+#   type              = "egress"
+#   description       = "http"
+#   cidr_blocks       = ["0.0.0.0/0"]
+# }
 
-# storage gateway 
-resource "aws_security_group_rule" "storage_https" {
-  security_group_id = aws_security_group.storage_endpoint.id
-  from_port         = 443
-  to_port           = 443
-  protocol          = "tcp"
-  type              = "ingress"
-  description       = "https"
-  cidr_blocks       = [local.vpc_cidr_block]
-}
+# resource "aws_security_group_rule" "nfs_tcp" {
+#   security_group_id = aws_security_group.gateway.id
+#   from_port         = 2049
+#   to_port           = 2049
+#   protocol          = "tcp"
+#   type              = "ingress"
+#   description       = "nfs"
+#   cidr_blocks       = local.cidr_block
+# }
 
-resource "aws_security_group_rule" "storage_ports" {
-  security_group_id = aws_security_group.storage_endpoint.id
-  from_port         = 1026
-  to_port           = 1031
-  protocol          = "tcp"
-  type              = "ingress"
-  description       = "storage ports"
-  cidr_blocks       = [local.vpc_cidr_block]
-}
+# resource "aws_security_group_rule" "nfsv1_tcp" {
+#   security_group_id = aws_security_group.gateway.id
+#   from_port         = 111
+#   to_port           = 111
+#   protocol          = "tcp"
+#   type              = "ingress"
+#   description       = "nfs"
+#   cidr_blocks       = local.cidr_block
+# }
 
-resource "aws_security_group_rule" "storage_ssh_alt" {
-  security_group_id = aws_security_group.storage_endpoint.id
-  from_port         = 2222
-  to_port           = 2222
-  protocol          = "tcp"
-  type              = "ingress"
-  description       = "storage ssh alt"
-  cidr_blocks       = [local.vpc_cidr_block]
-}
+# resource "aws_security_group_rule" "nfsv3_tcp" {
+#   security_group_id = aws_security_group.gateway.id
+#   from_port         = 20048
+#   to_port           = 20048
+#   protocol          = "tcp"
+#   type              = "ingress"
+#   description       = "nfs rule 2"
+#   cidr_blocks       = local.cidr_block
+# }
 
-resource "aws_security_group_rule" "storage_out_https" {
-  security_group_id = aws_security_group.storage_endpoint.id
-  from_port         = 443
-  to_port           = 443
-  protocol          = "tcp"
-  type              = "egress"
-  description       = "storage https out"
-  cidr_blocks       = ["0.0.0.0/0"]
-}
+# resource "aws_security_group_rule" "nfs_udp" {
+#   security_group_id = aws_security_group.gateway.id
+#   from_port         = 2049
+#   to_port           = 2049
+#   protocol          = "udp"
+#   type              = "ingress"
+#   description       = "nfs"
+#   cidr_blocks       = local.cidr_block
+# }
+
+# resource "aws_security_group_rule" "nfsv1_udp" {
+#   security_group_id = aws_security_group.gateway.id
+#   from_port         = 111
+#   to_port           = 111
+#   protocol          = "udp"
+#   type              = "ingress"
+#   description       = "nfs"
+#   cidr_blocks       = local.cidr_block
+# }
+
+# resource "aws_security_group_rule" "nfsv3_udp" {
+#   security_group_id = aws_security_group.gateway.id
+#   from_port         = 20048
+#   to_port           = 20048
+#   protocol          = "udp"
+#   type              = "ingress"
+#   description       = "nfs rule 2"
+#   cidr_blocks       = local.cidr_block
+# }
+
+# resource "aws_security_group_rule" "dns" {
+#   security_group_id = aws_security_group.gateway.id
+#   type              = "egress"
+#   from_port         = "53"
+#   to_port           = "53"
+#   protocol          = "udp"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   description       = "dns"
+# }
+
+# resource "aws_security_group_rule" "ssh" {
+#   security_group_id = aws_security_group.gateway.id
+#   type              = "egress"
+#   from_port         = "22"
+#   to_port           = "22"
+#   protocol          = "tcp"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   description       = "ssh"
+# }
+
+# resource "aws_security_group_rule" "ntp" {
+#   security_group_id = aws_security_group.gateway.id
+#   type              = "egress"
+#   from_port         = "123"
+#   to_port           = "123"
+#   protocol          = "udp"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   description       = "ntp"
+# }
+
+# # storage gateway 
+# resource "aws_security_group_rule" "storage_https" {
+#   security_group_id = aws_security_group.storage_endpoint.id
+#   from_port         = 443
+#   to_port           = 443
+#   protocol          = "tcp"
+#   type              = "ingress"
+#   description       = "https"
+#   cidr_blocks       = [local.vpc_cidr_block]
+# }
+
+# resource "aws_security_group_rule" "storage_ports" {
+#   security_group_id = aws_security_group.storage_endpoint.id
+#   from_port         = 1026
+#   to_port           = 1031
+#   protocol          = "tcp"
+#   type              = "ingress"
+#   description       = "storage ports"
+#   cidr_blocks       = [local.vpc_cidr_block]
+# }
+
+# resource "aws_security_group_rule" "storage_ssh_alt" {
+#   security_group_id = aws_security_group.storage_endpoint.id
+#   from_port         = 2222
+#   to_port           = 2222
+#   protocol          = "tcp"
+#   type              = "ingress"
+#   description       = "storage ssh alt"
+#   cidr_blocks       = [local.vpc_cidr_block]
+# }
+
+# resource "aws_security_group_rule" "storage_out_https" {
+#   security_group_id = aws_security_group.storage_endpoint.id
+#   from_port         = 443
+#   to_port           = 443
+#   protocol          = "tcp"
+#   type              = "egress"
+#   description       = "storage https out"
+#   cidr_blocks       = ["0.0.0.0/0"]
+# }

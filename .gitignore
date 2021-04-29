@@ -68,6 +68,7 @@ inspec_profiles/**/terraform.json
 *.plan
 **/backend.tf
 **/provider.tf
+**.tf1
 utils
 .env
 docker-run.sh
