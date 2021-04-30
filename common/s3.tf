@@ -32,3 +32,10 @@ module "s3bucket-logs" {
   tags           = local.tags
   versioning     = false
 }
+
+module "s3config_bucket" {
+  source         = "../modules/s3/s3bucket_without_policy"
+  s3_bucket_name = local.common_name
+  tags           = local.tags
+  versioning     = false
+}

@@ -1,14 +1,13 @@
 data "template_file" "iam" {
-  template = file("../policies/storage_instance.json")
-
+  template = file("../policies/jitbit_instance.json")
   vars = {
-    storage_bucket_arn = module.s3bucket.s3_bucket_arn
+    storage_bucket_arn = local.bucket_arn
   }
 }
 
 module "iam-app-role" {
   source     = "../modules/iam/iam_role"
-  rolename   = "${local.common_name}-storage-inst"
+  rolename   = format("%s-instance", local.common_name)
   policyfile = "ec2.json"
 }
 

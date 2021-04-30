@@ -5,7 +5,8 @@
       "Action": "sts:AssumeRole",
       "Principal": {
         "Service": [
-          "ec2.amazonaws.com"
+          "ec2.amazonaws.com",
+          "storagegateway.amazonaws.com"
         ]
       },
       "Effect": "Allow",

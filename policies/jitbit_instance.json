@@ -37,33 +37,6 @@
       "Resource": "*"
     },
     {
-      "Action": [
-        "s3:GetAccelerateConfiguration",
-        "s3:GetBucketLocation",
-        "s3:GetBucketVersioning",
-        "s3:ListBucket",
-        "s3:ListBucketVersions",
-        "s3:ListBucketMultipartUploads"
-      ],
-      "Resource": "${storage_bucket_arn}",
-      "Effect": "Allow"
-    },
-    {
-      "Action": [
-        "s3:AbortMultipartUpload",
-        "s3:DeleteObject",
-        "s3:DeleteObjectVersion",
-        "s3:GetObject",
-        "s3:GetObjectAcl",
-        "s3:GetObjectVersion",
-        "s3:ListMultipartUploadParts",
-        "s3:PutObject",
-        "s3:PutObjectAcl"
-      ],
-      "Resource": "${storage_bucket_arn}/*",
-      "Effect": "Allow"
-    },
-    {
       "Effect": "Allow",
       "Sid": "SsmParamStorePerms",
       "Action": [
@@ -72,7 +45,21 @@
         "ssm:List*"
       ],
       "Resource": [
-        "arn:aws:ssm:*:*:parameter/cr-ancillary/jitbit/samba/share/*"
+        "arn:aws:ssm:*:*:parameter/cr-ancillary/jitbit/rds/database/jitbit/*",
+        "arn:aws:ssm:*:*:parameter/cr-ancillary/jitbit/samba/share/jitbit/*",
+        "arn:aws:ssm:*:*:parameter/cr-ancillary/jitbit/system/common/user/jitbit/*"
+      ]
+    },
+    {
+      "Sid": "allowAccessToS3Buckets",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::${storage_bucket_arn}/installers",
+        "arn:aws:s3:::${storage_bucket_arn}/installers/*"
       ]
     }
   ]

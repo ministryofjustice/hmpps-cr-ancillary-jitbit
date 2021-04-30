@@ -24,20 +24,20 @@ variable "jitbit_samba_configs" {
   default = {
     instance_type             = "m4.xlarge"
     volume_size               = "100"
-    cache_disk_size           = "50"
+    cache_disk_size           = "200"
     cache_iops                = "0"
     cache_device_name         = "/dev/xvdb"
     cache_volume_type         = "standard"
     asg_min_size              = 1
     asg_max_size              = 1
     asg_capacity              = 1
-    cookie_duration           = "3600"
     health_check_type         = "ELB"
     min_elb_capacity          = "1"
     wait_for_capacity_timeout = "10m"
     health_check_grace_period = "300"
     samba_ssm_user            = "/cr-ancillary/jitbit/samba/share/jitbit/user"
     samba_ssm_password        = "/cr-ancillary/jitbit/samba/share/jitbit/password"
+    samba_ssm_guest_password  = "/cr-ancillary/jitbit/samba/share/password"
     samba_share               = "/opt/jitbit"
   }
 }
@@ -72,4 +72,9 @@ variable "source_code_versions" {
     samba           = "master"
     samba_bootstrap = "master"
   }
+}
+
+variable "jitbit_admin_cidrs" {
+  type    = list
+  default = []
 }

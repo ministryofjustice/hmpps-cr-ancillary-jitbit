@@ -29,8 +29,7 @@ resource "aws_launch_configuration" "instance" {
   key_name             = local.ssh_deployer_key
   security_groups = [
     data.terraform_remote_state.common.outputs.sg_outbound_id,
-    aws_security_group.gateway.id,
-    aws_security_group.storage_endpoint.id
+    aws_security_group.samba.id
   ]
   associate_public_ip_address = false
   user_data                   = data.template_file.userdata.rendered

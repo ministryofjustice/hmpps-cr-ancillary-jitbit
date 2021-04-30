@@ -38,6 +38,13 @@ output "s3bucket-logs" {
   value = module.s3bucket-logs.s3_bucket_name
 }
 
+output "config_bucket" {
+  value = {
+    name = module.s3config_bucket.s3_bucket_name
+    arn  = module.s3config_bucket.s3_bucket_arn
+  }
+}
+
 # KMS Key
 output "kms_arn" {
   value = aws_kms_key.kms.arn

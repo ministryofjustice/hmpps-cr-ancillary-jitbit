@@ -12,35 +12,41 @@ data "terraform_remote_state" "common" {
 }
 
 #-------------------------------------------------------------
-### Getting the common details
+### Getting the samba details
 #-------------------------------------------------------------
-data "terraform_remote_state" "efs" {
+data "terraform_remote_state" "samba" {
   backend = "s3"
 
   config = {
     bucket = var.remote_state_bucket_name
-    key    = "jitbit/efs/terraform.tfstate"
+    key    = "jitbit/samba/terraform.tfstate"
     region = var.region
   }
 }
 
 #-------------------------------------------------------------
-### S3 service name
+### Getting the database details
 #-------------------------------------------------------------
-data "aws_vpc_endpoint_service" "s3" {
-  service      = "s3"
-  service_type = "Gateway"
+data "terraform_remote_state" "database" {
+  backend = "s3"
+
+  config = {
+    bucket = var.remote_state_bucket_name
+    key    = "jitbit/database/terraform.tfstate"
+    region = var.region
+  }
 }
 
 #-------------------------------------------------------------
-### Route tables
+### Getting the current vpc
 #-------------------------------------------------------------
-data "aws_route_tables" "routes" {
-  vpc_id = local.vpc_id
+data "terraform_remote_state" "vpc" {
+  backend = "s3"
 
-  filter {
-    name   = "tag:Name"
-    values = ["*private*"]
+  config = {
+    bucket = var.remote_state_bucket_name
+    key    = "vpc/terraform.tfstate"
+    region = var.region
   }
 }
 
@@ -57,7 +63,7 @@ data "aws_ami" "ami" {
 
   filter {
     name   = "name"
-    values = ["HMPPS Base Docker Centos*"]
+    values = ["HMPPS Windows Server Base 2019 Ansible master*"]
   }
 
   filter {
@@ -76,26 +82,4 @@ data "aws_ami" "ami" {
   }
 
   owners = [local.account_id, "895523100917"] # MOJ
-}
-
-
-#-------------------------------------------------------------
-### Getting SSM creds
-#-------------------------------------------------------------
-
-data "aws_ssm_parameter" "guest_password" {
-  name = local.jitbit_samba_configs["samba_ssm_guest_password"]
-}
-
-#-------------------------------------------------------------
-### Getting the vpc details
-#-------------------------------------------------------------
-data "terraform_remote_state" "vpc" {
-  backend = "s3"
-
-  config = {
-    bucket = var.remote_state_bucket_name
-    key    = "vpc/terraform.tfstate"
-    region = var.region
-  }
 }

@@ -1,0 +1,33 @@
+locals {
+  jitbit_configs             = merge(var.cr_jitbit_configs, var.cr_jitbit_overrides)
+  ami_id                     = data.aws_ami.ami.id
+  tags                       = data.terraform_remote_state.common.outputs.tags
+  kms_key_arn                = data.terraform_remote_state.common.outputs.kms_arn
+  common_name                = data.terraform_remote_state.common.outputs.common_name
+  public_subnet_ids          = data.terraform_remote_state.common.outputs.public_subnet_ids
+  subnet_ids                 = data.terraform_remote_state.common.outputs.private_subnet_ids
+  vpc_id                     = data.terraform_remote_state.common.outputs.vpc_id
+  s3bucket-logs              = data.terraform_remote_state.common.outputs.s3bucket-logs
+  lb_logs_bucket             = data.terraform_remote_state.common.outputs.lb_logs_bucket
+  account_id                 = data.terraform_remote_state.common.outputs.account_id
+  ssh_deployer_key           = data.terraform_remote_state.vpc.outputs.ssh_deployer_key
+  cidr_block                 = data.terraform_remote_state.common.outputs.private_cidr_block
+  vpc_cidr_block             = data.terraform_remote_state.common.outputs.vpc_cidr_block
+  bastion_cidr_ranges        = data.terraform_remote_state.common.outputs.bastion_cidr_ranges
+  log_group_arn              = data.terraform_remote_state.common.outputs.log_group["log_group_arn"]
+  log_group_name             = data.terraform_remote_state.common.outputs.log_group["log_group_name"]
+  external_domain            = data.terraform_remote_state.common.outputs.domain_info["external_domain"]
+  public_acm_arn             = data.terraform_remote_state.common.outputs.domain_info["public_acm_arn"]
+  private_domain             = data.terraform_remote_state.common.outputs.domain_info["private_domain"]
+  app_name                   = "jitbit"
+  bucket_arn                 = data.terraform_remote_state.common.outputs.config_bucket["arn"]
+  samba_security_group_id    = data.terraform_remote_state.samba.outputs.storage_info["samba_security_group_id"]
+  samba_host                 = data.terraform_remote_state.samba.outputs.storage_info["samba_security_group_id"]
+  samba_ssm_user             = data.terraform_remote_state.samba.outputs.storage_info["samba_ssm_user"]
+  samba_ssm_password         = data.terraform_remote_state.samba.outputs.storage_info["samba_ssm_password"]
+  database_address           = data.terraform_remote_state.database.outputs.database_info["address"]
+  database_endpoint          = data.terraform_remote_state.database.outputs.database_info["endpoint"]
+  database_ssm_user          = data.terraform_remote_state.database.outputs.database_info["database_ssm_user"]
+  database_ssm_password      = data.terraform_remote_state.database.outputs.database_info["database_ssm_password"]
+  database_security_group_id = data.terraform_remote_state.database.outputs.database_info["security_group_id"]
+}
