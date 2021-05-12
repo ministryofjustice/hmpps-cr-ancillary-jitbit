@@ -71,3 +71,16 @@ resource "aws_lb_listener" "instance" {
     type             = "forward"
   }
 }
+
+# Route53 entry to jitbit lb
+resource "aws_route53_record" "dns_entry" {
+  zone_id = local.public_zone_id
+  name    = "helpdesk.${local.external_domain}"
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.instance.dns_name
+    zone_id                = aws_lb.instance.zone_id
+    evaluate_target_health = false
+  }
+}

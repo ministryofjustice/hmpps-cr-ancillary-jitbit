@@ -183,3 +183,24 @@ resource "aws_security_group_rule" "bastion" {
   description       = "rdp"
 }
 
+# Bastion for foxy proxy
+resource "aws_security_group_rule" "bastion_foxy_proxy" {
+  security_group_id = aws_security_group.lb.id
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = local.bastion_public_ip
+  description       = "Bastion - Foxy Proxy"
+}
+
+# Enviornment User Access Eg: MOJ VPN
+resource "aws_security_group_rule" "env_user_access" {
+  security_group_id = aws_security_group.lb.id
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = local.env_user_access_cidr_blocks
+  description       = "Env User Access"
+}
