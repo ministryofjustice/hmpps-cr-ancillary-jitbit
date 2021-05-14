@@ -55,3 +55,20 @@ variable "jitbit_admin_cidrs" {
   type    = list
   default = []
 }
+
+variable "jitbit_access_cidrs" {
+  type    = list
+  default = []
+}
+
+variable "bastion_remote_state_bucket_name" {
+  description = "Terraform remote state bucket name for Bastion VPC"
+}
+
+variable "bastion_role_arn" {
+  description = "role to access bastion terraform state"
+}
+
+variable "env_user_access_cidr_blocks" {
+  type = list(string)
+}
