@@ -1,0 +1,74 @@
+---
+- name: Remove ssh key files
+  file:
+    path: "/tmp/id_rsa_{{ item  }}"
+    state: absent
+  with_items:
+    - "{{ param.name }}"
+    - "{{ param.name }}.pub"
+  no_log: true
+
+- name: "create sshkey ssm_param_name fact {{ param.name }}"
+  set_fact:
+    ssm_param_name: "{{ ssm_param_prefix }}/{{ param.name }}/{{ param.id }}"
+
+- name: add ssh key with password
+  block:
+    - include_tasks: create_password.yml
+      vars:
+        - character_set: "ascii_letters,digits,hexdigits"
+    - name: create ssh key pair shell
+      shell: "ssh-keygen -q -b {{ param.bits }} -f /tmp/id_rsa_{{ param.id }} -N '{{ password_value }}' -C 'Created by Ansible for {{ param.name }}'"
+      register: ssh_keypair
+      no_log: true
+
+    - name: "create ssm entry for sshkey password {{ param.name }}"
+      include_tasks: add_ssm_parameter.yml
+      vars:
+        key_name: "{{ ssm_param_name }}-password"
+        key_type: "SecureString"
+        key_value: "{{ password_value }}"
+        description: "Ansible managed {{ ssm_param_name }} parameter"
+  when: param.hasPassword | bool == true
+
+- name: add ssh key with no password
+  block:
+    - name: create ssh key pair no password
+      openssh_keypair:
+        path: "/tmp/id_rsa_{{ param.id }}"
+        size: "{{ param.bits }}"
+        comment: "Created by Ansible for {{ param.name }}"
+      register: ssh_keypair
+      no_log: true
+  when: param.hasPassword | bool == false
+
+- name: Set ssh key facts
+  set_fact:
+    private_key: "{{ lookup('file', '/tmp/id_rsa_' + param.id ) }}"
+    public_key: "{{ lookup('file', '/tmp/id_rsa_' + param.id + '.pub') }}"
+  no_log: true
+
+- name: Cleanup
+  file:
+    path: "/tmp/id_rsa_{{ item }}"
+    state: absent
+  with_items:
+    - "{{ param.id }}"
+    - "{{ param.id }}.pub"
+  no_log: true
+
+- name: create ssm entry for ssh private key
+  include_tasks: add_ssm_parameter.yml
+  vars:
+    key_name: "{{ ssm_param_name }}-private"
+    key_type: "SecureString"
+    key_value: "{{ private_key }}"
+    description: "Ansible managed {{ ssm_param_name }} parameter"
+
+- name: create ssm entry for ssh public key
+  include_tasks: add_ssm_parameter.yml
+  vars:
+    key_name: "{{ ssm_param_name }}-public"
+    key_type: "String"
+    key_value: "{{ public_key }}"
+    description: "Ansible managed {{ ssm_param_name }}-public"
