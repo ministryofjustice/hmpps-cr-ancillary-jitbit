@@ -1,3 +1,4 @@
+name: format code
 on:
   pull_request:
     types: [opened, edited, reopened, synchronize]
@@ -6,7 +7,8 @@ jobs:
   format-code:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@main
-      - uses: ministryofjustice/github-actions/code-formatter@main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/checkout@main
+    - uses: ministryofjustice/github-actions/code-formatter@main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPO_OWNER: ministryofjustice
