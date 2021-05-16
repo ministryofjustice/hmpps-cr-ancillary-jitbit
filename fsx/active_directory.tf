@@ -1,6 +1,6 @@
 module "active_directory" {
-  source = "../modules/active_directory"
+  source = "../modules/activedirectory"
 
-  common = local.common 
   ad     = local.ad
+  common = local.common 
 }

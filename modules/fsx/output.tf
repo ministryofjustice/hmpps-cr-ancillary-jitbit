@@ -1,0 +1,4 @@
+output "fsx" {
+  value = {
+  }
+}
