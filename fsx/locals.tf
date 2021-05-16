@@ -10,5 +10,18 @@ locals {
     tags              = data.terraform_remote_state.common.outputs.tags
     vpc_id            = data.terraform_remote_state.common.outputs.vpc_id
   }
+  fsx = {
+    active_directory_id               = module.active_directory.active_directory["id"]
+    automatic_backup_retention_days   = 7
+    bfs_fileshare_size                = ""
+    bfs_fileshare_throughput          = "" 
+    bfs_filesystem_name               = "jitbit-bfs"
+    copy_tags_to_backups              = false
+    daily_automatic_backup_start_time = "03:00"
+    deployment_type                   = "MULTI_AZ_1"
+    preferred_subnet_id               = local.private_subnet_ids[0]
+    storage_capacity                  = 10 # GiB
+    throughput_capacity               = 64 # MB/s
+  }
   private_subnet_ids = data.terraform_remote_state.common.outputs.private_subnet_ids
 }
