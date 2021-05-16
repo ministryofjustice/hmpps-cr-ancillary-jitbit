@@ -1,9 +1,7 @@
-variable "common" {
-  type = map
-  description = "Holds configuration details"
+variable "ad" {
+  description = "Active Directory configuration details"
 }
 
-variable "ad" {
-  type = map
-  description = "Active Directory configuration details"
+variable "common" {
+  description = "Holds configuration details"
 }
