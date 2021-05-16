@@ -2,5 +2,5 @@ module "fsx" {
   source = "../modules/fsx"
 
   common = local.common  
-  fxs     = local.fsx
+  fsx     = local.fsx
 }

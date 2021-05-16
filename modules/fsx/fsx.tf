@@ -8,13 +8,13 @@ resource "aws_fsx_windows_file_system" "mis_bfs" {
   automatic_backup_retention_days   = var.fsx.automatic_backup_retention_days
   copy_tags_to_backups              = var.fsx.copy_tags_to_backups
   daily_automatic_backup_start_time = var.fsx.daily_automatic_backup_start_time
-  security_group_ids                = [aws_security_group.mis-fsx.id]//To do
+  security_group_ids                = [aws_security_group.fsx.id]
   deployment_type                   = var.fsx.deployment_type
 
   tags = merge(
     var.common.tags,
     {
-      "Name" = var.fsx.bfs_filesystem_name
+      "Name" = var.fsx.filesystem_name
     }
   )
 
