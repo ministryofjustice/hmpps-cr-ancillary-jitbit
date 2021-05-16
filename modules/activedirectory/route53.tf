@@ -5,7 +5,7 @@ resource "aws_route53_resolver_endpoint" "resolve_local_entries_using_ad_dns" {
   direction = "OUTBOUND"
 
   security_group_ids = [
-    var.ad.security_group_id
+    aws_directory_service_directory.active_directory.security_group_id
   ]
 
   ip_address {
@@ -28,11 +28,11 @@ resource "aws_route53_resolver_rule" "r53_fwd_to_ad" {
   resolver_endpoint_id = aws_route53_resolver_endpoint.resolve_local_entries_using_ad_dns.id
 
   target_ip {
-    ip = module.active_directory.active_directory["dns_ip_addresses"][0]
+    ip = local.directory_dns_ips[0]
   }
 
   target_ip {
-    ip = module.active_directory.active_directory["dns_ip_addresses"][1]
+    ip = local.directory_dns_ips[1]
   }
 
   tags = var.common.tags
