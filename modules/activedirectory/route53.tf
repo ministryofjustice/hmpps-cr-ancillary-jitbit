@@ -5,7 +5,7 @@ resource "aws_route53_resolver_endpoint" "resolve_local_entries_using_ad_dns" {
   direction = "OUTBOUND"
 
   security_group_ids = [
-    module.fsx.fsx["security_group_id"]
+    var.ad.security_group_id
   ]
 
   ip_address {

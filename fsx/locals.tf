@@ -3,6 +3,7 @@ locals {
     admin_password = data.aws_ssm_parameter.ad_admin_password.value
     name           = "${var.environment_name}.local" # cr-jitbit-dev.local
     short_name     = substr(var.environment_name,0,15) # 15 char limit in shortname for AD. ie. cr-jitbit-dev
+    security_group_id = module.fsx.fsx["security_group_id"]
   }
   common = {
     environment_name  = var.environment_name
