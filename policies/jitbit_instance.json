@@ -63,12 +63,19 @@
       ]
     },
     {
-      "Sid": "allADAutoJoin",
+      "Effect": "Allow",
+      "Action": [
+          "ec2:DescribeInstanceStatus"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "allowADAutoJoin",
       "Effect": "Allow",
       "Action": [
           "ssm:CreateAssociation"
       ],
       "Resource": "*"
-    }   
+    }
   ]
 }
