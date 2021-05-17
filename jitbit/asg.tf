@@ -18,8 +18,8 @@ resource "aws_launch_configuration" "instance" {
   ]
   associate_public_ip_address = false
   user_data                   = data.template_file.userdata.rendered
-  enable_monitoring = true
-  ebs_optimized     = true
+  enable_monitoring           = true
+  ebs_optimized               = true
 
   root_block_device {
     volume_size = local.jitbit_configs["volume_size"]

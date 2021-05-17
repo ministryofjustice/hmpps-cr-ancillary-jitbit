@@ -11,6 +11,13 @@
       },
       "Effect": "Allow",
       "Sid": ""
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+          "ssm:CreateAssociation"
+      ],
+      "Resource": "*"
     }
   ]
 }
