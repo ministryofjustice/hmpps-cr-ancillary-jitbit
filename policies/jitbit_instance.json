@@ -33,7 +33,8 @@
         "ec2:AllocateAddress",
         "ec2:DescribeInstances",
         "ec2:AssociateAddress",
-        "ec2:DescribeInstanceStatus"
+        "ec2:DescribeInstanceStatus",
+        "ec2:DescribeTags"
       ],
       "Resource": "*"
     },
