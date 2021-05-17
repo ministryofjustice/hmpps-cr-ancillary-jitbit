@@ -61,6 +61,14 @@
         "arn:aws:s3:::${storage_bucket_arn}/installers",
         "arn:aws:s3:::${storage_bucket_arn}/installers/*"
       ]
-    }
+    },
+    {
+      "Sid": "allADAutoJoin",
+      "Effect": "Allow",
+      "Action": [
+          "ssm:CreateAssociation"
+      ],
+      "Resource": "*"
+    }   
   ]
 }
