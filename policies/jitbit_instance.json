@@ -33,7 +33,7 @@
         "ec2:AllocateAddress",
         "ec2:DescribeInstances",
         "ec2:AssociateAddress",
-        "ec2:DescribeInstanceStatus",
+        "ec2:DescribeInstanceStatus"
       ],
       "Resource": "*"
     },
@@ -67,7 +67,7 @@
       "Sid": "allowADAutoJoin",
       "Effect": "Allow",
       "Action": [
-          "ssm:CreateAssociation"
+        "ssm:CreateAssociation"
       ],
       "Resource": "*"
     }
