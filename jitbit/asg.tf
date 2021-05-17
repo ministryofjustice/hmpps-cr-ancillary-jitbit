@@ -1,3 +1,11 @@
+data "template_file" "userdata" {
+  template = file("../user_data/jitbit_instance.tpl")
+
+  vars = {
+    ssm_adjoin_document_name = data.terraform_remote_state.fsx.outputs.jitbit_ad.details["ssm_ad_auto_join_name"]
+  }
+}
+
 resource "aws_launch_configuration" "instance" {
   name_prefix          = format("%s-inst", local.common_name)
   image_id             = local.ami_id
@@ -9,7 +17,7 @@ resource "aws_launch_configuration" "instance" {
     aws_security_group.instance.id
   ]
   associate_public_ip_address = false
-  # user_data                   = data.template_file.userdata.rendered
+  user_data                   = data.template_file.userdata.rendered
   enable_monitoring = true
   ebs_optimized     = true
 
