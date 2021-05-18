@@ -4,12 +4,6 @@ $ErrorActionPreference = "Continue"
 $VerbosePreference="Continue"
 
 Write-Output "------------------------------------"
-Write-Output "Install latest SSM Agent"
-Write-Output "------------------------------------"
-Invoke-WebRequest https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/windows_amd64/AmazonSSMAgentSetup.exe -OutFile $env:USERPROFILE\Desktop\SSMAgent_latest.exe
-Start-Process -FilePath $env:USERPROFILE\Desktop\SSMAgent_latest.exe -ArgumentList "/S"
-
-Write-Output "------------------------------------"
 Write-Output "Install Chocolatey & Carbon"
 Write-Output "------------------------------------"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -24,8 +18,8 @@ Write-Output "------------------------------------"
 Write-Output "Creating Local Admin Users"
 Write-Output "------------------------------------"
 Import-Module Carbon
-$misCreds = New-Credential -UserName "${user}" -Password "${password}"
-Install-User -Credential $misCreds
+$Creds = New-Credential -UserName "${user}" -Password "${password}"
+Install-User -Credential $Creds
 Add-GroupMember -Name Administrators -Member ${user}
 
 Write-Output "------------------------------------"
@@ -33,12 +27,6 @@ Write-Output "------------------------------------"
 Write-Output "------------------------------------"
 Install-WindowsFeature RSAT-ADDS
 Install-WindowsFeature RSAT-DNS-Server
-
-Write-Output "------------------------------------"
-Write-Output "Resize Partition"
-Write-Output "------------------------------------"
-$MaxSize = (Get-PartitionSupportedSize -DriveLetter C).sizeMax
-Resize-Partition -DriveLetter C -Size $MaxSize
 
 Write-Output "----------------------------------------------"
 Write-Output " Run all scripts that apply runtime config"
