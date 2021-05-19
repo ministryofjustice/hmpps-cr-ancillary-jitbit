@@ -2,9 +2,8 @@ data "template_file" "userdata" {
   template = file("../user_data/jitbit_instance.tpl")
 
   vars = {
-    user                     = "benson"
-    password                 = "QKjO29yJQTDpC2cZ6jJnmyNr3kuj"
     ssm_adjoin_document_name = data.terraform_remote_state.fsx.outputs.fsx.ad_details["ssm_ad_auto_join_name"]
+    filesystem_dns_name      = data.terraform_remote_state.fsx.outputs.fsx.fsx_details["dns_name"]
   }
 }
 

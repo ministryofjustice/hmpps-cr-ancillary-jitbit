@@ -1,4 +1,4 @@
-resource "aws_fsx_windows_file_system" "mis_bfs" {
+resource "aws_fsx_windows_file_system" "fsx" {
 
   active_directory_id               = var.fsx.active_directory_id
   storage_capacity                  = var.fsx.storage_capacity

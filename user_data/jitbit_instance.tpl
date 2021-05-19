@@ -15,14 +15,6 @@ if (!(Test-Path $ChocoInstallPath)) {
 choco install carbon -y --version 2.9.2
 
 Write-Output "------------------------------------"
-Write-Output "Creating Local Admin Users"
-Write-Output "------------------------------------"
-Import-Module Carbon
-$Creds = New-Credential -UserName "${user}" -Password "${password}"
-Install-User -Credential $Creds
-Add-GroupMember -Name Administrators -Member ${user}
-
-Write-Output "------------------------------------"
 # Install AD Client and DNS Client Tools
 Write-Output "------------------------------------"
 Install-WindowsFeature RSAT-ADDS
@@ -43,6 +35,17 @@ Write-Output "------------------------------------"
 Set-DefaultAWSRegion -Region eu-west-2
 Set-Variable -name instance_id -value (Invoke-Restmethod -uri http://169.254.169.254/latest/meta-data/instance-id)
 New-SSMAssociation -InstanceId $instance_id -Name "${ssm_adjoin_document_name}"
+
+Write-Output "------------------------------------"
+Write-Output "Map FSX"
+Write-Output "------------------------------------"
+
+$ad_admin_password = Get-SSMParameter -Name /cr-ancillary/jitbit/ad/admin/password -WithDecryption $true
+$secpasswd = ConvertTo-SecureString $ad_admin_password.Value -AsPlainText -Force
+$domainusername = "admin"
+$domaincreds = New-Object System.Management.Automation.PSCredential ($domainusername, $secpasswd) 
+
+New-SmbGlobalMapping -RemotePath "\\${filesystem_dns_name}\Share" -Persistent $true -Credential $domaincreds -LocalPath D:
 
 </powershell>
 <persist>true</persist>
