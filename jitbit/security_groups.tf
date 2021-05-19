@@ -2,8 +2,7 @@ locals {
   security_group_list = [
     aws_security_group.instance.id,
     aws_security_group.proxy.id,
-    aws_security_group.lb.id,
-    local.fsx_integration_security_group_id
+    aws_security_group.lb.id
   ]
 }
 
