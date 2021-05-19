@@ -20,7 +20,7 @@ locals {
     filesystem_name                         = var.environment_name
     preferred_subnet_id                     = local.private_subnet_ids[0]
     storage_capacity                        = 32 # GiB
-    throughput_capacity                     = 64 # MB/s
+    throughput_capacity                     = 8 # MB/s
     active_directory_security_group_id      = module.active_directory.active_directory["security_group_id"]
   }
   private_subnet_ids = data.terraform_remote_state.common.outputs.private_subnet_ids
