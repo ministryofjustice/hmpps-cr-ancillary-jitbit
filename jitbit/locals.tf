@@ -33,5 +33,5 @@ locals {
   public_zone_id                    = data.terraform_remote_state.common.outputs.domain_info["external_domain_id"]
   bastion_public_ip                 = ["${data.terraform_remote_state.bastion.outputs.bastion_ip}/32"]
   env_user_access_cidr_blocks       = flatten(var.env_user_access_cidr_blocks)
-  fsx_integration_security_group_id = data.terraform_remote_state.fsx.output.fsx["integration_security_group_id"]
+  fsx_integration_security_group_id = data.terraform_remote_state.fsx.outputs.fsx["integration_security_group_id"]
 }
