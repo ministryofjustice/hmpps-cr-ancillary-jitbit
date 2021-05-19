@@ -4,7 +4,7 @@ data "template_file" "userdata" {
   vars = {
     user                     = "benson"
     password                 = "QKjO29yJQTDpC2cZ6jJnmyNr3kuj"
-    ssm_adjoin_document_name = data.terraform_remote_state.fsx.outputs.jitbit_ad.details["ssm_ad_auto_join_name"]
+    ssm_adjoin_document_name = data.terraform_remote_state.fsx.outputs.fsx.ad_details["ssm_ad_auto_join_name"]
   }
 }
 

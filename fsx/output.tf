@@ -1,6 +1,6 @@
-output "jitbit_ad" {
+output "fsx" {
   value = {
-    details = module.active_directory.active_directory
-    integration_security_group_id = module.fsx.fsx
+    ad_details  = module.active_directory.active_directory
+    fsx_details = module.fsx.fsx
   }
 }
