@@ -222,7 +222,7 @@ resource "aws_security_group_rule" "fsx_sg_ingress_from_fsx_integration_sg" {
   from_port                = 0
   to_port                  = 0
   protocol                 = -1
-  source_security_group_id = var.fsx.integration_instance_security_group_id
+  source_security_group_id = aws_security_group.fsx_integration.id
   security_group_id        = aws_security_group.fsx.id
   description              = "ingress ALL traffic from FSx Integration Security Group"
 }
@@ -242,7 +242,7 @@ resource "aws_security_group_rule" "fsx_sg_egress_to_integration_sg" {
   from_port                = 0
   to_port                  = 0
   protocol                 = -1
-  source_security_group_id = var.fsx.integration_instance_security_group_id
+  source_security_group_id = aws_security_group.fsx_integration.id
   security_group_id        = aws_security_group.fsx.id
   description              = "egress ALL traffic to FSx Integration Security Group"
 }

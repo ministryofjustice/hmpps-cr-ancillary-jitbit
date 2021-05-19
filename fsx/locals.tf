@@ -22,7 +22,6 @@ locals {
     storage_capacity                        = 32 # GiB
     throughput_capacity                     = 64 # MB/s
     active_directory_security_group_id      = module.active_directory.active_directory["security_group_id"]
-    integration_instance_security_group_id  = data.terraform_remote_state.jitbit.outputs.jitbit["security_group_id"]
   }
   private_subnet_ids = data.terraform_remote_state.common.outputs.private_subnet_ids
 }
