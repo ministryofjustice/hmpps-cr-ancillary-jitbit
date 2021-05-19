@@ -9,5 +9,9 @@ jitbit_admin_cidrs = [
 ]
 
 jitbit_access_cidrs = [
-  "194.33.192.0/25" #ARK Internet (DOM1)
+  "195.59.75.0/24",    # ARK internet (DOM1)
+  "194.33.192.0/25",   # ARK internet (DOM1)
+  "194.33.193.0/25",   # ARK internet (DOM1)
+  "194.33.196.0/25",   # ARK internet (DOM1)
+  "194.33.197.0/25",   # ARK internet (DOM1)
 ]
