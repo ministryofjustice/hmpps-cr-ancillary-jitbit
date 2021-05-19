@@ -38,7 +38,7 @@ resource "aws_lb_target_group" "instance" {
 
   health_check {
     interval            = 30
-    path                = "/"
+    path                = "/User/Login?ReturnUrl=%2f"
     port                = 80
     protocol            = "HTTP"
     timeout             = 5
