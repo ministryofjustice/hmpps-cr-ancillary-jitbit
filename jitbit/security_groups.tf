@@ -37,23 +37,6 @@ resource "aws_security_group" "lb" {
   }
 }
 
-
-resource "aws_security_group" "proxy" {
-  name        = format("%s-proxy-lb", local.common_name)
-  description = "Proxy lb Security Group"
-  vpc_id      = local.vpc_id
-  tags = merge(
-    local.tags,
-    {
-      "Name" = format("%s-proxy-lb", local.common_name)
-    },
-  )
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
 # LB Rules
 resource "aws_security_group_rule" "lb_to_jitbit" {
   security_group_id        = aws_security_group.lb.id
@@ -74,38 +57,6 @@ resource "aws_security_group_rule" "jitbit_from_lb" {
   type                     = "ingress"
   description              = "jitbit from lb"
   source_security_group_id = aws_security_group.lb.id
-}
-
-# Proxy
-resource "aws_security_group_rule" "rdp_in" {
-  security_group_id = aws_security_group.proxy.id
-  from_port         = 3389
-  to_port           = 3389
-  protocol          = "tcp"
-  type              = "ingress"
-  description       = "rdp"
-  cidr_blocks       = var.jitbit_admin_cidrs
-}
-
-resource "aws_security_group_rule" "lb_to_rdp" {
-  security_group_id        = aws_security_group.proxy.id
-  from_port                = 3389
-  to_port                  = 3389
-  protocol                 = "tcp"
-  type                     = "egress"
-  description              = "lb to rdp"
-  source_security_group_id = aws_security_group.instance.id
-}
-
-
-resource "aws_security_group_rule" "rdp_from_lb" {
-  security_group_id        = aws_security_group.instance.id
-  from_port                = 3389
-  to_port                  = 3389
-  protocol                 = "tcp"
-  type                     = "ingress"
-  description              = "rdp from lb"
-  source_security_group_id = aws_security_group.proxy.id
 }
 
 # DB Rules
@@ -129,27 +80,6 @@ resource "aws_security_group_rule" "db_in" {
   source_security_group_id = aws_security_group.instance.id
 }
 
-# Storage rules
-resource "aws_security_group_rule" "samba_out" {
-  security_group_id        = aws_security_group.instance.id
-  from_port                = 445
-  to_port                  = 445
-  protocol                 = "tcp"
-  type                     = "egress"
-  description              = "samba"
-  source_security_group_id = local.samba_security_group_id
-}
-
-resource "aws_security_group_rule" "samba_in" {
-  security_group_id        = local.samba_security_group_id
-  from_port                = 445
-  to_port                  = 445
-  protocol                 = "tcp"
-  type                     = "ingress"
-  description              = "samba"
-  source_security_group_id = aws_security_group.instance.id
-}
-
 # Misc
 resource "aws_security_group_rule" "self_in" {
   count             = length(local.security_group_list)
@@ -170,7 +100,6 @@ resource "aws_security_group_rule" "self_out" {
   protocol          = -1
   self              = true
 }
-
 
 # Bastion access
 resource "aws_security_group_rule" "bastion" {

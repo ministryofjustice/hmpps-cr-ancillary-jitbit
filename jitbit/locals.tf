@@ -21,10 +21,6 @@ locals {
   private_domain                    = data.terraform_remote_state.common.outputs.domain_info["private_domain"]
   app_name                          = "jitbit"
   bucket_arn                        = data.terraform_remote_state.common.outputs.config_bucket["arn"]
-  samba_security_group_id           = data.terraform_remote_state.samba.outputs.storage_info["samba_security_group_id"]
-  samba_host                        = data.terraform_remote_state.samba.outputs.storage_info["samba_security_group_id"]
-  samba_ssm_user                    = data.terraform_remote_state.samba.outputs.storage_info["samba_ssm_user"]
-  samba_ssm_password                = data.terraform_remote_state.samba.outputs.storage_info["samba_ssm_password"]
   database_address                  = data.terraform_remote_state.database.outputs.database_info["address"]
   database_endpoint                 = data.terraform_remote_state.database.outputs.database_info["endpoint"]
   database_ssm_user                 = data.terraform_remote_state.database.outputs.database_info["database_ssm_user"]
