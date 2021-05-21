@@ -17,3 +17,7 @@ variable "region" {
   description = "AWS Region"
   type        = string
 }
+
+variable "remote_state_bucket_name" {
+  description = "Terraform remote state bucket name"
+}
