@@ -100,16 +100,39 @@ resource "aws_security_group_rule" "self_out" {
   self              = true
 }
 
-# Bastion access
-resource "aws_security_group_rule" "bastion" {
-  security_group_id = aws_security_group.instance.id
-  type              = "ingress"
-  from_port         = 3389
-  to_port           = 3389
-  protocol          = "tcp"
-  cidr_blocks       = local.bastion_cidr_ranges
-  description       = "rdp"
+# SES and WorkMail
+resource "aws_security_group_rule" "jitbit_ses_out" {
+  security_group_id        = aws_security_group.instance.id
+  from_port                = 465
+  to_port                  = 465
+  protocol                 = "tcp"
+  type                     = "egress"
+  description              = "SMTPS to SES for outbound email"
+  cidr_blocks              = ["0.0.0.0/0"]
+  ipv6_cidr_blocks         = ["::/0"]
 }
+
+resource "aws_security_group_rule" "jitbit_work_mail_out" {
+  security_group_id        = aws_security_group.instance.id
+  from_port                = 993
+  to_port                  = 993
+  protocol                 = "tcp"
+  type                     = "egress"
+  description              = "IMAPS to Workmail for inbound email"
+  cidr_blocks              = ["0.0.0.0/0"]
+  ipv6_cidr_blocks         = ["::/0"]
+}
+
+# # Bastion access
+# resource "aws_security_group_rule" "bastion" {
+#   security_group_id = aws_security_group.instance.id
+#   type              = "ingress"
+#   from_port         = 3389
+#   to_port           = 3389
+#   protocol          = "tcp"
+#   cidr_blocks       = local.bastion_cidr_ranges
+#   description       = "rdp"
+# }
 
 # ALb Access
 resource "aws_security_group_rule" "application_access" {
