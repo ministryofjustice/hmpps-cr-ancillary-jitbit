@@ -1,3 +1,8 @@
+variable "environment_type" {
+  description = "The environment type - e.g. dev"
+  type        = string
+}
+
 variable "project_name" {
   description = "The project name - delius-core"
   type        = string
@@ -6,4 +11,9 @@ variable "project_name" {
 variable "public_dns_parent_zone" {
   type        = string
   description = "for strategic .gov domain. set in common.properties"
+}
+
+variable "region" {
+  description = "AWS Region"
+  type        = string
 }
