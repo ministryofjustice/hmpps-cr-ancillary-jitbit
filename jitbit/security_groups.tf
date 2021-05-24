@@ -123,17 +123,6 @@ resource "aws_security_group_rule" "jitbit_work_mail_out" {
   ipv6_cidr_blocks         = ["::/0"]
 }
 
-# # Bastion access
-# resource "aws_security_group_rule" "bastion" {
-#   security_group_id = aws_security_group.instance.id
-#   type              = "ingress"
-#   from_port         = 3389
-#   to_port           = 3389
-#   protocol          = "tcp"
-#   cidr_blocks       = local.bastion_cidr_ranges
-#   description       = "rdp"
-# }
-
 # ALb Access
 resource "aws_security_group_rule" "application_access" {
   security_group_id = aws_security_group.lb.id
