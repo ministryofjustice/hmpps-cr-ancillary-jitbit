@@ -148,3 +148,17 @@ resource "aws_security_group_rule" "application_access" {
   )
   description       = "Application Access"
 }
+
+resource "aws_security_group_rule" "application_access_https" {
+  security_group_id = aws_security_group.lb.id
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = concat(
+    local.bastion_public_ip,
+    local.env_user_access_cidr_blocks,
+    var.jitbit_access_cidrs
+  )
+  description       = "Application Access - Https"
+}

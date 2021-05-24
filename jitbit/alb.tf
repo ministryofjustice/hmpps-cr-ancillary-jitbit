@@ -72,6 +72,19 @@ resource "aws_lb_listener" "instance" {
   }
 }
 
+resource "aws_lb_listener" "instance_https" {
+  load_balancer_arn = aws_lb.instance.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = local.public_acm_arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.instance.arn
+  }
+}
+
 # Route53 entry to jitbit lb
 resource "aws_route53_record" "dns_entry" {
   zone_id = local.public_zone_id
