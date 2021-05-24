@@ -77,7 +77,7 @@ resource "aws_lb_listener" "instance_https" {
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = local.public_acm_arn
+  certificate_arn   = element(local.public_acm_arn, 0)
 
   default_action {
     type             = "forward"
