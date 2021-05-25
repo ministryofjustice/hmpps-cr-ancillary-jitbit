@@ -1,4 +1,4 @@
-# Jitbit
+# JitBit
 ## HMPPS Community Rehabilitation Ancillary Applications
 
 JitBit Help Desk Ticketing System - Ticketing software for your support team
@@ -20,12 +20,14 @@ The diagram above shows the current IA as deployed to meet MVP1 and 2*. The VPC 
 
 VPC subnets:
 
-|         	| eu-west-2a       	| eu-west-2a     	| eu-west-2a       	|
-|---------	|------------------	|----------------	|------------------	|
-| Public  	| 10.163.46.128/25 	| 10.163.47.0/25 	| 10.163.47.128/25 	|
-| Private 	| 10.163.32.0/22   	| 10.163.36.0/22 	| 10.163.40.0/22   	|
-| Data    	| 10.163.44.0/24   	| 10.163.45.0/24 	| 10.163.46.0/25   	|
-
+|         	| Account Name                    | eu-west-2a       	| eu-west-2b     	| eu-west-2c      	|
+|---------	|-------------------------------- |------------------	|----------------	|------------------	|
+| Public  	| hmpps-cr-jitbit-production      | 10.163.78.128/25	| 10.163.79.0/25	| 10.163.79.128/25 	|
+| Private 	| hmpps-cr-jitbit-production      | 10.163.64.0/22  	| 10.163.68.0/22 	| 10.163.72.0/22   	|
+| Data    	| hmpps-cr-jitbit-production      | 10.163.76.0/24   	| 10.163.77.0/24 	| 10.163.78.0/25   	|
+| Public  	| hmpps-cr-jitbit-non-production  | 10.163.62.128/25 	| 10.163.63.0/25 	| 10.163.63.128/25 	|
+| Private 	| hmpps-cr-jitbit-non-production  | 10.163.48.0/22  	| 10.163.52.0/22 	| 10.163.56.0/22   	|
+| Data    	| hmpps-cr-jitbit-non-production  | 10.163.60.0/24  	| 10.163.61.0/24 	| 10.163.62.0/25   	|
 
 ## Service
 
