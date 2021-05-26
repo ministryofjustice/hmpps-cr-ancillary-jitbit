@@ -25,7 +25,7 @@ Write-Output "Install IIS & ASP .Net Features"
 Write-Output "------------------------------------"
 
 Install-WindowsFeature Web-Server -IncludeManagementTools -IncludeAllSubFeature
-Install-Module -Name 'IISAdministration'
+Install-Module -Name IISAdministration -Force
 
 Write-Output "----------------------------------------------"
 Write-Output " Run all scripts that apply runtime config"
