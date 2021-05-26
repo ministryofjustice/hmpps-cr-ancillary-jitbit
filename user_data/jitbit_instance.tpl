@@ -15,7 +15,7 @@ if (!(Test-Path $ChocoInstallPath)) {
 choco install carbon -y --version 2.9.2
 
 Write-Output "------------------------------------"
-# Install AD Client and DNS Client Tools
+Write-Output "Install AD Client and DNS Client Tools"
 Write-Output "------------------------------------"
 Install-WindowsFeature RSAT-ADDS
 Install-WindowsFeature RSAT-DNS-Server
