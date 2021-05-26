@@ -1,0 +1,113 @@
+{
+        "logs": {
+                "logs_collected": {
+                        "files": {
+                            "collect_list": [
+                                {
+                                    "file_path": "C:\\Windows\\System32\\LogFiles\\HTTPERR",
+                                    "log_group_name": "cr-jitbit",
+                                    "log_stream_name": "{instance_id}-httpErr"
+                                },
+                                {
+                                    "file_path": "C:\\inetpub\\logs\\LogFiles\\W3SVC1",
+                                    "log_group_name": "cr-jitbit",
+                                    "log_stream_name": "{instance_id}-iis"
+                                }
+                            ]
+                        },
+                        "windows_events": {
+                                "collect_list": [
+                                        {
+                                                "event_format": "text",
+                                                "event_levels": [
+                                                        "VERBOSE",
+                                                        "INFORMATION",
+                                                        "WARNING",
+                                                        "ERROR",
+                                                        "CRITICAL"
+                                                ],
+                                                "event_name": "System",
+                                                "log_group_name": "/mis/system-logs",
+                                                "log_stream_name": "{instance_id}"
+                                        },
+                                        {
+                                                "event_format": "text",
+                                                "event_levels": [
+                                                        "VERBOSE",
+                                                        "INFORMATION",
+                                                        "WARNING",
+                                                        "ERROR",
+                                                        "CRITICAL"
+                                                ],
+                                                "event_name": "Application",
+                                                "log_group_name": "/mis/application_logs",
+                                                "log_stream_name": "{instance_id}"
+                                        }
+                                ]
+                        }
+                }
+        },
+        "metrics": {
+                "append_dimensions": {
+                        "AutoScalingGroupName": "${aws:AutoScalingGroupName}",
+                        "ImageId": "${aws:ImageId}",
+                        "InstanceId": "${aws:InstanceId}",
+                        "InstanceType": "${aws:InstanceType}"
+                },
+                "metrics_collected": {
+                        "LogicalDisk": {
+                                "measurement": [
+                                        "% Free Space"
+                                ],
+                                "metrics_collection_interval": 60,
+                                "resources": [
+                                        "*"
+                                ]
+                        },
+                        "Memory": {
+                                "measurement": [
+                                    {
+                                        "name":"% Committed Bytes In Use",
+                                        "rename":"MemoryUtilization",
+                                        "unit":"Percent"
+                                    }
+                                ],
+                                "metrics_collection_interval": 60
+                        },
+                        "Paging File": {
+                                "measurement": [
+                                        "% Usage"
+                                ],
+                                "metrics_collection_interval": 60,
+                                "resources": [
+                                        "*"
+                                ]
+                        },
+                        "PhysicalDisk": {
+                                "measurement": [
+                                        "% Disk Time"
+                                ],
+                                "metrics_collection_interval": 60,
+                                "resources": [
+                                        "*"
+                                ]
+                        },
+                        "Processor": {
+                                "measurement": [
+                                        "% User Time",
+                                        "% Idle Time",
+                                        "% Interrupt Time"
+                                ],
+                                "metrics_collection_interval": 60,
+                                "resources": [
+                                        "_Total"
+                                ]
+                        },
+                        "statsd": {
+                                "metrics_aggregation_interval": 60,
+                                "metrics_collection_interval": 30,
+                                "service_address": ":8125"
+                        }
+                }
+        }
+}
