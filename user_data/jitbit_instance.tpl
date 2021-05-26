@@ -23,8 +23,8 @@ Install-WindowsFeature RSAT-DNS-Server
 Write-Output "------------------------------------"
 Write-Output "Install IIS & ASP .Net Features"
 Write-Output "------------------------------------"
-
 Install-WindowsFeature Web-Server -IncludeManagementTools -IncludeAllSubFeature
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 Install-Module -Name IISAdministration -Force
 
 Write-Output "----------------------------------------------"
