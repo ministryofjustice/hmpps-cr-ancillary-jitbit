@@ -20,6 +20,13 @@ Write-Output "------------------------------------"
 Install-WindowsFeature RSAT-ADDS
 Install-WindowsFeature RSAT-DNS-Server
 
+Write-Output "------------------------------------"
+Write-Output "Install IIS & ASP .Net Features"
+Write-Output "------------------------------------"
+
+Install-WindowsFeature Web-Server -IncludeManagementTools -IncludeAllSubFeature
+Install-Module -Name 'IISAdministration'
+
 Write-Output "----------------------------------------------"
 Write-Output " Run all scripts that apply runtime config"
 Write-Output "----------------------------------------------"
@@ -48,15 +55,15 @@ $domaincreds = New-Object System.Management.Automation.PSCredential ($domainuser
 New-SmbGlobalMapping -RemotePath "\\${filesystem_dns_name}\Share" -Persistent $true -Credential $domaincreds -LocalPath D:
 
 Write-Output "------------------------------------"
-Write-Output "Install & Config IIS"
+Write-Output "Config IIS"
 Write-Output "------------------------------------"
-
+Remove-IISSite -Name "Default Web Site" -Confirm:$false -Verbose
+New-IISSite -Name 'JitBit' -PhysicalPath 'D:\HelpDesk' -BindingInformation "*:80:"
 
 Write-Output "------------------------------------"
 Write-Output "Install & Config Cloudwatch"
 Write-Output "------------------------------------"
 
-New-Item C:\cloudwatch_installer -ItemType Directory -ErrorAction Ignore
 Invoke-WebRequest -Uri 'https://s3.amazonaws.com/amazoncloudwatch-agent/windows/amd64/latest/amazon-cloudwatch-agent.msi' -OutFile 'C:\cloudwatch_installer\amazon-cloudwatch-agent.msi'
 aws s3 cp "${cloudwatch_config}" C:\cloudwatch_installer\config.json
 Start-Process msiexec.exe -Wait -ArgumentList '/i C:\cloudwatch_installer\amazon-cloudwatch-agent.msi'
