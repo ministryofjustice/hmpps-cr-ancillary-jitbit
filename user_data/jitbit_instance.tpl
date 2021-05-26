@@ -47,5 +47,17 @@ $domaincreds = New-Object System.Management.Automation.PSCredential ($domainuser
 
 New-SmbGlobalMapping -RemotePath "\\${filesystem_dns_name}\Share" -Persistent $true -Credential $domaincreds -LocalPath D:
 
+
+Write-Output "------------------------------------"
+Write-Output "Install & Config Cloudwatch"
+Write-Output "------------------------------------"
+
+Invoke-WebRequest -Uri 'https://s3.amazonaws.com/amazoncloudwatch-agent/windows/amd64/latest/amazon-cloudwatch-agent.msi' -OutFile 'C:\cloudwatch_installer\amazon-cloudwatch-agent.msi'
+aws s3 cp "${cloudwatch_config}" C:\cloudwatch_installer\config.json
+Start-Process msiexec.exe -Wait -ArgumentList '/i C:\cloudwatch_installer\amazon-cloudwatch-agent.msi'
+cd 'C:\Program Files\Amazon\AmazonCloudWatchAgent'
+.\amazon-cloudwatch-agent-ctl.ps1 -a fetch-config -m ec2 -c file:C:\cloudwatch_installer\config.json -s
+# rm -r C:\cloudwatch_installer
+
 </powershell>
 <persist>true</persist>
