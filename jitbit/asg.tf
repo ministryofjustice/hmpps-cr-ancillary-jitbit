@@ -4,6 +4,7 @@ data "template_file" "userdata" {
   vars = {
     ssm_adjoin_document_name = data.terraform_remote_state.fsx.outputs.fsx.ad_details["ssm_ad_auto_join_name"]
     filesystem_dns_name      = data.terraform_remote_state.fsx.outputs.fsx.fsx_details["dns_name"]
+    cloudwatch_config        = "s3://${local.config_bucket}/cloudwatch/config.json"
   }
 }
 
