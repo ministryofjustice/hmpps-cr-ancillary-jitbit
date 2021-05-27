@@ -6,12 +6,12 @@
                                 {
                                     "file_path": "C:\\Windows\\System32\\LogFiles\\HTTPERR\\*.log",
                                     "log_group_name": "${log_group_name}",
-                                    "log_stream_name": "iis-{instance_id}-httpErr"
+                                    "log_stream_name": "{instance_id}/iis/httpErr"
                                 },
                                 {
                                     "file_path": "C:\\inetpub\\logs\\LogFiles\\W3SVC1\\*.log",
                                     "log_group_name": "${log_group_name}",
-                                    "log_stream_name": "iis-{instance_id}-logs"
+                                    "log_stream_name": "{instance_id}/iis/logs"
                                 }
                             ]
                         },
@@ -27,8 +27,8 @@
                                                         "CRITICAL"
                                                 ],
                                                 "event_name": "System",
-                                                "log_group_name": "/mis/system-logs",
-                                                "log_stream_name": "{instance_id}"
+                                                "log_group_name": "${log_group_name}",
+                                                "log_stream_name": "{instance_id}/event-log/system"
                                         },
                                         {
                                                 "event_format": "text",
@@ -40,8 +40,8 @@
                                                         "CRITICAL"
                                                 ],
                                                 "event_name": "Application",
-                                                "log_group_name": "/mis/application_logs",
-                                                "log_stream_name": "{instance_id}"
+                                                "log_group_name": "${log_group_name}",
+                                                "log_stream_name": "{instance_id}/event-log/application"
                                         }
                                 ]
                         }
