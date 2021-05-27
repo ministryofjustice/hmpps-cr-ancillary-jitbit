@@ -54,7 +54,10 @@ Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 Install-Module -Name IISAdministration -Force
 
 Remove-IISSite -Name "Default Web Site" -Confirm:$false -Verbose
-New-IISSite -Name "JitBit" -PhysicalPath "D:\HelpDesk" -BindingInformation "*:80:"
+
+Copy-S3Object -BucketName cr-jitbit-dev -KeyPrefix installers\HelpDesk -LocalFolder C:\inetpub\wwwroot\HelpDesk
+
+New-IISSite -Name "JitBit" -PhysicalPath "C:\inetpub\wwwroot\HelpDesk" -BindingInformation "*:80:"
 
 Write-Output "------------------------------------"
 Write-Output "Install & Config Cloudwatch"
