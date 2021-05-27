@@ -6,14 +6,16 @@
       "Effect": "Allow",
       "Action": [
         "cloudwatch:PutMetricData",
+        "ec2:DescribeVolumes",
+        "ec2:DescribeTags",
         "logs:CreateLogGroup",
         "logs:CreateLogStream",
         "logs:PutLogEvents",
-        "logs:DescribeLogStreams",
-        "logs:DescribeLogGroups"
+        "logs:DescribeLogGroups",
+        "logs:DescribeLogStreams"
       ],
       "Resource": [
-        "arn:aws:logs:*:*:*"
+        "*"
       ]
     },
     {
