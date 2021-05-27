@@ -5,13 +5,13 @@
                             "collect_list": [
                                 {
                                     "file_path": "C:\\Windows\\System32\\LogFiles\\HTTPERR\\*.log",
-                                    "log_group_name": "/${log_group_name}/iis",
-                                    "log_stream_name": "{instance_id}-httpErr"
+                                    "log_group_name": "${log_group_name}",
+                                    "log_stream_name": "iis-{instance_id}-httpErr"
                                 },
                                 {
                                     "file_path": "C:\\inetpub\\logs\\LogFiles\\W3SVC1\\*.log",
-                                    "log_group_name": "/${log_group_name}/iis",
-                                    "log_stream_name": "{instance_id}-logs"
+                                    "log_group_name": "${log_group_name}",
+                                    "log_stream_name": "iis-{instance_id}-logs"
                                 }
                             ]
                         },
