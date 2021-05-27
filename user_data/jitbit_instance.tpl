@@ -47,6 +47,16 @@ $domaincreds = New-Object System.Management.Automation.PSCredential ($domainuser
 New-SmbGlobalMapping -RemotePath "\\${filesystem_dns_name}\Share" -Persistent $true -Credential $domaincreds -LocalPath D:
 
 Write-Output "------------------------------------"
+Write-Output "Install & Config IIS"
+Write-Output "------------------------------------"
+Install-WindowsFeature Web-Server -IncludeManagementTools -IncludeAllSubFeature
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+Install-Module -Name IISAdministration -Force
+
+Remove-IISSite -Name "Default Web Site" -Confirm:$false -Verbose
+New-IISSite -Name "JitBit" -PhysicalPath "D:\HelpDesk" -BindingInformation "*:80:"
+
+Write-Output "------------------------------------"
 Write-Output "Install & Config Cloudwatch"
 Write-Output "------------------------------------"
 New-Item C:\cloudwatch_installer -ItemType Directory -ErrorAction Ignore
@@ -56,16 +66,6 @@ Start-Process msiexec.exe -Wait -ArgumentList '/i C:\cloudwatch_installer\amazon
 cd 'C:\Program Files\Amazon\AmazonCloudWatchAgent'
 .\amazon-cloudwatch-agent-ctl.ps1 -a fetch-config -m ec2 -c file:C:\cloudwatch_installer\config.json -s
 rm -r C:\cloudwatch_installer
-
-Write-Output "------------------------------------"
-Write-Output "Install & Config IIS"
-Write-Output "------------------------------------"
-Install-WindowsFeature Web-Server -IncludeManagementTools -IncludeAllSubFeature
-Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-Install-Module -Name IISAdministration -Force
-
-Remove-IISSite -Name "Default Web Site" -Confirm:$false -Verbose
-New-IISSite -Name "JitBit" -PhysicalPath "D:\HelpDesk" -BindingInformation "*:80:"
 
 </powershell>
 <persist>true</persist>

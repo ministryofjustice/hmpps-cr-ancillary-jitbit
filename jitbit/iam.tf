@@ -1,7 +1,7 @@
 data "template_file" "iam" {
   template = file("../policies/jitbit_instance.json")
   vars = {
-    storage_bucket_arn = local.bucket_arn
+    config_bucket_arn = local.bucket_arn
   }
 }
 
