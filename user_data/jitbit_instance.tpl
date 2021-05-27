@@ -55,7 +55,7 @@ Install-Module -Name IISAdministration -Force
 
 Remove-IISSite -Name "Default Web Site" -Confirm:$false -Verbose
 
-Copy-S3Object -BucketName cr-jitbit-dev -KeyPrefix installers\HelpDesk -LocalFolder C:\inetpub\wwwroot\HelpDesk
+Copy-S3Object -BucketName "${config_bucket}" -KeyPrefix installers\HelpDesk -LocalFolder C:\inetpub\wwwroot\HelpDesk
 
 New-IISSite -Name "JitBit" -PhysicalPath "C:\inetpub\wwwroot\HelpDesk" -BindingInformation "*:80:"
 
