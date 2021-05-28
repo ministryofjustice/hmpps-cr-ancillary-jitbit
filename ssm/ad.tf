@@ -5,7 +5,7 @@ resource "random_password" "ad_admin_password" {
 }
 
 resource "aws_ssm_parameter" "ad_admin_password" {
-  name        = "/${var.common_name}/jitbit/ad/admin/password"
+  name        = "/${local.common_name}/jitbit/ad/admin/password"
   description = "JITBIT FSx AD Admin Password"
   type        = "SecureString"
   value       = random_password.ad_admin_password.result
@@ -13,7 +13,7 @@ resource "aws_ssm_parameter" "ad_admin_password" {
   tags = merge(
     var.tags,
     {
-      "Name" = "/${var.common_name}/jitbit/ad/admin/password"
+      "Name" = "/${local.common_name}/jitbit/ad/admin/password"
     },
   )
 
@@ -24,7 +24,7 @@ resource "aws_ssm_parameter" "ad_admin_password" {
 
 # JitBit FSx AD Admins UserName
 resource "aws_ssm_parameter" "ad_admin_username" {
-  name        = "/${var.common_name}/jitbit/ad/admin/username"
+  name        = "/${local.common_name}/jitbit/ad/admin/username"
   description = "JITBIT FSx AD Admin UserName"
   type        = "String"
   value       = "admin"
@@ -32,7 +32,7 @@ resource "aws_ssm_parameter" "ad_admin_username" {
   tags = merge(
     var.tags,
     {
-      "Name" = "/${var.common_name}/jitbit/ad/admin/username"
+      "Name" = "/${local.common_name}/jitbit/ad/admin/username"
     },
   )
 }
