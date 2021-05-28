@@ -102,25 +102,25 @@ resource "aws_security_group_rule" "self_out" {
 
 # SES and WorkMail
 resource "aws_security_group_rule" "jitbit_ses_out" {
-  security_group_id        = aws_security_group.instance.id
-  from_port                = 465
-  to_port                  = 465
-  protocol                 = "tcp"
-  type                     = "egress"
-  description              = "SMTPS to SES for outbound email"
-  cidr_blocks              = ["0.0.0.0/0"]
-  ipv6_cidr_blocks         = ["::/0"]
+  security_group_id = aws_security_group.instance.id
+  from_port         = 465
+  to_port           = 465
+  protocol          = "tcp"
+  type              = "egress"
+  description       = "SMTPS to SES for outbound email"
+  cidr_blocks       = ["0.0.0.0/0"]
+  ipv6_cidr_blocks  = ["::/0"]
 }
 
 resource "aws_security_group_rule" "jitbit_work_mail_out" {
-  security_group_id        = aws_security_group.instance.id
-  from_port                = 993
-  to_port                  = 993
-  protocol                 = "tcp"
-  type                     = "egress"
-  description              = "IMAPS to Workmail for inbound email"
-  cidr_blocks              = ["0.0.0.0/0"]
-  ipv6_cidr_blocks         = ["::/0"]
+  security_group_id = aws_security_group.instance.id
+  from_port         = 993
+  to_port           = 993
+  protocol          = "tcp"
+  type              = "egress"
+  description       = "IMAPS to Workmail for inbound email"
+  cidr_blocks       = ["0.0.0.0/0"]
+  ipv6_cidr_blocks  = ["::/0"]
 }
 
 # ALb Access
@@ -130,10 +130,10 @@ resource "aws_security_group_rule" "application_access_https" {
   from_port         = 443
   to_port           = 443
   protocol          = "tcp"
-  cidr_blocks       = concat(
+  cidr_blocks = concat(
     local.bastion_public_ip,
     local.env_user_access_cidr_blocks,
     var.jitbit_access_cidrs
   )
-  description       = "Application Access - Https"
+  description = "Application Access - Https"
 }
