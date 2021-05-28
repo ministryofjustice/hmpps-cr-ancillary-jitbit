@@ -11,7 +11,7 @@ resource "aws_ssm_parameter" "ad_admin_password" {
   value       = random_password.ad_admin_password.result
 
   tags = merge(
-    var.tags,
+    local.tags,
     {
       "Name" = "/${local.common_name}/jitbit/ad/admin/password"
     },
@@ -30,7 +30,7 @@ resource "aws_ssm_parameter" "ad_admin_username" {
   value       = "admin"
 
   tags = merge(
-    var.tags,
+    local.tags,
     {
       "Name" = "/${local.common_name}/jitbit/ad/admin/username"
     },

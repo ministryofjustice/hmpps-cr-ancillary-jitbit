@@ -11,7 +11,7 @@ resource "aws_ssm_parameter" "workmail_office_user_password" {
   value       = random_password.workmail_office_user_password.result
 
   tags = merge(
-    var.tags,
+    local.tags,
     {
       "Name" = "/${local.common_name}/jitbit/workmail/office/user/password"
     },
@@ -31,7 +31,7 @@ resource "aws_ssm_parameter" "workmail_office_user_name" {
   value       = "office"
 
   tags = merge(
-    var.tags,
+    local.tags,
     {
       "Name" = "/${local.common_name}/jitbit/workmail/office/user/username"
     },

@@ -11,7 +11,7 @@ resource "aws_ssm_parameter" "rds_admin_password" {
   value       = random_password.rds_admin_password.result
 
   tags = merge(
-    var.tags,
+    local.tags,
     {
       "Name" = "/${local.common_name}/jitbit/rds/admin/password"
     },
@@ -30,7 +30,7 @@ resource "aws_ssm_parameter" "rds_admin_username" {
   value       = "admin"
 
   tags = merge(
-    var.tags,
+    local.tags,
     {
       "Name" = "/${local.common_name}/jitbit/rds/admin/username"
     },
@@ -50,7 +50,7 @@ resource "aws_ssm_parameter" "rds_jitbit_user_password" {
   value       = random_password.rds_jitbit_user_password.result
 
   tags = merge(
-    var.tags,
+    local.tags,
     {
       "Name" = "/${local.common_name}/jitbit/rds/jitbit/user/password"
     },
@@ -69,7 +69,7 @@ resource "aws_ssm_parameter" "rds_jitbit_user_username" {
   value       = "jitbit"
 
   tags = merge(
-    var.tags,
+    local.tags,
     {
       "Name" = "/${local.common_name}/jitbit/rds/jitbit/user/username"
     },
