@@ -61,17 +61,6 @@ resource "aws_lb_target_group" "instance" {
   )
 }
 
-resource "aws_lb_listener" "instance" {
-  load_balancer_arn = aws_lb.instance.arn
-  port              = 80
-  protocol          = "HTTP"
-
-  default_action {
-    target_group_arn = aws_lb_target_group.instance.arn
-    type             = "forward"
-  }
-}
-
 resource "aws_lb_listener" "instance_https" {
   load_balancer_arn = aws_lb.instance.arn
   port              = "443"

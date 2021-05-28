@@ -124,20 +124,6 @@ resource "aws_security_group_rule" "jitbit_work_mail_out" {
 }
 
 # ALb Access
-resource "aws_security_group_rule" "application_access" {
-  security_group_id = aws_security_group.lb.id
-  type              = "ingress"
-  from_port         = 80
-  to_port           = 80
-  protocol          = "tcp"
-  cidr_blocks       = concat(
-    local.bastion_public_ip,
-    local.env_user_access_cidr_blocks,
-    var.jitbit_access_cidrs
-  )
-  description       = "Application Access"
-}
-
 resource "aws_security_group_rule" "application_access_https" {
   security_group_id = aws_security_group.lb.id
   type              = "ingress"
