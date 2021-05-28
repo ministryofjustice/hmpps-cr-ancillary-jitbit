@@ -57,7 +57,8 @@ Credentials are store leveraging AWS Systems Manager Parameter Store.
 
 AWS Simple Email Service (SES) has been configured to enable email notification from JitBit to user’s emails for ticket status, assignment etc.
 AWS Work Mail has been configured as JitBit incoming mailboxes which can be used to open tickets and further communication updates(Currently setup in Ireland region and manually due to limitation in AWS Service offering and Terraform provider).
+Note: Used only for testing purpose, Prod environment will be configured to use Justice mailbox.
 
 ## Logging and Monitoring
 
-Logs will be shipped to AWS Cloudwatch. Dashboards will be configured to show service performance. Alerts will be configured to inform of service degradation.
+Logs are shipped to AWS Cloudwatch. Dashboards will be configured to show service performance. Alerts will be configured to inform of service degradation.
