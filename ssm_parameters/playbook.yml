@@ -1,9 +1,0 @@
----
-- name: SSM Parameters
-  hosts: localhost
-  connection: local
-  vars_files:
-    - ../configs/common-vars.yml
-    - ../configs/credentials-vars.yml
-  roles:
-    - ssm_parameters
