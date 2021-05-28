@@ -15,5 +15,5 @@ data "terraform_remote_state" "common" {
 ### Getting the ad admin password
 #-------------------------------------------------------------
 data "aws_ssm_parameter" "ad_admin_password" {
-  name = "/cr-ancillary/jitbit/ad/admin/password"
+  name = "/${var.environment_name}/jitbit/ad/admin/password"
 }
