@@ -39,7 +39,7 @@ New-SSMAssociation -InstanceId $instance_id -Name "${ssm_adjoin_document_name}"
 Write-Output "------------------------------------"
 Write-Output "Map FSX"
 Write-Output "------------------------------------"
-$ad_admin_password = Get-SSMParameter -Name /cr-ancillary/jitbit/ad/admin/password -WithDecryption $true
+$ad_admin_password = Get-SSMParameter -Name /${common_name}/jitbit/ad/admin/password -WithDecryption $true
 $secpasswd = ConvertTo-SecureString $ad_admin_password.Value -AsPlainText -Force
 $domainusername = "admin"
 $domaincreds = New-Object System.Management.Automation.PSCredential ($domainusername, $secpasswd) 

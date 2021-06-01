@@ -6,6 +6,7 @@ data "template_file" "userdata" {
     filesystem_dns_name      = data.terraform_remote_state.fsx.outputs.fsx.fsx_details["dns_name"]
     config_bucket            = local.config_bucket
     cloudwatch_config        = "cloudwatch/config.json"
+    common_name              = local.common_name
   }
 }
 
