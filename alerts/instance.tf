@@ -27,4 +27,9 @@ resource "aws_cloudwatch_metric_alarm" "iis_httperr" {
 #   ok_actions          = [aws_sns_topic.alarm_notification.arn]
 }
 
-# General Instance check    
+# 
+# Fix insufficent data as metrics not created until first time
+# 
+
+# General Instance check
+

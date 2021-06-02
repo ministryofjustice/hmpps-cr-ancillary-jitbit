@@ -1,0 +1,81 @@
+{
+    "widgets": [
+        {
+            "height": 6,
+            "width": 9,
+            "y": 6,
+            "x": 6,
+            "type": "metric",
+            "properties": {
+                "view": "timeSeries",
+                "stacked": true,
+                "metrics": [
+                    [ "AWS/EC2", "CPUUtilization", "AutoScalingGroupName", "${asg_autoscale_name}" ],
+                    [ "AWS/AutoScaling", "GroupTotalInstances", ".", "." ]
+                ],
+                "region": "${region}",
+                "title": "JitBit"
+            }
+        },
+        {
+            "height": 6,
+            "width": 6,
+            "y": 6,
+            "x": 0,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ "IIS", "cr-jitbit-dev_AppPool", { "region": "eu-west-2" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "${region}",
+                "title": "IIS HttpError",
+                "period": 300,
+                "stat": "SampleCount"
+            }
+        },
+        {
+            "height": 6,
+            "width": 24,
+            "y": 0,
+            "x": 0,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ "AWS/ApplicationELB", "RequestCountPerTarget", "TargetGroup", "${target_group_arn_suffix}" ],
+                    [ ".", "UnHealthyHostCount", ".", ".", "LoadBalancer", "${lb_arn_suffix}" ],
+                    [ ".", "RequestCount", ".", ".", ".", "." ],
+                    [ ".", "HTTPCode_Target_4XX_Count", ".", ".", ".", "." ],
+                    [ ".", "TargetResponseTime", ".", ".", ".", "." ],
+                    [ ".", "RequestCountPerTarget", ".", ".", ".", "." ],
+                    [ ".", "HealthyHostCount", ".", ".", ".", "." ]
+                ],
+                "view": "singleValue",
+                "region": "${region}",
+                "title": "JitBitALB",
+                "period": 300
+            }
+        },
+        {
+            "height": 6,
+            "width": 9,
+            "y": 6,
+            "x": 15,
+            "type": "metric",
+            "properties": {
+                "view": "timeSeries",
+                "stacked": false,
+                "metrics": [
+                    [ "AWS/RDS", "FreeStorageSpace", "DBInstanceIdentifier", "${common_prefix}-db" ],
+                    [ ".", "FreeableMemory", ".", "." ],
+                    [ ".", "CPUUtilization", ".", "." ],
+                    [ ".", "WriteIOPS", ".", "." ],
+                    [ ".", "ReadIOPS", ".", "." ]
+                ],
+                "region": "${region}",
+                "title": "Database"
+            }
+        }
+    ]
+}
