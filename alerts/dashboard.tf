@@ -31,7 +31,7 @@ data "aws_lb" "alb" {
 
 # FSX 
 data "template_file" "fsx_dashboard" {
-  template = file("templates/fsx_dashboard.json")
+  template = file("./files/fsx_dashboard.json")
   vars = {
     region           = var.region
 # TO be fixed
