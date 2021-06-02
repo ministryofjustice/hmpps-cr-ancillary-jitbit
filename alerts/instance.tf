@@ -1,11 +1,11 @@
 # IIS HttpErr log Metrics
 resource "aws_cloudwatch_log_metric_filter" "iis_httperr_metrics" {
-  name           = "IIS_AppPool"
+  name           = "${local.common_name}-IIS-AppPool"
   pattern        = "AppOffline"
   log_group_name = local.common_name
 
   metric_transformation {
-    name      = "AppPool"
+    name      = "${local.common_name}-AppPool"
     namespace = "IIS"
     value     = "1"
   }
@@ -13,10 +13,10 @@ resource "aws_cloudwatch_log_metric_filter" "iis_httperr_metrics" {
 
 # IIS HttpErr Alarm
 resource "aws_cloudwatch_metric_alarm" "iis_httperr" {
-  alarm_name                = "${local.common_name}_AppPool_Offline"
+  alarm_name                = "${local.common_name}-AppPool-Offline"
   comparison_operator       = "GreaterThanThreshold"
   evaluation_periods        = "2"
-  metric_name               = "AppPool"
+  metric_name               = "${local.common_name}-AppPool"
   namespace                 = "IIS"
   period                    = "60"
   statistic                 = "SampleCount"
