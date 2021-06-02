@@ -22,9 +22,9 @@ resource "aws_cloudwatch_metric_alarm" "iis_httperr" {
   statistic                 = "SampleCount"
   threshold                 = "0"
   alarm_description         = "This metric monitors IIS HttpErr"
-
+  treat_missing_data        = "breaching"
 #   alarm_actions       = [aws_sns_topic.alarm_notification.arn]
 #   ok_actions          = [aws_sns_topic.alarm_notification.arn]
 }
 
-# General Instance check 
+# General Instance check    
