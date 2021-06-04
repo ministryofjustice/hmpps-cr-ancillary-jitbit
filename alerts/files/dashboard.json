@@ -86,7 +86,7 @@
             "properties": {
                 "title": "Application Status",
                 "alarms": [
-                    "${apppool_httperr_offline}"
+                    "${app_pool_httperr_offline}"
                 ]
             }
         }
