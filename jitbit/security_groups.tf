@@ -1,7 +1,6 @@
 locals {
   security_group_list = [
     aws_security_group.instance.id,
-    aws_security_group.proxy.id,
     aws_security_group.lb.id
   ]
 }
@@ -37,23 +36,6 @@ resource "aws_security_group" "lb" {
   }
 }
 
-
-resource "aws_security_group" "proxy" {
-  name        = format("%s-proxy-lb", local.common_name)
-  description = "Proxy lb Security Group"
-  vpc_id      = local.vpc_id
-  tags = merge(
-    local.tags,
-    {
-      "Name" = format("%s-proxy-lb", local.common_name)
-    },
-  )
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
 # LB Rules
 resource "aws_security_group_rule" "lb_to_jitbit" {
   security_group_id        = aws_security_group.lb.id
@@ -76,38 +58,6 @@ resource "aws_security_group_rule" "jitbit_from_lb" {
   source_security_group_id = aws_security_group.lb.id
 }
 
-# Proxy
-resource "aws_security_group_rule" "rdp_in" {
-  security_group_id = aws_security_group.proxy.id
-  from_port         = 3389
-  to_port           = 3389
-  protocol          = "tcp"
-  type              = "ingress"
-  description       = "rdp"
-  cidr_blocks       = var.jitbit_admin_cidrs
-}
-
-resource "aws_security_group_rule" "lb_to_rdp" {
-  security_group_id        = aws_security_group.proxy.id
-  from_port                = 3389
-  to_port                  = 3389
-  protocol                 = "tcp"
-  type                     = "egress"
-  description              = "lb to rdp"
-  source_security_group_id = aws_security_group.instance.id
-}
-
-
-resource "aws_security_group_rule" "rdp_from_lb" {
-  security_group_id        = aws_security_group.instance.id
-  from_port                = 3389
-  to_port                  = 3389
-  protocol                 = "tcp"
-  type                     = "ingress"
-  description              = "rdp from lb"
-  source_security_group_id = aws_security_group.proxy.id
-}
-
 # DB Rules
 resource "aws_security_group_rule" "db_out" {
   security_group_id        = aws_security_group.instance.id
@@ -126,27 +76,6 @@ resource "aws_security_group_rule" "db_in" {
   protocol                 = "tcp"
   type                     = "ingress"
   description              = "mssql"
-  source_security_group_id = aws_security_group.instance.id
-}
-
-# Storage rules
-resource "aws_security_group_rule" "samba_out" {
-  security_group_id        = aws_security_group.instance.id
-  from_port                = 445
-  to_port                  = 445
-  protocol                 = "tcp"
-  type                     = "egress"
-  description              = "samba"
-  source_security_group_id = local.samba_security_group_id
-}
-
-resource "aws_security_group_rule" "samba_in" {
-  security_group_id        = local.samba_security_group_id
-  from_port                = 445
-  to_port                  = 445
-  protocol                 = "tcp"
-  type                     = "ingress"
-  description              = "samba"
   source_security_group_id = aws_security_group.instance.id
 }
 
@@ -171,29 +100,40 @@ resource "aws_security_group_rule" "self_out" {
   self              = true
 }
 
-
-# Bastion access
-resource "aws_security_group_rule" "bastion" {
+# SES and WorkMail
+resource "aws_security_group_rule" "jitbit_ses_out" {
   security_group_id = aws_security_group.instance.id
-  type              = "ingress"
-  from_port         = 3389
-  to_port           = 3389
+  from_port         = 465
+  to_port           = 465
   protocol          = "tcp"
-  cidr_blocks       = local.bastion_cidr_ranges
-  description       = "rdp"
+  type              = "egress"
+  description       = "SMTPS to SES for outbound email"
+  cidr_blocks       = ["0.0.0.0/0"]
+  ipv6_cidr_blocks  = ["::/0"]
+}
+
+resource "aws_security_group_rule" "jitbit_work_mail_out" {
+  security_group_id = aws_security_group.instance.id
+  from_port         = 993
+  to_port           = 993
+  protocol          = "tcp"
+  type              = "egress"
+  description       = "IMAPS to Workmail for inbound email"
+  cidr_blocks       = ["0.0.0.0/0"]
+  ipv6_cidr_blocks  = ["::/0"]
 }
 
 # ALb Access
-resource "aws_security_group_rule" "application_access" {
+resource "aws_security_group_rule" "application_access_https" {
   security_group_id = aws_security_group.lb.id
   type              = "ingress"
-  from_port         = 80
-  to_port           = 80
+  from_port         = 443
+  to_port           = 443
   protocol          = "tcp"
-  cidr_blocks       = concat(
+  cidr_blocks = concat(
     local.bastion_public_ip,
     local.env_user_access_cidr_blocks,
     var.jitbit_access_cidrs
   )
-  description       = "Application Access"
+  description = "Application Access - Https"
 }

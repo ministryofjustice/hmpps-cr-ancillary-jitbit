@@ -1,3 +1,15 @@
+data "template_file" "userdata" {
+  template = file("../user_data/jitbit_instance.tpl")
+
+  vars = {
+    ssm_adjoin_document_name = data.terraform_remote_state.fsx.outputs.fsx.ad_details["ssm_ad_auto_join_name"]
+    filesystem_dns_name      = data.terraform_remote_state.fsx.outputs.fsx.fsx_details["dns_name"]
+    config_bucket            = local.config_bucket
+    cloudwatch_config        = "cloudwatch/config.json"
+    common_name              = local.common_name
+  }
+}
+
 resource "aws_launch_configuration" "instance" {
   name_prefix          = format("%s-inst", local.common_name)
   image_id             = local.ami_id
@@ -6,12 +18,13 @@ resource "aws_launch_configuration" "instance" {
   key_name             = local.ssh_deployer_key
   security_groups = [
     data.terraform_remote_state.common.outputs.sg_outbound_id,
-    aws_security_group.instance.id
+    aws_security_group.instance.id,
+    local.fsx_integration_security_group_id
   ]
   associate_public_ip_address = false
-  # user_data                   = data.template_file.userdata.rendered
-  enable_monitoring = true
-  ebs_optimized     = true
+  user_data                   = data.template_file.userdata.rendered
+  enable_monitoring           = true
+  ebs_optimized               = true
 
   root_block_device {
     volume_size = local.jitbit_configs["volume_size"]
