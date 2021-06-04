@@ -38,7 +38,7 @@ resource "aws_lb_target_group" "instance" {
 
   health_check {
     interval            = 30
-    path                = "/"
+    path                = "/User/Login?ReturnUrl=%2f"
     port                = 80
     protocol            = "HTTP"
     timeout             = 5
@@ -61,14 +61,16 @@ resource "aws_lb_target_group" "instance" {
   )
 }
 
-resource "aws_lb_listener" "instance" {
+resource "aws_lb_listener" "instance_https" {
   load_balancer_arn = aws_lb.instance.arn
-  port              = 80
-  protocol          = "HTTP"
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = element(local.public_acm_arn, 0)
 
   default_action {
-    target_group_arn = aws_lb_target_group.instance.arn
     type             = "forward"
+    target_group_arn = aws_lb_target_group.instance.arn
   }
 }
 

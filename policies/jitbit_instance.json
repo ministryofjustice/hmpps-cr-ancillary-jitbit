@@ -5,13 +5,17 @@
       "Sid": "allowLoggingToCloudWatch",
       "Effect": "Allow",
       "Action": [
+        "cloudwatch:PutMetricData",
+        "ec2:DescribeVolumes",
+        "ec2:DescribeTags",
         "logs:CreateLogGroup",
         "logs:CreateLogStream",
         "logs:PutLogEvents",
+        "logs:DescribeLogGroups",
         "logs:DescribeLogStreams"
       ],
       "Resource": [
-        "arn:aws:logs:*:*:*"
+        "*"
       ]
     },
     {
@@ -32,7 +36,9 @@
         "ec2:DescribeAddresses",
         "ec2:AllocateAddress",
         "ec2:DescribeInstances",
-        "ec2:AssociateAddress"
+        "ec2:AssociateAddress",
+        "ec2:DescribeInstanceStatus",
+        "ec2:DescribeTags"
       ],
       "Resource": "*"
     },
@@ -46,7 +52,6 @@
       ],
       "Resource": [
         "arn:aws:ssm:*:*:parameter/cr-ancillary/jitbit/rds/database/jitbit/*",
-        "arn:aws:ssm:*:*:parameter/cr-ancillary/jitbit/samba/share/jitbit/*",
         "arn:aws:ssm:*:*:parameter/cr-ancillary/jitbit/system/common/user/jitbit/*"
       ]
     },
@@ -54,13 +59,24 @@
       "Sid": "allowAccessToS3Buckets",
       "Effect": "Allow",
       "Action": [
+        "s3:DeleteObject",
         "s3:GetObject",
-        "s3:ListBucket"
+        "s3:GetObjectTagging",
+        "s3:ListBucket",
+        "s3:PutObject"
       ],
       "Resource": [
-        "arn:aws:s3:::${storage_bucket_arn}/installers",
-        "arn:aws:s3:::${storage_bucket_arn}/installers/*"
+        "${config_bucket_arn}",
+        "${config_bucket_arn}/*"
       ]
+    },
+    {
+      "Sid": "allowADAutoJoin",
+      "Effect": "Allow",
+      "Action": [
+        "ssm:CreateAssociation"
+      ],
+      "Resource": "*"
     }
   ]
 }

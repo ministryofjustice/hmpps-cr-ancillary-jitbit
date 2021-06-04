@@ -16,7 +16,7 @@ output "database_info" {
     instance_arn          = module.db_instance.this_db_instance_arn
     address               = module.db_instance.this_db_instance_address
     security_group_id     = join("", aws_security_group.rds.*.id)
-    database_ssm_user     = local.database_ssm_user
-    database_ssm_password = local.database_ssm_password
+    database_ssm_user     = data.aws_ssm_parameter.db_user.name
+    database_ssm_password = data.aws_ssm_parameter.db_password.name
   }
 }

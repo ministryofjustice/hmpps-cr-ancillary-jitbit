@@ -12,6 +12,19 @@ data "terraform_remote_state" "common" {
 }
 
 #-------------------------------------------------------------
+### Getting the fsx details
+#-------------------------------------------------------------
+data "terraform_remote_state" "fsx" {
+  backend = "s3"
+
+  config = {
+    bucket = var.remote_state_bucket_name
+    key    = "jitbit/fsx/terraform.tfstate"
+    region = var.region
+  }
+}
+
+#-------------------------------------------------------------
 ### Getting the database details
 #-------------------------------------------------------------
 data "terraform_remote_state" "database" {
