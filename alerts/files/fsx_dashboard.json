@@ -106,7 +106,7 @@
                 "metrics": [
                     [ "AWS/FSx", "FreeStorageCapacity", "FileSystemId", "${filesystemid}", { "id": "m1", "visible": false } ],
                     [ { "id": "e1", "expression": "SUM(METRICS())/PERIOD(m1)*60", "label": "Free storage capacity", "region": "${region}" } ],
-                    [ { "expression": "300000000000-e1", "label": "Used Storage Capacity", "id": "e2", "region": "${region}" } ]
+                    [ { "expression": "30000000000-e1", "label": "Used Storage Capacity", "id": "e2", "region": "${region}" } ]
                 ],
                 "title": "Storage Capacity (GiB)",
                 "view": "timeSeries",
@@ -126,8 +126,8 @@
                 "metrics": [
                     [ "AWS/FSx", "FreeStorageCapacity", "FileSystemId", "${filesystemid}", { "id": "m1", "visible": false } ],
                     [ { "id": "e1", "expression": "SUM(METRICS())/PERIOD(m1)*60", "label": "Free storage capacity", "region": "${region}", "visible": false } ],
-                    [ { "expression": "100*(e2/322122547200)", "label": "Percent Storage Used", "id": "e3", "region": "${region}" } ],
-                    [ { "expression": "322122547200-e1", "label": "Used Storage capacity", "id": "e2", "visible": false, "region": "${region}" } ],
+                    [ { "expression": "100*(e2/32212254720)", "label": "Percent Storage Used", "id": "e3", "region": "${region}" } ],
+                    [ { "expression": "32212254720-e1", "label": "Used Storage capacity", "id": "e2", "visible": false, "region": "${region}" } ],
                     [ { "expression": "100-e3", "label": "Percent Storage Free", "id": "e4", "region": "${region}" } ]
                 ],
                 "title": "Storage (Percent)",
@@ -161,7 +161,7 @@
                 "metrics": [
                     [ "AWS/FSx", "FreeStorageCapacity", "FileSystemId", "${filesystemid}", { "id": "m1", "visible": false } ],
                     [ { "id": "e1", "expression": "SUM(METRICS())/PERIOD(m1)*60", "label": "Free storage capacity", "region": "${region}", "visible": false } ],
-                    [ { "expression": "100*(e2/322122547200)", "label": "Percent Storage Used", "id": "e3", "region": "${region}" } ],
+                    [ { "expression": "100*(e2/32212254720)", "label": "Percent Storage Used", "id": "e3", "region": "${region}" } ],
                     [ { "expression": "322122547200-e1", "label": "Used Storage capacity", "id": "e2", "visible": false, "region": "${region}" } ],
                     [ { "expression": "100-e3", "label": "Percent Storage Free", "id": "e4", "region": "${region}" } ]
                 ],

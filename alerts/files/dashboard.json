@@ -2,7 +2,7 @@
     "widgets": [
         {
             "height": 6,
-            "width": 9,
+            "width": 6,
             "y": 6,
             "x": 6,
             "type": "metric",
@@ -59,9 +59,9 @@
         },
         {
             "height": 6,
-            "width": 9,
+            "width": 6,
             "y": 6,
-            "x": 15,
+            "x": 12,
             "type": "metric",
             "properties": {
                 "view": "timeSeries",
@@ -75,6 +75,19 @@
                 ],
                 "region": "${region}",
                 "title": "Database"
+            }
+        },
+        {
+            "height": 6,
+            "width": 6,
+            "y": 6,
+            "x": 18,
+            "type": "alarm",
+            "properties": {
+                "title": "Application Status",
+                "alarms": [
+                    "${apppool_httperr_offline}"
+                ]
             }
         }
     ]

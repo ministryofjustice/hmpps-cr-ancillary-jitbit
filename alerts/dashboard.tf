@@ -2,13 +2,14 @@
 data "template_file" "dashboard" {
   template = file("./files/dashboard.json")
   vars = {
-    region                  = var.region
+    region                   = var.region
 # TO be fixed
-    asg_autoscale_name      = "cr-jitbit-dev-inst20210601135148702100000001"  
+    asg_autoscale_name       = "cr-jitbit-dev-inst20210601135148702100000001"  
 # TO be fixed
-    common_prefix           = local.common_name
-    lb_arn_suffix           = data.aws_lb.alb.arn_suffix
-    target_group_arn_suffix = data.aws_lb_target_group.target_group.arn_suffix
+    common_prefix            = local.common_name
+    lb_arn_suffix            = data.aws_lb.alb.arn_suffix
+    target_group_arn_suffix  = data.aws_lb_target_group.target_group.arn_suffix
+    app_pool_httperr_offline = aws_cloudwatch_metric_alarm.iis_httperr.name
   }
 }
 
