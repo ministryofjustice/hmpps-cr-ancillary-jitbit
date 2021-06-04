@@ -22,8 +22,8 @@ resource "aws_cloudwatch_metric_alarm" "iis_httperr" {
   statistic           = "SampleCount"
   threshold           = "0"
   alarm_description   = "This metric monitors IIS HttpErr"
-  alarm_actions       = local.sns_alarm_notification_arn
-  ok_actions          = local.sns_alarm_notification_arn
+  alarm_actions       = [local.sns_alarm_notification_arn]
+  ok_actions          = [local.sns_alarm_notification_arn]
 }
 
 # 
