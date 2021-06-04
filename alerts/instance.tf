@@ -13,17 +13,17 @@ resource "aws_cloudwatch_log_metric_filter" "iis_httperr_metrics" {
 
 # IIS HttpErr Alarm
 resource "aws_cloudwatch_metric_alarm" "iis_httperr" {
-  alarm_name                = "${local.common_name}_AppPool_Offline"
-  comparison_operator       = "GreaterThanThreshold"
-  evaluation_periods        = "2"
-  metric_name               = "${local.common_name}_AppPool"
-  namespace                 = "IIS"
-  period                    = "60"
-  statistic                 = "SampleCount"
-  threshold                 = "0"
-  alarm_description         = "This metric monitors IIS HttpErr"
-#   alarm_actions       = [aws_sns_topic.alarm_notification.arn]
-#   ok_actions          = [aws_sns_topic.alarm_notification.arn]
+  alarm_name          = "${local.common_name}_AppPool_Offline--critical"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "${local.common_name}_AppPool"
+  namespace           = "IIS"
+  period              = "60"
+  statistic           = "SampleCount"
+  threshold           = "0"
+  alarm_description   = "This metric monitors IIS HttpErr"
+  alarm_actions       = local.sns_alarm_notification_arn
+  ok_actions          = local.sns_alarm_notification_arn
 }
 
 # 
