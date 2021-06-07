@@ -214,11 +214,6 @@ resource "aws_cloudwatch_metric_alarm" "db_anomalous_connections" {
   comparison_operator = "GreaterThanUpperThreshold"
   evaluation_periods  = 1
   threshold_metric_id = "e1"
-  metric_name         = "DatabaseConnections"
-  namespace           = "AWS/RDS"
-  period              = 300
-  statistic           = "Average"
-  threshold           = 600
   alarm_description   = "Anomalous database connection count detected. Something unusual is happening."
   alarm_actions       = [local.sns_alarm_notification_arn]
   ok_actions          = [local.sns_alarm_notification_arn]
