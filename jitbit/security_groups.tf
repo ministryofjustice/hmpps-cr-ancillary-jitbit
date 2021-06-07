@@ -112,6 +112,17 @@ resource "aws_security_group_rule" "jitbit_ses_out" {
   ipv6_cidr_blocks  = ["::/0"]
 }
 
+resource "aws_security_group_rule" "jitbit_work_mail_out" {
+  security_group_id = aws_security_group.instance.id
+  from_port         = 993
+  to_port           = 993
+  protocol          = "tcp"
+  type              = "egress"
+  description       = "IMAPS to Workmail for inbound email"
+  cidr_blocks       = ["0.0.0.0/0"]
+  ipv6_cidr_blocks  = ["::/0"]
+}
+
 # Justice office365 MailBox
 resource "aws_security_group_rule" "jitbit_office365_out" {
   security_group_id = aws_security_group.instance.id
@@ -120,17 +131,6 @@ resource "aws_security_group_rule" "jitbit_office365_out" {
   protocol          = "tcp"
   type              = "egress"
   description       = "SMTPS to Office365 for outbound email"
-  cidr_blocks       = ["0.0.0.0/0"]
-  ipv6_cidr_blocks  = ["::/0"]
-}
-
-resource "aws_security_group_rule" "jitbit_work_mail_out" {
-  security_group_id = aws_security_group.instance.id
-  from_port         = 993
-  to_port           = 993
-  protocol          = "tcp"
-  type              = "egress"
-  description       = "IMAPS to Workmail for inbound email"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
 }
