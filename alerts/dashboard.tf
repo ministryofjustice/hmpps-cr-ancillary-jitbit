@@ -27,21 +27,3 @@ data "aws_lb_target_group" "target_group" {
 data "aws_lb" "alb" {
   name = "${local.common_name}-lb"
 }
-
-
-
-# FSX 
-data "template_file" "fsx_dashboard" {
-  template = file("./files/fsx_dashboard.json")
-  vars = {
-    region           = var.region
-# TO be fixed
-    filesystemid     = "fs-01eb9318811b3b6e4"
-# TO be fixed
-  }
-}
-
-resource "aws_cloudwatch_dashboard" "fsx" {
-  dashboard_name = "${local.common_name}-monitoring-fsx-filesystem"
-  dashboard_body = data.template_file.fsx_dashboard.rendered
-}

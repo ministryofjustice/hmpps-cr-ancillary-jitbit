@@ -1,3 +1,0 @@
-#  AD
-
-#  FSX Monitor, etc
