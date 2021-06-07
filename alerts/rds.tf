@@ -133,7 +133,7 @@ resource "aws_cloudwatch_metric_alarm" "db_burst_balance" {
   namespace           = "AWS/RDS"
   period              = 300
   statistic           = "Average"
-  threshold           = 100
+  threshold           = 90
   alarm_description   = "Average database storage burst balance is too low, a negative performance impact is imminent."
   alarm_actions       = [local.sns_alarm_notification_arn]
   ok_actions          = [local.sns_alarm_notification_arn]
@@ -156,27 +156,6 @@ resource "aws_cloudwatch_metric_alarm" "db_freeable_memory" {
   statistic           = "Average"
   threshold           = 256000000 //256 MB
   alarm_description   = "Average database freeable memory is too low, performance may be negatively impacted."
-  alarm_actions       = [local.sns_alarm_notification_arn]
-  ok_actions          = [local.sns_alarm_notification_arn]
-
-  dimensions = {
-    DBInstanceIdentifier = local.db_instance_id
-  }
-
-  tags                = local.tags
-}
-
-# SwapUsage - Warning
-resource "aws_cloudwatch_metric_alarm" "db_swap_usage" {
-  alarm_name          = "${local.common_name}_database_swap_usage--warning"
-  comparison_operator = "GreaterThanThreshold"
-  evaluation_periods  = 1
-  metric_name         = "SwapUsage"
-  namespace           = "AWS/RDS"
-  period              = 300
-  statistic           = "Average"
-  threshold           = 256000000 // 256 MB
-  alarm_description   = "Average database swap usage is too high, performance may be negatively impacted."
   alarm_actions       = [local.sns_alarm_notification_arn]
   ok_actions          = [local.sns_alarm_notification_arn]
 
