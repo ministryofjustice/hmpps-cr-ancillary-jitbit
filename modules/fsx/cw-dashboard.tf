@@ -1,6 +1,6 @@
 # FSX 
 data "template_file" "fsx_dashboard" {
-  template = file("./files/fsx_dashboard.json")
+  template = file("${path.module}/files/fsx_dashboard.json")
   vars = {
     region       = var.fsx.region
     filesystemid = aws_fsx_windows_file_system.fsx.id
