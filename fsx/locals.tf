@@ -9,6 +9,7 @@ locals {
     subnet_ids       = tolist([local.private_subnet_ids[0], local.private_subnet_ids[1]])
     tags             = data.terraform_remote_state.common.outputs.tags
     vpc_id           = data.terraform_remote_state.common.outputs.vpc_id
+    region           = var.region
   }
   fsx = {
     active_directory_id                = module.active_directory.active_directory["id"]
