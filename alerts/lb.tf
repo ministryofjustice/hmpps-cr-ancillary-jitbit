@@ -5,7 +5,7 @@ resource "aws_cloudwatch_metric_alarm" "lb_healthy_hosts_less_than_one" {
   evaluation_periods  = 1
   metric_name         = "HealthyHostCount"
   namespace           = "AWS/ELB"
-  period              = 300
+  period              = 60
   statistic           = "Average"
   threshold           = 1
   alarm_description   = "No Healthy Hosts!!! JitBit Application is down"
@@ -13,7 +13,8 @@ resource "aws_cloudwatch_metric_alarm" "lb_healthy_hosts_less_than_one" {
   # ok_actions          = [local.sns_alarm_notification_arn]
 
   dimensions = {
-    LoadBalancerName = local.jitbit["aws_lb_name"]
+    TargetGroup  = local.jitbit["aws_lb_target_group_arn_suffix"]
+    LoadBalancer = local.jitbit["aws_lb_arn_suffix"]
   }
 
   tags                = local.tags
