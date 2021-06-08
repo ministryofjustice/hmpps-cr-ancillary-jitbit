@@ -49,6 +49,7 @@ resource "aws_cloudwatch_metric_alarm" "StatusCheckFailed" {
   namespace           = "AWS/EC2"
   period              = 300
   statistic           = "Average"
+  threshold           = 1
   alarm_description   = "ec2 StatusCheckFailed for JitBit instance"
   alarm_actions       = [local.sns_alarm_notification_arn]
   ok_actions          = [local.sns_alarm_notification_arn]
