@@ -51,8 +51,8 @@ resource "aws_cloudwatch_metric_alarm" "jitbit" {
   statistic           = "Minimum"
   threshold           = "1"
   alarm_description   = "Route53 health check status for ${local.jitbit["aws_route53_record_name"]}"
-  alarm_actions       = [local.sns_alarm_notification_arn]
-  ok_actions          = [local.sns_alarm_notification_arn]
+  # alarm_actions       = [local.sns_alarm_notification_arn]
+  # ok_actions          = [local.sns_alarm_notification_arn]
 
   dimensions = {
     HealthCheckId = aws_route53_health_check.jitbit.id
