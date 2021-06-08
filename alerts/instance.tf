@@ -72,8 +72,8 @@ resource "aws_cloudwatch_metric_alarm" "MemoryUtilization_critical" {
   statistic           = "Average"
   threshold           = 85
   alarm_description   = "Memory Utilization is averaging 85% for JitBit Instance."
-  alarm_actions       = [local.sns_alarm_notification_arn]
-  ok_actions          = [local.sns_alarm_notification_arn]
+  # alarm_actions       = [local.sns_alarm_notification_arn]
+  # ok_actions          = [local.sns_alarm_notification_arn]
 
   dimensions = {
     AutoScalingGroupName = local.jitbit["autoscaling_group_name"]
@@ -94,8 +94,8 @@ resource "aws_cloudwatch_metric_alarm" "MemoryUtilization_warning" {
   statistic           = "Average"
   threshold           = 70
   alarm_description   = "Memory Utilization is averaging 70% for JitBit Instance."
-  alarm_actions       = [local.sns_alarm_notification_arn]
-  ok_actions          = [local.sns_alarm_notification_arn]
+  # alarm_actions       = [local.sns_alarm_notification_arn]
+  # ok_actions          = [local.sns_alarm_notification_arn]
 
   dimensions = {
     AutoScalingGroupName = local.jitbit["autoscaling_group_name"]
@@ -116,8 +116,8 @@ resource "aws_cloudwatch_metric_alarm" "free_disk_space_C_critical" {
   statistic           = "Average"
   threshold           = 5
   alarm_description   = "C: Drive Free Space is less than 5% on JitBit Instance."
-  alarm_actions       = [local.sns_alarm_notification_arn]
-  ok_actions          = [local.sns_alarm_notification_arn]
+  # alarm_actions       = [local.sns_alarm_notification_arn]
+  # ok_actions          = [local.sns_alarm_notification_arn]
 
   dimensions = {
     instance             = "C:"
@@ -139,8 +139,8 @@ resource "aws_cloudwatch_metric_alarm" "free_disk_space_C_warning" {
   statistic           = "Average"
   threshold           = 25
   alarm_description   = "C: Drive Free Space is less than 25% on JitBit Instance."
-  alarm_actions       = [local.sns_alarm_notification_arn]
-  ok_actions          = [local.sns_alarm_notification_arn]
+  # alarm_actions       = [local.sns_alarm_notification_arn]
+  # ok_actions          = [local.sns_alarm_notification_arn]
 
   dimensions = {
     instance             = "C:"
