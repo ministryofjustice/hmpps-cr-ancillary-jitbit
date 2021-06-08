@@ -36,7 +36,7 @@ resource "aws_route53_health_check" "jitbit" {
   type              = "HTTPS"
   resource_path     = "/User/Login"
   failure_threshold = 3
-  request_interval  = 300
+  request_interval  = 30
   regions           = ["us-east-1", "eu-west-1", "ap-southeast-1"]
   tags              = local.tags
 }
