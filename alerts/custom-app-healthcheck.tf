@@ -22,7 +22,7 @@ resource "aws_cloudwatch_metric_alarm" "iis_httperr" {
   metric_name         = "${local.common_name}_AppPool"
   namespace           = "IIS"
   period              = "60"
-  statistic           = "SampleCount"
+  statistic           = "Average"
   threshold           = "0"
   alarm_description   = "This metric monitors IIS HttpErr"
   alarm_actions       = [local.sns_alarm_notification_arn]
