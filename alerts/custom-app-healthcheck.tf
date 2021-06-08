@@ -29,7 +29,8 @@ resource "aws_cloudwatch_metric_alarm" "iis_httperr" {
 }
 
 # Endpoint HealthCheck using Route53
-/*
+# London Region not support yet, so metrics are not yet publised, can be enabled at later stage
+/* 
 resource "aws_route53_health_check" "jitbit" {
   fqdn              = local.jitbit["aws_route53_record_name"]
   port              = 443
