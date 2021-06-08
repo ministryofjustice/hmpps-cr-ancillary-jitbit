@@ -29,6 +29,7 @@ resource "aws_cloudwatch_metric_alarm" "iis_httperr" {
 }
 
 # Endpoint HealthCheck using Route53
+/*
 resource "aws_route53_health_check" "jitbit" {
   fqdn              = local.jitbit["aws_route53_record_name"]
   port              = 443
@@ -59,3 +60,4 @@ resource "aws_cloudwatch_metric_alarm" "jitbit" {
 
   tags                = local.tags
 }
+*/
