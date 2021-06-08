@@ -6,9 +6,10 @@ resource "aws_cloudwatch_log_metric_filter" "iis_httperr_metrics" {
   log_group_name = local.common_name
 
   metric_transformation {
-    name      = "${local.common_name}_AppPool"
-    namespace = "IIS"
-    value     = "1"
+    name          = "${local.common_name}_AppPool"
+    namespace     = "IIS"
+    value         = 1
+    default_value = 0
   }
 }
 
