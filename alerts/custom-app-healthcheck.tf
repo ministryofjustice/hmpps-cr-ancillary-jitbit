@@ -28,3 +28,35 @@ resource "aws_cloudwatch_metric_alarm" "iis_httperr" {
   ok_actions          = [local.sns_alarm_notification_arn]
   tags                = local.tags
 }
+
+# Endpoint HealthCheck using Route53
+resource "aws_route53_health_check" "jitbit" {
+  fqdn              = local.jitbit["aws_route53_record_name"]
+  port              = 443
+  type              = "HTTPS"
+  resource_path     = "/User/Login"
+  failure_threshold = 3
+  request_interval  = 30
+  regions           = ["us-east-1", "eu-west-1", "ap-southeast-1"]
+  tags              = local.tags
+}
+
+resource "aws_cloudwatch_metric_alarm" "jitbit" {
+  alarm_name          = "${local.common_name}_jitbit_endpoint_status--critical"
+  comparison_operator = "LessThanThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "HealthCheckStatus"
+  namespace           = "AWS/Route53"
+  period              = "60"
+  statistic           = "Minimum"
+  threshold           = "1"
+  alarm_description   = "Route53 health check status for ${local.jitbit["aws_route53_record_name"]}"
+  alarm_actions       = [local.sns_alarm_notification_arn]
+  ok_actions          = [local.sns_alarm_notification_arn]
+
+  dimensions = {
+    HealthCheckId = aws_route53_health_check.jitbit.id
+  }
+
+  tags                = local.tags
+}

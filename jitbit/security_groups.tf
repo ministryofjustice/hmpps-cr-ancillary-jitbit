@@ -145,7 +145,11 @@ resource "aws_security_group_rule" "application_access_https" {
   cidr_blocks = concat(
     local.bastion_public_ip,
     local.env_user_access_cidr_blocks,
-    var.jitbit_access_cidrs
+    var.jitbit_access_cidrs,
+    var.jitbit_route53_healthcheck_access_cidrs
+  )
+  ipv6_cidr_blocks  = concat(
+    var.jitbit_route53_healthcheck_access_ipv6_cidrs
   )
   description = "Application Access - Https"
 }
