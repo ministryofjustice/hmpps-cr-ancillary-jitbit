@@ -1,5 +1,4 @@
 # IIS HttpErr log Metrics
-# Note: Metrics wont be created unless an entry exists on the first time deployment
 resource "aws_cloudwatch_log_metric_filter" "iis_httperr_metrics" {
   name           = "${local.common_name}_IIS_AppPool"
   pattern        = "AppOffline"
@@ -14,7 +13,6 @@ resource "aws_cloudwatch_log_metric_filter" "iis_httperr_metrics" {
 }
 
 # IIS HttpErr Alarm
-# Alarm remains in Insufficent data as metrics not created until first time
 resource "aws_cloudwatch_metric_alarm" "iis_httperr" {
   alarm_name          = "${local.common_name}_AppPool_Offline--critical"
   comparison_operator = "GreaterThanThreshold"
@@ -52,8 +50,8 @@ resource "aws_cloudwatch_metric_alarm" "jitbit" {
   statistic           = "Minimum"
   threshold           = "1"
   alarm_description   = "Route53 health check status for ${local.jitbit["aws_route53_record_name"]}"
-  # alarm_actions       = [local.sns_alarm_notification_arn]
-  # ok_actions          = [local.sns_alarm_notification_arn]
+  alarm_actions       = [local.sns_alarm_notification_arn]
+  ok_actions          = [local.sns_alarm_notification_arn]
 
   dimensions = {
     HealthCheckId = aws_route53_health_check.jitbit.id
