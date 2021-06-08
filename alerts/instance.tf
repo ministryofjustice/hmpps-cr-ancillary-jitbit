@@ -78,9 +78,6 @@ resource "aws_cloudwatch_metric_alarm" "MemoryUtilization_critical" {
   dimensions = {
     AutoScalingGroupName = local.jitbit["autoscaling_group_name"]
     objectname           = "Memory"
-    InstanceType         = "*"
-    InstanceId           = "*"
-    ImageId              = "*"
   }
 
   tags                = local.tags
@@ -103,9 +100,6 @@ resource "aws_cloudwatch_metric_alarm" "MemoryUtilization_warning" {
   dimensions = {
     AutoScalingGroupName = local.jitbit["autoscaling_group_name"]
     objectname           = "Memory"
-    InstanceType         = "*"
-    InstanceId           = "*"
-    ImageId              = "*"
   }
 
   tags                = local.tags
@@ -129,9 +123,6 @@ resource "aws_cloudwatch_metric_alarm" "free_disk_space_C_critical" {
     instance             = "C:"
     AutoScalingGroupName = local.jitbit["autoscaling_group_name"]
     objectname           = "LogicalDisk"
-    InstanceType         = "*"
-    InstanceId           = "*"
-    ImageId              = "*"
   }
 
   tags                = local.tags
@@ -155,9 +146,6 @@ resource "aws_cloudwatch_metric_alarm" "free_disk_space_C_warning" {
     instance             = "C:"
     AutoScalingGroupName = local.jitbit["autoscaling_group_name"]
     objectname           = "LogicalDisk"
-    InstanceType         = "*"
-    InstanceId           = "*"
-    ImageId              = "*"
   }
 
   tags                = local.tags
