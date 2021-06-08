@@ -19,23 +19,23 @@ resource "aws_security_group" "fsx_integration" {
 }
 
 resource "aws_security_group_rule" "mis_fsx_integration_ingress_all_local_sg" {
-  type                     = "ingress"
-  from_port                = 0
-  to_port                  = 0
-  protocol                 = -1
-  security_group_id        = aws_security_group.fsx_integration.id
-  self                     = true
-  description              = "ingress internal security group traffic"
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = -1
+  security_group_id = aws_security_group.fsx_integration.id
+  self              = true
+  description       = "ingress internal security group traffic"
 }
 
 resource "aws_security_group_rule" "mis_fsx_integration_egress_all_local_sg" {
-  type                     = "egress"
-  from_port                = 0
-  to_port                  = 0
-  protocol                 = -1
-  security_group_id        = aws_security_group.fsx_integration.id
-  self                     = true
-  description              = "egress internal security group traffic"
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = -1
+  security_group_id = aws_security_group.fsx_integration.id
+  self              = true
+  description       = "egress internal security group traffic"
 }
 
 resource "aws_security_group_rule" "fsx_integration_sg_ingress_from_fsx_sg" {

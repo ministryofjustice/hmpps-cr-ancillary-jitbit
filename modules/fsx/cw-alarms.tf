@@ -27,7 +27,7 @@ resource "aws_cloudwatch_metric_alarm" "fsx_filesystem_critical" {
   period                    = "120"
   statistic                 = "Average"
   threshold                 = "3221225472" // 3GB
-  alarm_actions             =[var.fsx.sns_alarm_notification_arn]
+  alarm_actions             = [var.fsx.sns_alarm_notification_arn]
   ok_actions                = [var.fsx.sns_alarm_notification_arn]
   alarm_description         = "FSx Filesystem Free Storage Capacity is less than 10% (3GB)"
   insufficient_data_actions = []

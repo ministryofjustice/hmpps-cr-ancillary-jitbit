@@ -15,8 +15,8 @@ resource "aws_cloudwatch_metric_alarm" "db_cpu_critical" {
   dimensions = {
     DBInstanceIdentifier = local.db_instance_id
   }
-  
-  tags                = local.tags
+
+  tags = local.tags
 }
 
 # CPU Utilization - Warning
@@ -37,7 +37,7 @@ resource "aws_cloudwatch_metric_alarm" "db_cpu_warning" {
     DBInstanceIdentifier = local.db_instance_id
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
 
 # CPUCreditBalance - Warning
@@ -58,7 +58,7 @@ resource "aws_cloudwatch_metric_alarm" "db_cpu_credit_balance" {
     DBInstanceIdentifier = local.db_instance_id
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
 
 # DiskQueueDepth - Warning
@@ -79,7 +79,7 @@ resource "aws_cloudwatch_metric_alarm" "db_disk_queue_depth" {
     DBInstanceIdentifier = local.db_instance_id
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
 
 # FreeStorageSpace - Critical
@@ -100,7 +100,7 @@ resource "aws_cloudwatch_metric_alarm" "db_free_storage_space_critical" {
     DBInstanceIdentifier = local.db_instance_id
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
 
 # FreeStorageSpace - Warning
@@ -121,7 +121,7 @@ resource "aws_cloudwatch_metric_alarm" "db_free_storage_space_warning" {
     DBInstanceIdentifier = local.db_instance_id
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
 
 # BurstBalance - Warning
@@ -142,7 +142,7 @@ resource "aws_cloudwatch_metric_alarm" "db_burst_balance" {
     DBInstanceIdentifier = local.db_instance_id
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
 
 # FreeableMemory - Warning
@@ -163,7 +163,7 @@ resource "aws_cloudwatch_metric_alarm" "db_freeable_memory" {
     DBInstanceIdentifier = local.db_instance_id
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
 
 # DatabaseConnections - Warning
@@ -184,7 +184,7 @@ resource "aws_cloudwatch_metric_alarm" "db_connections" {
     DBInstanceIdentifier = local.db_instance_id
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
 
 # DatabaseConnections anomalous - Critical
@@ -220,5 +220,5 @@ resource "aws_cloudwatch_metric_alarm" "db_anomalous_connections" {
     }
   }
 
-  tags                = local.tags
+  tags = local.tags
 }

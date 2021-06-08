@@ -16,7 +16,7 @@ resource "aws_cloudwatch_metric_alarm" "CPUUtilization_critical" {
     AutoScalingGroupName = local.jitbit["autoscaling_group_name"]
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
 
 # CPU Utilization - Warning
@@ -37,7 +37,7 @@ resource "aws_cloudwatch_metric_alarm" "CPUUtilization_warning" {
     AutoScalingGroupName = local.jitbit["autoscaling_group_name"]
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
 
 # Instance Status Failed - Critical
@@ -58,7 +58,7 @@ resource "aws_cloudwatch_metric_alarm" "StatusCheckFailed" {
     AutoScalingGroupName = local.jitbit["autoscaling_group_name"]
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
 
 # Memory Utilization - Critical
@@ -80,7 +80,7 @@ resource "aws_cloudwatch_metric_alarm" "MemoryUtilization_critical" {
     objectname           = "Memory"
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
 
 # Memory Utilization - Warning
@@ -102,7 +102,7 @@ resource "aws_cloudwatch_metric_alarm" "MemoryUtilization_warning" {
     objectname           = "Memory"
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
 
 #  Drive Space - Critical
@@ -125,7 +125,7 @@ resource "aws_cloudwatch_metric_alarm" "free_disk_space_C_critical" {
     objectname           = "LogicalDisk"
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
 
 #  Drive Space - Warning
@@ -148,5 +148,5 @@ resource "aws_cloudwatch_metric_alarm" "free_disk_space_C_warning" {
     objectname           = "LogicalDisk"
   }
 
-  tags                = local.tags
+  tags = local.tags
 }

@@ -17,5 +17,5 @@ resource "aws_cloudwatch_metric_alarm" "lb_healthy_hosts_less_than_one" {
     LoadBalancer = local.jitbit["aws_lb_arn_suffix"]
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
