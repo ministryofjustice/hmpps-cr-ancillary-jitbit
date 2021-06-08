@@ -118,7 +118,7 @@ resource "aws_security_group_rule" "jitbit_work_mail_out" {
   to_port           = 993
   protocol          = "tcp"
   type              = "egress"
-  description       = "IMAPS to Workmail for inbound email"
+  description       = "IMAPS to Workmail/Office365 for inbound email"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
 }
