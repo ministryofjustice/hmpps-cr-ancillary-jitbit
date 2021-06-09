@@ -25,19 +25,6 @@ data "terraform_remote_state" "fsx" {
 }
 
 #-------------------------------------------------------------
-### Getting the samba details
-#-------------------------------------------------------------
-data "terraform_remote_state" "samba" {
-  backend = "s3"
-
-  config = {
-    bucket = var.remote_state_bucket_name
-    key    = "jitbit/samba/terraform.tfstate"
-    region = var.region
-  }
-}
-
-#-------------------------------------------------------------
 ### Getting the database details
 #-------------------------------------------------------------
 data "terraform_remote_state" "database" {

@@ -118,7 +118,19 @@ resource "aws_security_group_rule" "jitbit_work_mail_out" {
   to_port           = 993
   protocol          = "tcp"
   type              = "egress"
-  description       = "IMAPS to Workmail for inbound email"
+  description       = "IMAPS to Workmail/Office365 for inbound email"
+  cidr_blocks       = ["0.0.0.0/0"]
+  ipv6_cidr_blocks  = ["::/0"]
+}
+
+# Justice office365 MailBox
+resource "aws_security_group_rule" "jitbit_office365_out" {
+  security_group_id = aws_security_group.instance.id
+  from_port         = 587
+  to_port           = 587
+  protocol          = "tcp"
+  type              = "egress"
+  description       = "SMTPS to Office365 for outbound email"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
 }
@@ -133,7 +145,11 @@ resource "aws_security_group_rule" "application_access_https" {
   cidr_blocks = concat(
     local.bastion_public_ip,
     local.env_user_access_cidr_blocks,
-    var.jitbit_access_cidrs
+    var.jitbit_access_cidrs,
+    var.jitbit_route53_healthcheck_access_cidrs
+  )
+  ipv6_cidr_blocks = concat(
+    var.jitbit_route53_healthcheck_access_ipv6_cidrs
   )
   description = "Application Access - Https"
 }

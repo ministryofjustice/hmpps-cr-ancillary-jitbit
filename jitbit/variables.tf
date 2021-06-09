@@ -61,6 +61,16 @@ variable "jitbit_access_cidrs" {
   default = []
 }
 
+variable "jitbit_route53_healthcheck_access_cidrs" {
+  type    = list
+  default = []
+}
+
+variable "jitbit_route53_healthcheck_access_ipv6_cidrs" {
+  type    = list
+  default = []
+}
+
 variable "bastion_remote_state_bucket_name" {
   description = "Terraform remote state bucket name for Bastion VPC"
 }

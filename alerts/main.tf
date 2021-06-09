@@ -12,6 +12,32 @@ data "terraform_remote_state" "common" {
 }
 
 #-------------------------------------------------------------
+### Getting the database details
+#-------------------------------------------------------------
+data "terraform_remote_state" "database" {
+  backend = "s3"
+
+  config = {
+    bucket = var.remote_state_bucket_name
+    key    = "jitbit/database/terraform.tfstate"
+    region = var.region
+  }
+}
+
+#-------------------------------------------------------------
+### Getting the JitBit details
+#-------------------------------------------------------------
+data "terraform_remote_state" "jitbit" {
+  backend = "s3"
+
+  config = {
+    bucket = var.remote_state_bucket_name
+    key    = "jitbit/jitbit/terraform.tfstate"
+    region = var.region
+  }
+}
+
+#-------------------------------------------------------------
 ### Getting the Monitoring details
 #-------------------------------------------------------------
 data "terraform_remote_state" "monitoring" {
@@ -22,11 +48,4 @@ data "terraform_remote_state" "monitoring" {
     key    = "monitoring/terraform.tfstate"
     region = var.region
   }
-}
-
-#-------------------------------------------------------------
-### Getting the ad admin password
-#-------------------------------------------------------------
-data "aws_ssm_parameter" "ad_admin_password" {
-  name = "/${var.environment_name}/jitbit/ad/admin/password"
 }
