@@ -36,3 +36,16 @@ jitbit_route53_healthcheck_access_ipv6_cidrs = [
   "2600:1f18:7fff:f800::/53",   # us-east-1 Region
   "2600:1f18:3fff:f800::/53",   # us-east-1 Region
 ]
+
+# @justice.gov.uk email address (ssm name allows only .-_on the name)
+mail_account = [
+  "dtv.office",
+  "dtv.oakwood",
+  "dtv.external",
+  "dtv.ttg",
+  "dtv.recalls",
+  "dtv.precons",
+  "dtv.programmes",
+  "dtv.secureinfo",
+  "dtv.iom",
+]
