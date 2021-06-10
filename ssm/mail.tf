@@ -39,7 +39,7 @@ resource "aws_ssm_parameter" "workmail_office_user_name" {
 }
 
 resource "aws_ssm_parameter" "office365_user_password" {
-  count       = lenght(var.mail_account) && var.common_name == "cr-jitbit-prod" ? 1 : 0
+  count       = lenght(var.mail_account) && local.common_name == "cr-jitbit-prod" ? 1 : 0
   name        = "/${local.common_name}/jitbit/office365/${var.mail_account[count.index]}/user/password"
   description = "JITBIT office365 ${var.mail_account[count.index]} User Password"
   type        = "SecureString"
