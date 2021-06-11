@@ -77,6 +77,14 @@
         "ssm:CreateAssociation"
       ],
       "Resource": "*"
+    },
+    {
+      "Sid": "allowDescribeFSx",
+      "Effect": "Allow",
+      "Action": [
+        " fsx:DescribeFileSystems"
+      ],
+      "Resource": "*"
     }
   ]
 }
