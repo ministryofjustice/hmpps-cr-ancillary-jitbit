@@ -82,7 +82,7 @@
       "Sid": "allowDescribeFSx",
       "Effect": "Allow",
       "Action": [
-        " fsx:DescribeFileSystems"
+        "fsx:DescribeFileSystems"
       ],
       "Resource": "*"
     }
