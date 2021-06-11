@@ -39,9 +39,13 @@ New-SSMAssociation -InstanceId $instance_id -Name "${ssm_adjoin_document_name}"
 Write-Output "------------------------------------"
 Write-Output "Map FSX"
 Write-Output "------------------------------------"
-$ad_admin_password = Get-SSMParameter -Name /${common_name}/jitbit/ad/admin/password -WithDecryption $true
-$secpasswd = ConvertTo-SecureString $ad_admin_password.Value -AsPlainText -Force
-$domainusername = "admin"
+
+$ad_username = Get-SSMParameter -Name /${common_name}/jitbit/ad/service_account/username
+$ad_password = Get-SSMParameter -Name /${common_name}/jitbit/ad/service_account/password -WithDecryption $true
+
+$domainusername = ConvertTo-SecureString $ad_username.Value -AsPlainText -Force
+$secpasswd = ConvertTo-SecureString $ad_password.Value -AsPlainText -Force
+
 $domaincreds = New-Object System.Management.Automation.PSCredential ($domainusername, $secpasswd) 
 
 New-SmbGlobalMapping -RemotePath "\\${filesystem_dns_name}\Share" -Persistent $true -Credential $domaincreds -LocalPath D:
