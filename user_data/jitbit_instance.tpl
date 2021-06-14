@@ -61,7 +61,10 @@ Remove-IISSite -Name "Default Web Site" -Confirm:$false -Verbose
 
 Copy-S3Object -BucketName "${config_bucket}" -KeyPrefix installers\HelpDesk -LocalFolder C:\inetpub\wwwroot\HelpDesk
 
-New-IISSite -Name "JitBit" -PhysicalPath "C:\inetpub\wwwroot\HelpDesk" -BindingInformation "*:80:"
+New-SelfSignedCertificate -DnsName localhost -CertStoreLocation cert:\LocalMachine\My -NotAfter (Get-Date).AddYears(3)
+$cert = (Get-ChildItem cert:\LocalMachine\My | where-object { $_.Subject -like "*localhost*" } | Select-Object -First 1).Thumbprint
+
+New-IISSite -Name "JitBit" -PhysicalPath "C:\inetpub\wwwroot\HelpDesk" -BindingInformation "*:443:" -CertificateThumbPrint $cert -CertStoreLocation "Cert:\LocalMachine\My" -Protocol https
 
 Write-Output "------------------------------------"
 Write-Output "Install & Config Cloudwatch"

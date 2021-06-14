@@ -30,8 +30,8 @@ resource "aws_lb" "instance" {
 
 resource "aws_lb_target_group" "instance" {
   name                 = format("%s-tg", local.common_name)
-  port                 = 80
-  protocol             = "HTTP"
+  port                 = 443
+  protocol             = "tcp"
   vpc_id               = local.vpc_id
   deregistration_delay = 60
   target_type          = "instance"
@@ -39,8 +39,8 @@ resource "aws_lb_target_group" "instance" {
   health_check {
     interval            = 30
     path                = "/User/Login?ReturnUrl=%2f"
-    port                = 80
-    protocol            = "HTTP"
+    port                = 443
+    protocol            = "tcp"
     timeout             = 5
     healthy_threshold   = 3
     unhealthy_threshold = 3

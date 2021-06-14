@@ -39,8 +39,8 @@ resource "aws_security_group" "lb" {
 # LB Rules
 resource "aws_security_group_rule" "lb_to_jitbit" {
   security_group_id        = aws_security_group.lb.id
-  from_port                = 80
-  to_port                  = 80
+  from_port                = 443
+  to_port                  = 443
   protocol                 = "tcp"
   type                     = "egress"
   description              = "lb to jitbit"
@@ -50,8 +50,8 @@ resource "aws_security_group_rule" "lb_to_jitbit" {
 
 resource "aws_security_group_rule" "jitbit_from_lb" {
   security_group_id        = aws_security_group.instance.id
-  from_port                = 80
-  to_port                  = 80
+  from_port                = 443
+  to_port                  = 443
   protocol                 = "tcp"
   type                     = "ingress"
   description              = "jitbit from lb"
