@@ -7,7 +7,7 @@ variable "remote_state_bucket_name" {
 }
 
 variable "cr_jitbit_configs" {
-  type = map
+  type = map(any)
   default = {
     cookie_duration           = "3600"
     system_ssm_user           = "/cr-ancillary/jitbit/system/common/user/jitbit/user"
@@ -29,7 +29,7 @@ variable "cr_jitbit_configs" {
 }
 
 variable "cr_jitbit_overrides" {
-  type    = map
+  type    = map(any)
   default = {}
 }
 
@@ -52,22 +52,22 @@ variable "enabled_metrics" {
 }
 
 variable "jitbit_admin_cidrs" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
 variable "jitbit_access_cidrs" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
 variable "jitbit_route53_healthcheck_access_cidrs" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
 variable "jitbit_route53_healthcheck_access_ipv6_cidrs" {
-  type    = list
+  type    = list(any)
   default = []
 }
 
