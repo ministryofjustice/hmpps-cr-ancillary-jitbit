@@ -39,9 +39,13 @@ New-SSMAssociation -InstanceId $instance_id -Name "${ssm_adjoin_document_name}"
 Write-Output "------------------------------------"
 Write-Output "Map FSX"
 Write-Output "------------------------------------"
-$ad_admin_password = Get-SSMParameter -Name /${common_name}/jitbit/ad/admin/password -WithDecryption $true
-$secpasswd = ConvertTo-SecureString $ad_admin_password.Value -AsPlainText -Force
-$domainusername = "admin"
+
+$ad_username = Get-SSMParameter -Name /${common_name}/jitbit/ad/service_account/username
+$ad_password = Get-SSMParameter -Name /${common_name}/jitbit/ad/service_account/password -WithDecryption $true
+
+$domainusername = ConvertTo-SecureString $ad_username.Value -AsPlainText -Force
+$secpasswd = ConvertTo-SecureString $ad_password.Value -AsPlainText -Force
+
 $domaincreds = New-Object System.Management.Automation.PSCredential ($domainusername, $secpasswd) 
 
 New-SmbGlobalMapping -RemotePath "\\${filesystem_dns_name}\Share" -Persistent $true -Credential $domaincreds -LocalPath D:
@@ -57,7 +61,10 @@ Remove-IISSite -Name "Default Web Site" -Confirm:$false -Verbose
 
 Copy-S3Object -BucketName "${config_bucket}" -KeyPrefix installers\HelpDesk -LocalFolder C:\inetpub\wwwroot\HelpDesk
 
-New-IISSite -Name "JitBit" -PhysicalPath "C:\inetpub\wwwroot\HelpDesk" -BindingInformation "*:80:"
+New-SelfSignedCertificate -DnsName localhost -CertStoreLocation cert:\LocalMachine\My -NotAfter (Get-Date).AddYears(3)
+$cert = (Get-ChildItem cert:\LocalMachine\My | where-object { $_.Subject -like "*localhost*" } | Select-Object -First 1).Thumbprint
+
+New-IISSite -Name "JitBit" -PhysicalPath "C:\inetpub\wwwroot\HelpDesk" -BindingInformation "*:443:" -CertificateThumbPrint $cert -CertStoreLocation "Cert:\LocalMachine\My" -Protocol https
 
 Write-Output "------------------------------------"
 Write-Output "Install & Config Cloudwatch"
