@@ -51,22 +51,22 @@ variable "enabled_metrics" {
   ]
 }
 
-variable "jitbit_admin_cidrs" {
+variable "cr_ancillary_admin_cidrs" {
   type    = list(any)
   default = []
 }
 
-variable "jitbit_access_cidrs" {
+variable "cr_ancillary_access_cidrs" {
   type    = list(any)
   default = []
 }
 
-variable "jitbit_route53_healthcheck_access_cidrs" {
+variable "cr_ancillary_route53_healthcheck_access_cidrs" {
   type    = list(any)
   default = []
 }
 
-variable "jitbit_route53_healthcheck_access_ipv6_cidrs" {
+variable "cr_ancillary_route53_healthcheck_access_ipv6_cidrs" {
   type    = list(any)
   default = []
 }
@@ -77,8 +77,4 @@ variable "bastion_remote_state_bucket_name" {
 
 variable "bastion_role_arn" {
   description = "role to access bastion terraform state"
-}
-
-variable "env_user_access_cidr_blocks" {
-  type = list(string)
 }
