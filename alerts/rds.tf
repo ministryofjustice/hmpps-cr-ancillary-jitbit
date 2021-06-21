@@ -199,7 +199,7 @@ resource "aws_cloudwatch_metric_alarm" "db_anomalous_connections" {
 
   metric_query {
     id          = "e1"
-    expression  = "ANOMALY_DETECTION_BAND(m1, 10)"
+    expression  = "ANOMALY_DETECTION_BAND(m1, 50)"
     label       = "DatabaseConnections (Expected)"
     return_data = "true"
   }
