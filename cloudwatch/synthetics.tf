@@ -1,6 +1,6 @@
 module "synthetics" {
   source = "../modules/synthetics"
 
-  common_name     = local.common_name
-  healthchech_url = local.jitbit["aws_route53_record_name"]
+  common_name      = local.common_name
+  health_check_url = local.health_check_url
 }
