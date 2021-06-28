@@ -1,5 +1,5 @@
-variable "common" {
-  description = "Holds configuration details"
+variable "common_name" {
+  description = "common name used in reference to create resources"
 }
 
 variable "healthchech_url" {
