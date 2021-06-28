@@ -10,3 +10,10 @@ resource "aws_s3_bucket_object" "cloudwatch_config" {
   key     = "/cloudwatch/config.json"
   content = data.template_file.cloudwatch_config.rendered
 }
+
+# synthetics screenshot location
+resource "aws_s3_bucket_object" "synthetics" {
+  bucket = local.common_name
+  key    = "synthetics/"
+  source = "/dev/null"
+}

@@ -5,3 +5,7 @@ variable "common_name" {
 variable "health_check_url" {
   description = "healthcheck endpoint"
 }
+
+variable "artifact_s3_location" {
+  description = "synthetics artifact location"
+}
