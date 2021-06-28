@@ -2,7 +2,7 @@
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "Allow publish cloudwatch metrics",
+            "Sid": "Allowpublishcloudwatchmetrics",
             "Effect": "Allow",
             "Action": "cloudwatch:PutMetricData",
             "Resource": "*",
@@ -13,7 +13,7 @@
             }
         },
         {
-            "Sid": "Allow for permission for deployment of Lambda within VPC and S3 access",
+            "Sid": "AllowdeploymentLambdawithVPCS3",
             "Effect": "Allow",
             "Action": [
                 "ec2:CreateNetworkInterface",
@@ -26,7 +26,7 @@
             "Resource": "*"
         },
         {
-            "Sid": "Allow permission lambda to create logs and access S3 bucket",
+            "Sid": "AllowlambdalogsS3",
             "Effect": "Allow",
             "Action": [
                 "logs:CreateLogStream",
