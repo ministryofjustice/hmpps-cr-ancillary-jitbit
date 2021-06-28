@@ -4,7 +4,7 @@ from aws_synthetics.common import synthetics_logger as logger
 
 def main():
     
-    url = "${health_check_url}"
+    url = "https://${health_check_url}"
 
     # Set screenshot option
     takeScreenshot = True
