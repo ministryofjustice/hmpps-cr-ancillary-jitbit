@@ -7,6 +7,6 @@ resource "aws_synthetics_canary" "synthetics" {
   runtime_version      = "syn-python-selenium-1.0"
 
   schedule {
-    expression = "rate(15 minute)"
+    expression = "rate(15 minutes)"
   }
 }
