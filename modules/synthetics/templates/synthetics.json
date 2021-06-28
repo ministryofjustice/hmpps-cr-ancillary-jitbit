@@ -1,0 +1,43 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Allow publish cloudwatch metrics",
+            "Effect": "Allow",
+            "Action": "cloudwatch:PutMetricData",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "cloudwatch:namespace": "CloudWatchSynthetics"
+                }
+            }
+        },
+        {
+            "Sid": "Allow for permission for deployment of Lambda within VPC and S3 access",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:CreateNetworkInterface",
+                "s3:PutObject",
+                "ec2:DescribeNetworkInterfaces",
+                "s3:ListAllMyBuckets",
+                "ec2:DeleteNetworkInterface",
+                "xray:PutTraceSegments"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "Allow permission lambda to create logs and access S3 bucket",
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogStream",
+                "logs:CreateLogGroup",
+                "logs:PutLogEvents",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": [
+                "arn:aws:logs:eu-west-2:${account_id}:log-group:/aws/lambda/*",
+                "arn:aws:s3:::*"
+            ]
+        }
+    ]
+}
