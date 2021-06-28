@@ -34,10 +34,7 @@
                 "logs:PutLogEvents",
                 "s3:GetBucketLocation"
             ],
-            "Resource": [
-                "arn:aws:logs:eu-west-2:${account_id}:log-group:/aws/lambda/*",
-                "arn:aws:s3:::*"
-            ]
+            "Resource": "*"
         }
     ]
 }
