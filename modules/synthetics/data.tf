@@ -1,3 +1,5 @@
+data "aws_caller_identity" "current" {}
+
 data "archive_file" "synthetics" {
   type        = "zip"
   output_path = "${path.module}/files/synthetics.zip"
