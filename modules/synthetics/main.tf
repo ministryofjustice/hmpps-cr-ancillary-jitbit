@@ -1,3 +1,4 @@
+# By Default canary are in stop status after creation need to be started
 resource "aws_synthetics_canary" "synthetics" {
   name                 = var.common["environment_name"]
   artifact_s3_location = var.synthetics["artifact_s3_location"]
@@ -17,7 +18,7 @@ resource "aws_synthetics_canary" "synthetics" {
   schedule {
     expression = "rate(1 hour)"
   }
-  
+
   tags = merge(
     var.common["tags"],
     {
