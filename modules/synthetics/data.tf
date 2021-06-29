@@ -14,5 +14,5 @@ data "template_file" "synthetics" {
 
 resource "local_file" "synthetics" {
   content = data.template_file.synthetics.rendered
-  filename = "${path.module}/synthetics/pageLoadBlueprint.py"
+  filename = "${path.module}/synthetics/python/pageLoadBlueprint.py"
 }
