@@ -1,10 +1,10 @@
 resource "aws_iam_role" "synthetics" {
-  name               = "${var.common_name}-synthetics-role"
+  name               = "${var.common["environment_name"]}-synthetics-role"
   assume_role_policy = file("${path.module}/templates/trust.json")
 }
 
 resource "aws_iam_policy" "synthetics" {
-  name   = "${var.common_name}-synthetics-policy"
+  name   = "${var.common["environment_name"]}-synthetics-policy"
   policy = file("${path.module}/templates/synthetics.json")
 }
 

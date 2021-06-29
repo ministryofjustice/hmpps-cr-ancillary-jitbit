@@ -1,6 +1,6 @@
 resource "aws_synthetics_canary" "synthetics" {
-  name                 = var.common_name
-  artifact_s3_location = var.artifact_s3_location
+  name                 = var.common["environment_name"]
+  artifact_s3_location = var.synthetics["artifact_s3_location"]
   execution_role_arn   = aws_iam_role.synthetics.arn
   handler              = "pageLoadBlueprint.handler"
   zip_file             = data.archive_file.synthetics.output_path
@@ -8,14 +8,21 @@ resource "aws_synthetics_canary" "synthetics" {
 
   vpc_config {
     security_group_ids = [
-     var.lb_inbound_security_group_id,
-     var.lb_outbound_security_group_id
+     var.synthetics["inbound_security_group_id"],
+     var.synthetics["outbound_security_group_id"]
     ]
-    subnet_ids = flatten(var.subnet_ids)
+    subnet_ids = flatten(var.synthetics["subnet_ids"])
   }
 
   schedule {
-    expression = "rate(15 minutes)"
+    expression = "rate(1 hour)"
   }
-  tags = var.tags
+  
+  tags = merge(
+    var.common["tags"],
+    {
+      "Name" = var.common["environment_name"]
+    }
+  )
+
 }

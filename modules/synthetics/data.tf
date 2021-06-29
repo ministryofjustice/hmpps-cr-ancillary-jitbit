@@ -8,7 +8,7 @@ data "archive_file" "synthetics" {
 data "template_file" "synthetics" {
   template = "${file("${path.module}/templates/pageLoadBlueprint.py")}"
   vars = {
-    health_check_url = "${var.health_check_url}"
+    health_check_url = "${var.synthetics["health_check_url"]}"
   }
 }
 
