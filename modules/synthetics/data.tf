@@ -6,13 +6,13 @@ data "archive_file" "synthetics" {
 
 
 data "template_file" "synthetics" {
-  template = "${file("${path.module}/templates/pageLoadBlueprint.py")}"
+  template = file("${path.module}/templates/pageLoadBlueprint.py")
   vars = {
     health_check_url = "${var.synthetics["health_check_url"]}"
   }
 }
 
 resource "local_file" "synthetics" {
-  content = data.template_file.synthetics.rendered
+  content  = data.template_file.synthetics.rendered
   filename = "${path.module}/synthetics/python/pageLoadBlueprint.py"
 }

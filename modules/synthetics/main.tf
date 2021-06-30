@@ -9,8 +9,8 @@ resource "aws_synthetics_canary" "synthetics" {
 
   vpc_config {
     security_group_ids = [
-     var.synthetics["inbound_security_group_id"],
-     var.synthetics["outbound_security_group_id"]
+      var.synthetics["inbound_security_group_id"],
+      var.synthetics["outbound_security_group_id"]
     ]
     subnet_ids = flatten(var.synthetics["subnet_ids"])
   }
