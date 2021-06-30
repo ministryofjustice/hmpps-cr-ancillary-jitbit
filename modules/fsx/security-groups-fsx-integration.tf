@@ -3,7 +3,7 @@
 # ============================================
 resource "aws_security_group" "fsx_integration" {
   name        = "${var.fsx.common_name}-fsx-integration"
-  description = "security group to allow MIS instances access to fsx filesystem"
+  description = "security group to allow instances access to fsx filesystem"
   vpc_id      = var.common.vpc_id
 
   tags = merge(

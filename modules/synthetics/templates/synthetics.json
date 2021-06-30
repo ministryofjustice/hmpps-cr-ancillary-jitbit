@@ -1,0 +1,40 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Allowpublishcloudwatchmetrics",
+            "Effect": "Allow",
+            "Action": "cloudwatch:PutMetricData",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "cloudwatch:namespace": "CloudWatchSynthetics"
+                }
+            }
+        },
+        {
+            "Sid": "AllowdeploymentLambdawithVPCS3",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:CreateNetworkInterface",
+                "s3:PutObject",
+                "ec2:DescribeNetworkInterfaces",
+                "s3:ListAllMyBuckets",
+                "ec2:DeleteNetworkInterface",
+                "xray:PutTraceSegments"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowlambdalogsS3",
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogStream",
+                "logs:CreateLogGroup",
+                "logs:PutLogEvents",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
