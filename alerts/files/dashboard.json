@@ -11,7 +11,8 @@
                 "stacked": true,
                 "metrics": [
                     [ "AWS/EC2", "CPUUtilization", "AutoScalingGroupName", "${asg_autoscale_name}" ],
-                    [ "AWS/AutoScaling", "GroupTotalInstances", ".", "." ]
+                    [ "AWS/AutoScaling", "GroupTotalInstances", ".", "." ],
+                    [ "CWAgent", "MemoryUtilization", ".", ".", "objectname", "Memory" ]
                 ],
                 "region": "${region}",
                 "title": "JitBit"
