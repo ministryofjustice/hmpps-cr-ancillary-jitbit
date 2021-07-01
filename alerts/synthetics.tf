@@ -74,6 +74,7 @@ resource "aws_cloudwatch_metric_alarm" "synthetics_Cananry" {
   alarm_description   = "Alert on Synthetics Cananry execution failure"
   alarm_actions       = [local.sns_alarm_notification_arn]
   ok_actions          = [local.sns_alarm_notification_arn]
+  treat_missing_data  = "notBreaching"
 
   dimensions = {
     CanaryName = local.common_name
