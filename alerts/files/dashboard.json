@@ -89,6 +89,30 @@
                     "${app_pool_httperr_offline}"
                 ]
             }
+        },
+        {
+            "height": 3,
+            "width": 24,
+            "y": 12,
+            "x": 0,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ "CloudWatchSynthetics", "SuccessPercent", "CanaryName", "${common_prefix}" ],
+                    [ ".", "5xx", ".", "." ],
+                    [ ".", "2xx", ".", "." ],
+                    [ ".", "Failed requests", ".", "." ],
+                    [ ".", "4xx", ".", "." ],
+                    [ ".", "Duration", ".", "." ],
+                    [ ".", "Failed", ".", "." ]
+                ],
+                "view": "singleValue",
+                "region": "eu-west-2",
+                "title": "Synthetics",
+                "period": 3600,
+                "stat": "Average",
+                "stacked": true
+            }
         }
     ]
 }
