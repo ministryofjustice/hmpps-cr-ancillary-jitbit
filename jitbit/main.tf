@@ -102,9 +102,9 @@ data "terraform_remote_state" "bastion" {
 ## Getting the rds db password
 #-------------------------------------------------------------
 data "aws_ssm_parameter" "db_user_id" {
-  name = "/${var.environment_name}/jitbit/rds/jitbit/user/username"
+  name = "/${local.common_name}/jitbit/rds/jitbit/user/username"
 }
 
 data "aws_ssm_parameter" "db_user_password" {
-  name = "/${var.environment_name}/jitbit/rds/jitbit/user/password"
+  name = "/${local.common_name}/jitbit/rds/jitbit/user/password"
 }
