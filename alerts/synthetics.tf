@@ -16,7 +16,7 @@ resource "aws_cloudwatch_metric_alarm" "synthetics_failed_requests" {
     CanaryName = local.common_name
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
 
 # 4xx
@@ -37,7 +37,7 @@ resource "aws_cloudwatch_metric_alarm" "synthetics_4xx" {
     CanaryName = local.common_name
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
 
 # 5xx
@@ -58,7 +58,7 @@ resource "aws_cloudwatch_metric_alarm" "synthetics_5xx" {
     CanaryName = local.common_name
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
 
 # Failure on execution of Cananry   
@@ -80,5 +80,5 @@ resource "aws_cloudwatch_metric_alarm" "synthetics_Cananry" {
     CanaryName = local.common_name
   }
 
-  tags                = local.tags
+  tags = local.tags
 }
