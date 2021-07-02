@@ -97,3 +97,14 @@ data "terraform_remote_state" "bastion" {
     role_arn = var.bastion_role_arn
   }
 }
+
+#-------------------------------------------------------------
+## Getting the rds db password
+#-------------------------------------------------------------
+data "aws_ssm_parameter" "db_user_id" {
+  name = "/${var.environment_name}/jitbit/rds/jitbit/user/username"
+}
+
+data "aws_ssm_parameter" "db_user_password" {
+  name = "/${var.environment_name}/jitbit/rds/jitbit/user/password"
+}
