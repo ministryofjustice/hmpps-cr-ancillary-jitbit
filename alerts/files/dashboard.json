@@ -11,7 +11,8 @@
                 "stacked": true,
                 "metrics": [
                     [ "AWS/EC2", "CPUUtilization", "AutoScalingGroupName", "${asg_autoscale_name}" ],
-                    [ "AWS/AutoScaling", "GroupTotalInstances", ".", "." ]
+                    [ "AWS/AutoScaling", "GroupTotalInstances", ".", "." ],
+                    [ "CWAgent", "MemoryUtilization", ".", ".", "objectname", "Memory" ]
                 ],
                 "region": "${region}",
                 "title": "JitBit"
@@ -88,6 +89,30 @@
                 "alarms": [
                     "${app_pool_httperr_offline}"
                 ]
+            }
+        },
+        {
+            "height": 3,
+            "width": 24,
+            "y": 12,
+            "x": 0,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ "CloudWatchSynthetics", "SuccessPercent", "CanaryName", "${common_prefix}" ],
+                    [ ".", "5xx", ".", "." ],
+                    [ ".", "2xx", ".", "." ],
+                    [ ".", "Failed requests", ".", "." ],
+                    [ ".", "4xx", ".", "." ],
+                    [ ".", "Duration", ".", "." ],
+                    [ ".", "Failed", ".", "." ]
+                ],
+                "view": "singleValue",
+                "region": "eu-west-2",
+                "title": "Synthetics",
+                "period": 3600,
+                "stat": "Average",
+                "stacked": true
             }
         }
     ]
