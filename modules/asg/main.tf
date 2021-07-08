@@ -7,6 +7,7 @@ data "template_file" "userdata" {
     config_bucket            = var.canary.config_bucket
     cloudwatch_config        = var.canary.cloudwatch_config
     common_name              = var.common.common_name
+    test                     = ""
   }
 }
 
@@ -56,7 +57,7 @@ resource "aws_placement_group" "instance" {
 }
 
 resource "aws_autoscaling_group" "instance" {
-  name                      = aws_launch_configuration.instance.name
+  name                      = format("%s-inst-canary", var.common.common_name)
   vpc_zone_identifier       = flatten(var.canary.subnet_ids)
   placement_group           = aws_placement_group.instance.id
   min_size                  = var.canary.min_size
