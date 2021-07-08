@@ -1,6 +1,4 @@
-module "active" {
-  source = "../modules/asg"
-
+locals {
   common = {
     common_name               = local.common_name
     tags                      = local.tags
@@ -29,5 +27,18 @@ module "active" {
     metrics_granularity       = var.metrics_granularity
     enabled_metrics           = var.enabled_metrics
   }
+}
 
+module "active" {
+  source = "../modules/asg"
+
+  common = local.common
+  canary = local.canary
+}
+
+module "passive" {
+  source = "../modules/asg"
+
+  common = local.common
+  canary = local.canary
 }
