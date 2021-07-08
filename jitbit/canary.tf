@@ -1,6 +1,5 @@
-module "active" {
-  source = "../modules/asg"
 
+locals {
   common = {
     common_name              = local.common_name
     tags                     = local.tags
@@ -25,5 +24,11 @@ module "active" {
     max_size                 = local.jitbit_configs["asg_max_size"]
     desired_capacity         = local.jitbit_configs["asg_capacity"]
   }
+}
 
+module "active" {
+  source = "../modules/asg"
+
+  common = local.common
+  canary = local.canary
 }

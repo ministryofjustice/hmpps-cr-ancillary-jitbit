@@ -1,9 +1,7 @@
 variable "common" {
-  type    = map(any)
-  default = {}
+  description = "Holds configuration details"
 }
 
 variable "canary" {
-  type    = map(any)
-  default = {}
+  description = "canary configuration details"
 }
