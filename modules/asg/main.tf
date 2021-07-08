@@ -71,9 +71,9 @@ resource "aws_autoscaling_group" "instance" {
   metrics_granularity       = var.canary.metrics_granularity
   enabled_metrics           = var.canary.enabled_metrics
 
-  # lifecycle {
-  #   create_before_destroy = true
-  # }
+  lifecycle {
+    create_before_destroy = true
+  }
   tags = concat(
     [
       {
