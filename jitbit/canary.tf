@@ -24,6 +24,7 @@ module "active" {
     min_size                 = local.jitbit_configs["asg_min_size"]
     max_size                 = local.jitbit_configs["asg_max_size"]
     desired_capacity         = local.jitbit_configs["asg_capacity"]
+    lb_target_group          = aws_lb_target_group.instance.arn
   }
 
 }
