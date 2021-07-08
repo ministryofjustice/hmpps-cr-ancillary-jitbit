@@ -1,5 +1,5 @@
 locals {
-  security_group_list = [
+  security_group = [
     aws_security_group.instance.id,
     data.terraform_remote_state.common.outputs.sg_outbound_id,
     local.fsx_integration_security_group_id
@@ -22,7 +22,7 @@ module "active" {
     instance_type            = local.jitbit_configs["instance_type"]
     iam_instance_profile     = module.iam-instance-profile.iam_instance_name
     key_name                 = local.ssh_deployer_key
-    security_groups          = local.security_group_list
+    security_groups          = local.security_group
     volume_size              = local.jitbit_configs["volume_size"]
     disk_size                = local.jitbit_configs["cache_disk_size"]
     iops                     = local.jitbit_configs["cache_iops"]
