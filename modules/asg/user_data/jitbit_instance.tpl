@@ -82,6 +82,7 @@ Start-Process msiexec.exe -Wait -ArgumentList '/i C:\cloudwatch_installer\amazon
 cd 'C:\Program Files\Amazon\AmazonCloudWatchAgent'
 .\amazon-cloudwatch-agent-ctl.ps1 -a fetch-config -m ec2 -c file:C:\cloudwatch_installer\config.json -s
 rm -r C:\cloudwatch_installer
+rm -r C:\cloudwatch_installer
 
 </powershell>
 <persist>true</persist>
