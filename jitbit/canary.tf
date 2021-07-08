@@ -29,16 +29,17 @@ locals {
   }
 }
 
-module "active" {
+module "blue" {
   source = "../modules/asg"
 
   common = local.common
   canary = local.canary
 }
 
-module "passive" {
+module "green" {
   source = "../modules/asg"
 
   common = local.common
   canary = local.canary
+  name   = "green"
 }

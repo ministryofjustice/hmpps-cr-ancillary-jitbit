@@ -12,7 +12,7 @@ data "template_file" "userdata" {
 }
 
 resource "aws_launch_configuration" "instance" {
-  name_prefix                 = format("%s-inst-canary", var.common.common_name)
+  name_prefix                 = format("%s-inst-canary-%s", var.common.common_name, var.name)
   image_id                    = var.canary.image_id
   instance_type               = var.canary.instance_type
   iam_instance_profile        = var.canary.iam_instance_profile
@@ -52,12 +52,12 @@ data "null_data_source" "tags" {
 }
 
 resource "aws_placement_group" "instance" {
-  name     = format("%s-inst-canary", var.common.common_name)
+  name     = format("%s-inst-canary-%s", var.common.common_name, var.name)
   strategy = "spread"
 }
 
 resource "aws_autoscaling_group" "instance" {
-  name                      = format("%s-inst-canary", var.common.common_name)
+  name                      = format("%s-inst-canary-%s", var.common.common_name, var.name)
   vpc_zone_identifier       = flatten(var.canary.subnet_ids)
   placement_group           = aws_placement_group.instance.id
   min_size                  = var.canary.min_size
