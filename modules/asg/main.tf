@@ -6,7 +6,7 @@ data "template_file" "userdata" {
     filesystem_dns_name      = var.canary.filesystem_dns_name
     config_bucket            = var.canary.config_bucket
     cloudwatch_config        = var.canary.cloudwatch_config
-    common_name              = var.canary.common_name
+    common_name              = var.common.common_name
   }
 }
 
