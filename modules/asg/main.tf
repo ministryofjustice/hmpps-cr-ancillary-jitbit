@@ -113,7 +113,7 @@ resource "aws_lb_target_group" "instance" {
   }
 
   tags = merge(
-    local.tags,
+    var.common.tags,
     {
       "Name" = format("%s-tg-canary-%s", var.common.common_name, var.name)
     },
