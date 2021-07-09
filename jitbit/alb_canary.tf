@@ -46,6 +46,10 @@ resource "aws_lb_listener" "jitbit" {
         arn = module.green.target_group
         weight = 0       
       }
+      stickiness {
+        enabled  = true
+        duration = local.jitbit_configs["cookie_duration"]
+      }
     }
   }
 }

@@ -106,6 +106,12 @@ resource "aws_lb_target_group" "instance" {
     matcher             = "200-299"
   }
 
+  stickiness {
+    type            = "lb_cookie"
+    cookie_duration = var.canary.cookie_duration
+    enabled         = true
+  }
+
   tags = merge(
     var.common.tags,
     {
