@@ -63,7 +63,7 @@ resource "aws_autoscaling_group" "instance" {
   min_size                  = var.canary.min_size
   max_size                  = var.canary.max_size
   desired_capacity          = var.canary.desired_capacity
-  target_group_arns         = [var.canary.lb_target_group]
+  target_group_arns         = aws_lb_target_group.instance.arn
   launch_configuration      = aws_launch_configuration.instance.name
 
   health_check_grace_period = var.canary.health_check_grace_period
@@ -84,5 +84,38 @@ resource "aws_autoscaling_group" "instance" {
       },
     ],
     data.null_data_source.tags.*.outputs
+  )
+}
+
+resource "aws_lb_target_group" "instance" {
+  name                 = format("%s-tg-canary-%s", var.common.common_name, var.name)
+  port                 = 443
+  protocol             = "HTTPS"
+  vpc_id               = var.canary.vpc_id
+  deregistration_delay = 60
+  target_type          = "instance"
+
+  health_check {
+    interval            = 30
+    path                = "/User/Login?ReturnUrl=%2f"
+    port                = 443
+    protocol            = "HTTPS"
+    timeout             = 5
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+    matcher             = "200-299"
+  }
+
+  stickiness {
+    type            = "lb_cookie"
+    cookie_duration = var.canary.cookie_duration
+    enabled         = true
+  }
+
+  tags = merge(
+    local.tags,
+    {
+      "Name" = format("%s-tg-canary-%s", var.common.common_name, var.name)
+    },
   )
 }
