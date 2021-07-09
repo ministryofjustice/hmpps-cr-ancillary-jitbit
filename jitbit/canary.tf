@@ -22,7 +22,7 @@ locals {
     min_size                  = local.jitbit_configs["asg_min_size"]
     max_size                  = local.jitbit_configs["asg_max_size"]
     desired_capacity          = local.jitbit_configs["asg_capacity"]
-    lb_target_group           = aws_lb_target_group.instance.arn
+    lb_target_group           = aws_lb_target_group.jitbit.arn
     health_check_grace_period = local.jitbit_configs["health_check_grace_period"]
     metrics_granularity       = var.metrics_granularity
     enabled_metrics           = var.enabled_metrics

@@ -79,7 +79,7 @@ resource "aws_autoscaling_group" "instance" {
     [
       {
         key                 = "Name"
-        value               = format("%s-inst-canary", var.common.common_name)
+        value               = format("%s-inst-canary-%s", var.common.common_name, var.name)
         propagate_at_launch = true
       },
     ],
