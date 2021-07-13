@@ -2,7 +2,7 @@ resource "aws_iam_role" "lambda_role" {
   name               = "${var.common["environment_name"]}-mgmt-role"
   description        = "Role enabling Lambda to access LB for canary"
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy_document.json
-  tags               = merge(var.tags, { Name = "${var.common["environment_name"]}-mgmt-role" })
+  tags               = merge(var.common["tags"], { Name = "${var.common["environment_name"]}-mgmt-role" })
 }
 
 data "aws_iam_policy_document" "assume_role_policy_document" {
