@@ -9,7 +9,7 @@ resource "aws_cloudwatch_metric_alarm" "synthetics_failed_requests" {
   statistic           = "Average"
   threshold           = "0"
   alarm_description   = "Synthetics report on endpoint requests"
-  alarm_actions       = [local.sns_alarm_notification_arn]
+  alarm_actions       = [local.sns_alarm_notification_arn, local.jitbit["canary_sns_notification"]]
   ok_actions          = [local.sns_alarm_notification_arn]
 
   dimensions = {

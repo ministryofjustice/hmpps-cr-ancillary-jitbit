@@ -9,7 +9,7 @@ resource "aws_cloudwatch_metric_alarm" "lb_healthy_hosts_less_than_one" {
   statistic           = "Average"
   threshold           = 1
   alarm_description   = "No Healthy Hosts!!! JitBit Application is down"
-  alarm_actions       = [local.sns_alarm_notification_arn]
+  alarm_actions       = [local.sns_alarm_notification_arn, local.jitbit["canary_sns_notification"]]
   ok_actions          = [local.sns_alarm_notification_arn]
 
   dimensions = {

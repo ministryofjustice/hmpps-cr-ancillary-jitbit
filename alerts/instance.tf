@@ -51,7 +51,7 @@ resource "aws_cloudwatch_metric_alarm" "StatusCheckFailed" {
   statistic           = "Average"
   threshold           = 1
   alarm_description   = "ec2 StatusCheckFailed for JitBit instance"
-  alarm_actions       = [local.sns_alarm_notification_arn]
+  alarm_actions       = [local.sns_alarm_notification_arn, local.jitbit["canary_sns_notification"]]
   ok_actions          = [local.sns_alarm_notification_arn]
 
   dimensions = {

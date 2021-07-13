@@ -8,5 +8,6 @@ output "jitbit" {
     aws_lb_target_group_arn_suffix = aws_lb_target_group.instance.arn_suffix
     lb_security_group_id           = aws_security_group.lb.id
     aws_route53_record_name        = aws_route53_record.dns_entry.name
+    canary_sns_notification        = module.mgmt.aws_sns_topic_mgmt_notification["arn"]
   }
 }
