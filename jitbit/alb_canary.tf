@@ -53,7 +53,7 @@ resource "aws_lb_listener" "jitbit" {
 # Route53 entry to jitbit canary lb
 resource "aws_route53_record" "jitbit" {
   zone_id = local.public_zone_id
-  name    = "helpdeskcanary.${local.external_domain}"
+  name    = "helpdesk.${local.external_domain}"
   type    = "A"
 
   alias {
