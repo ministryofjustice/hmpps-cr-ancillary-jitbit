@@ -40,7 +40,7 @@ resource "aws_lb_listener" "jitbit" {
     forward {
       target_group {
         arn = module.blue.target_group
-        weight = 100
+        weight = 1
       }
       target_group {
         arn = module.green.target_group
