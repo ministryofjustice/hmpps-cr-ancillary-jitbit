@@ -39,11 +39,11 @@ resource "aws_lb_listener" "jitbit" {
     type             = "forward"
     forward {
       target_group {
-        arn = module.blue.target_group.asg[aws_lb_target_group_arn]
+        arn = module.blue.target_group.asg["aws_lb_target_group_arn"]
         weight = 1
       }
       target_group {
-        arn = module.green.target_group.asg[aws_lb_target_group_arn]
+        arn = module.green.target_group.asg["aws_lb_target_group_arn"]
         weight = 0       
       }
     }
