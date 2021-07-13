@@ -2,7 +2,7 @@ resource "aws_lambda_function" "mgmt" {
   runtime          = "python3.8"
   role             = aws_iam_role.lambda_role.arn
   filename         = data.archive_file.lambda_handler_zip.output_path
-  function_name    = "${var.common["environment_name"]}-mgmt-canary"
+  function_name    = "${var.common["common_name"]}-mgmt-canary"
   handler          = "lambda_function.lambda_handler"
   source_code_hash = filebase64sha256(data.archive_file.lambda_handler_zip.output_path)
   environment {
@@ -14,7 +14,7 @@ resource "aws_lambda_function" "mgmt" {
 }
 
 resource "aws_cloudwatch_log_group" "mgmt" {
-  name              = "/aws/lambda/${var.common["environment_name"]}-mgmt-canary"
+  name              = "/aws/lambda/${var.common["common_name"]}-mgmt-canary"
   retention_in_days = 14
 }
 

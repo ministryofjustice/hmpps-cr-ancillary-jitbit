@@ -1,5 +1,5 @@
 resource "aws_sns_topic" "mgmt_notification" {
-  name = "${var.common["environment_name"]}-mgmt-notification"
+  name = "${var.common["common_name"]}-mgmt-notification"
 }
 
 resource "aws_sns_topic_subscription" "mgmt_subscription" {
