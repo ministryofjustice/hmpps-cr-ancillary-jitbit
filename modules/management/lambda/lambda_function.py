@@ -47,10 +47,6 @@ def lambda_handler(event, context):
                                 'Weight': 0
                             },
                         ],
-                        'TargetGroupStickinessConfig': {
-                            'Enabled': True,
-                            'DurationSeconds': 3600
-                        },
                     },
                 },
             ],

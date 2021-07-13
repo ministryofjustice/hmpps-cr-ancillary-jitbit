@@ -26,7 +26,6 @@ locals {
     metrics_granularity       = var.metrics_granularity
     enabled_metrics           = var.enabled_metrics
     vpc_id                    = local.vpc_id
-    cookie_duration           = local.jitbit_configs["cookie_duration"]
   }
 }
 
