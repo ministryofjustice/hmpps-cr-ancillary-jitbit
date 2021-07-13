@@ -44,3 +44,10 @@ module "green" {
   canary = local.canary
   name   = "green"
 }
+
+module "mgmt" {
+  source = "../modules/management"
+  
+  common       = local.common
+  listener_arn = aws_lb_listener.jitbit.arn
+}
