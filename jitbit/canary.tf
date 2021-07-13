@@ -35,7 +35,7 @@ module "blue" {
 
   common     = local.common
   canary     = local.canary
-  subnet_ids = local.private_subnet_ids[0]
+  subnet_ids = [local.private_subnet_ids[0]]
 }
 
 module "green" {
