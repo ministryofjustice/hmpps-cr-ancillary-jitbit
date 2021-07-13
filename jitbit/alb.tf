@@ -38,6 +38,10 @@ resource "aws_lb_listener" "jitbit" {
   default_action {
     type             = "forward"
     forward {
+      stickiness {
+        duration = 1
+        enabled = false
+      }
       target_group {
         arn = module.blue.asg["aws_lb_target_group_arn"]
         weight = 1
