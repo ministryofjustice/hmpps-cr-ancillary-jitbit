@@ -39,7 +39,7 @@ data "aws_iam_policy_document" "lambda_policy_document" {
 }
 
 resource "aws_iam_policy" "lambda_policy" {
-  name   = "${var.common["environment_name"]}-mgmt-role"
+  name   = "${var.common["common_name"]}-mgmt-role"
   policy = data.aws_iam_policy_document.lambda_policy_document.json
 }
 
