@@ -27,21 +27,24 @@ locals {
     enabled_metrics           = var.enabled_metrics
     vpc_id                    = local.vpc_id
   }
+  private_subnet_ids          = data.terraform_remote_state.common.outputs.private_subnet_ids
 }
 
 module "blue" {
   source = "../modules/asg"
 
-  common = local.common
-  canary = local.canary
+  common     = local.common
+  canary     = local.canary
+  subnet_ids = local.private_subnet_ids[0]
 }
 
 module "green" {
   source = "../modules/asg"
 
-  common = local.common
-  canary = local.canary
-  name   = "green"
+  common     = local.common
+  canary     = local.canary
+  subnet_ids = tolist([local.private_subnet_ids[1], local.private_subnet_ids[2]])
+  name       = "green"
 }
 
 module "mgmt" {
