@@ -5,9 +5,8 @@ data "template_file" "userdata" {
     ssm_adjoin_document_name = var.canary.ssm_adjoin_document_name
     filesystem_dns_name      = var.canary.filesystem_dns_name
     config_bucket            = var.canary.config_bucket
-    cloudwatch_config        = var.canary.cloudwatch_config
+    cloudwatch_config        = var.name != "green" ? var.canary.cloudwatch_config : replace(var.canary.cloudwatch_config, "config", "passive_config")
     common_name              = var.common.common_name
-    test                     = ""
   }
 }
 
