@@ -13,7 +13,7 @@ resource "aws_cloudwatch_log_metric_filter" "iis_httperr_metrics" {
 }
 
 # IIS HttpErr Alarm
-resource "aws_cloudwatch_metric_alarm" "iis_httperr" {
+resource "aws_cloudwatch_metric_alarm" "iis_httperr_critical" {
   alarm_name          = "${local.common_name}_AppPool_Offline--critical"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "2"
