@@ -8,7 +8,7 @@ variable "canary" {
 
 variable "name" {
   description = "canary name"
-  default = "blue"
+  default     = "blue"
 }
 
 variable "subnet_ids" {

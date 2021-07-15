@@ -1,7 +1,7 @@
 locals {
   common = {
-    common_name               = local.common_name
-    tags                      = local.tags
+    common_name = local.common_name
+    tags        = local.tags
   }
   canary = {
     ssm_adjoin_document_name  = data.terraform_remote_state.fsx.outputs.fsx.ad_details["ssm_ad_auto_join_name"]
@@ -12,7 +12,7 @@ locals {
     instance_type             = local.jitbit_configs["instance_type"]
     iam_instance_profile      = module.iam-instance-profile.iam_instance_name
     key_name                  = local.ssh_deployer_key
-    security_groups           = tolist([data.terraform_remote_state.common.outputs.sg_outbound_id,aws_security_group.instance.id,local.fsx_integration_security_group_id])
+    security_groups           = tolist([data.terraform_remote_state.common.outputs.sg_outbound_id, aws_security_group.instance.id, local.fsx_integration_security_group_id])
     volume_size               = local.jitbit_configs["volume_size"]
     disk_size                 = local.jitbit_configs["cache_disk_size"]
     iops                      = local.jitbit_configs["cache_iops"]
@@ -27,7 +27,7 @@ locals {
     enabled_metrics           = var.enabled_metrics
     vpc_id                    = local.vpc_id
   }
-  private_subnet_ids          = data.terraform_remote_state.common.outputs.private_subnet_ids
+  private_subnet_ids = data.terraform_remote_state.common.outputs.private_subnet_ids
 }
 
 module "blue" {
@@ -49,7 +49,7 @@ module "green" {
 
 module "mgmt" {
   source = "../modules/management"
-  
+
   common       = local.common
   listener_arn = aws_lb_listener.jitbit.arn
 }

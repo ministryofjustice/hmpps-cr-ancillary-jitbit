@@ -56,14 +56,14 @@ resource "aws_placement_group" "instance" {
 }
 
 resource "aws_autoscaling_group" "instance" {
-  name                      = format("%s-inst-canary-%s", var.common.common_name, var.name)
-  vpc_zone_identifier       = flatten(var.subnet_ids)
-  placement_group           = aws_placement_group.instance.id
-  min_size                  = var.canary.min_size
-  max_size                  = var.canary.max_size
-  desired_capacity          = var.canary.desired_capacity
-  target_group_arns         = [aws_lb_target_group.instance.arn]
-  launch_configuration      = aws_launch_configuration.instance.name
+  name                 = format("%s-inst-canary-%s", var.common.common_name, var.name)
+  vpc_zone_identifier  = flatten(var.subnet_ids)
+  placement_group      = aws_placement_group.instance.id
+  min_size             = var.canary.min_size
+  max_size             = var.canary.max_size
+  desired_capacity     = var.canary.desired_capacity
+  target_group_arns    = [aws_lb_target_group.instance.arn]
+  launch_configuration = aws_launch_configuration.instance.name
 
   health_check_grace_period = var.canary.health_check_grace_period
   termination_policies      = ["OldestInstance", "OldestLaunchTemplate", "OldestLaunchConfiguration"]

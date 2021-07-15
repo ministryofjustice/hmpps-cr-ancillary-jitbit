@@ -36,19 +36,19 @@ resource "aws_lb_listener" "jitbit" {
   certificate_arn   = element(local.public_acm_arn, 0)
 
   default_action {
-    type             = "forward"
+    type = "forward"
     forward {
       stickiness {
         duration = 1
-        enabled = false
+        enabled  = false
       }
       target_group {
-        arn = module.blue.asg["aws_lb_target_group_arn"]
+        arn    = module.blue.asg["aws_lb_target_group_arn"]
         weight = 1
       }
       target_group {
-        arn = module.green.asg["aws_lb_target_group_arn"]
-        weight = 0       
+        arn    = module.green.asg["aws_lb_target_group_arn"]
+        weight = 0
       }
     }
   }

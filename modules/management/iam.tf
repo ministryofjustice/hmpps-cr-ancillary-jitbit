@@ -31,7 +31,7 @@ data "aws_iam_policy_document" "lambda_policy_document" {
     sid       = "Loadbalancer"
     effect    = "Allow"
     resources = ["*"]
-    actions   = [
+    actions = [
       "elasticloadbalancing:Describe*",
       "elasticloadbalancing:ModifyListener"
     ]
