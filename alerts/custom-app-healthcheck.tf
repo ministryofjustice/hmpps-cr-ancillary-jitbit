@@ -2,7 +2,7 @@
 resource "aws_cloudwatch_log_metric_filter" "iis_httperr_metrics" {
   name           = "${local.common_name}_IIS_AppPool"
   pattern        = "AppOffline"
-  log_group_name = "${local.common_name}/${local.jitbit["passive_autoscaling_group_name"]}"
+  log_group_name = local.common_name
 
   metric_transformation {
     name          = "${local.common_name}_AppPool"
@@ -22,7 +22,7 @@ resource "aws_cloudwatch_metric_alarm" "iis_httperr" {
   period              = "60"
   statistic           = "Average"
   threshold           = "0"
-  alarm_description   = "This metric monitors IIS HttpErr"
+  alarm_description   = "This metric monitors IIS HttpErr, It would be either on Blue or Green Stack"
   alarm_actions       = [local.sns_alarm_notification_arn]
   ok_actions          = [local.sns_alarm_notification_arn]
   tags                = local.tags
