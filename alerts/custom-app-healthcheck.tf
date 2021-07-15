@@ -2,7 +2,7 @@
 resource "aws_cloudwatch_log_metric_filter" "iis_httperr_metrics" {
   name           = "${local.common_name}_IIS_AppPool"
   pattern        = "AppOffline"
-  log_group_name = local.common_name/local.jitbit["passive_autoscaling_group_name"]
+  log_group_name = "${local.common_name}/${local.jitbit["passive_autoscaling_group_name"]}"
 
   metric_transformation {
     name          = "${local.common_name}_AppPool"
