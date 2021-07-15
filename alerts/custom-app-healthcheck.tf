@@ -2,7 +2,7 @@
 resource "aws_cloudwatch_log_metric_filter" "iis_httperr_metrics" {
   name           = "${local.common_name}_IIS_AppPool"
   pattern        = "AppOffline"
-  log_group_name = local.common_name // To update in support of canary
+  log_group_name = local.common_name/local.jitbit["passive_autoscaling_group_name"]
 
   metric_transformation {
     name          = "${local.common_name}_AppPool"
@@ -23,7 +23,7 @@ resource "aws_cloudwatch_metric_alarm" "iis_httperr" {
   statistic           = "Average"
   threshold           = "0"
   alarm_description   = "This metric monitors IIS HttpErr"
-  alarm_actions       = [local.sns_alarm_notification_arn] // To update in support of canary
+  alarm_actions       = [local.sns_alarm_notification_arn]
   ok_actions          = [local.sns_alarm_notification_arn]
   tags                = local.tags
 }
