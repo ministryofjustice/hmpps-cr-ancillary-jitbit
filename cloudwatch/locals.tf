@@ -4,6 +4,7 @@ locals {
     environment_name = local.common_name
     tags             = data.terraform_remote_state.common.outputs.tags
   }
+  jitbit = data.terraform_remote_state.jitbit.outputs.jitbit
   synthetics = {
     health_check_url           = data.terraform_remote_state.jitbit.outputs.jitbit["aws_route53_record_name"]
     artifact_s3_location       = "s3://${local.common_name}/synthetics/"

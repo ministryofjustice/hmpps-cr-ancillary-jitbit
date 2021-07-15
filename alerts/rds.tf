@@ -41,7 +41,7 @@ resource "aws_cloudwatch_metric_alarm" "db_cpu_warning" {
 }
 
 # CPUCreditBalance - Warning
-resource "aws_cloudwatch_metric_alarm" "db_cpu_credit_balance" {
+resource "aws_cloudwatch_metric_alarm" "db_cpu_credit_balance_warning" {
   alarm_name          = "${local.common_name}_database_cpu_credit_balance--warning"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = 1
@@ -62,7 +62,7 @@ resource "aws_cloudwatch_metric_alarm" "db_cpu_credit_balance" {
 }
 
 # DiskQueueDepth - Warning
-resource "aws_cloudwatch_metric_alarm" "db_disk_queue_depth" {
+resource "aws_cloudwatch_metric_alarm" "db_disk_queue_depth_warning" {
   alarm_name          = "${local.common_name}_database_disk_queue_depth--warning"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 1
@@ -125,7 +125,7 @@ resource "aws_cloudwatch_metric_alarm" "db_free_storage_space_warning" {
 }
 
 # BurstBalance - Warning
-resource "aws_cloudwatch_metric_alarm" "db_burst_balance" {
+resource "aws_cloudwatch_metric_alarm" "db_burst_balance_warning" {
   alarm_name          = "${local.common_name}_database_burst_balance--warning"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = 1
@@ -146,7 +146,7 @@ resource "aws_cloudwatch_metric_alarm" "db_burst_balance" {
 }
 
 # FreeableMemory - Warning
-resource "aws_cloudwatch_metric_alarm" "db_freeable_memory" {
+resource "aws_cloudwatch_metric_alarm" "db_freeable_memory_warning" {
   alarm_name          = "${local.common_name}_database_freeable_memory--warning"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = 1
@@ -167,7 +167,7 @@ resource "aws_cloudwatch_metric_alarm" "db_freeable_memory" {
 }
 
 # DatabaseConnections - Warning
-resource "aws_cloudwatch_metric_alarm" "db_connections" {
+resource "aws_cloudwatch_metric_alarm" "db_connections_warning" {
   alarm_name          = "${local.common_name}_database_connections--warning"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 1
@@ -188,7 +188,7 @@ resource "aws_cloudwatch_metric_alarm" "db_connections" {
 }
 
 # DatabaseConnections anomalous - Critical
-resource "aws_cloudwatch_metric_alarm" "db_anomalous_connections" {
+resource "aws_cloudwatch_metric_alarm" "db_anomalous_connections_critical" {
   alarm_name          = "${local.common_name}_database_anomalous_connections--critical"
   comparison_operator = "GreaterThanUpperThreshold"
   evaluation_periods  = 1

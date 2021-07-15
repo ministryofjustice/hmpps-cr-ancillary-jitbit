@@ -1,5 +1,5 @@
 # Endpoint failure
-resource "aws_cloudwatch_metric_alarm" "synthetics_failed_requests" {
+resource "aws_cloudwatch_metric_alarm" "synthetics_failed_requests_critical" {
   alarm_name          = "${local.common_name}_synthetics_failed_request_endpoint--critical"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
@@ -20,7 +20,7 @@ resource "aws_cloudwatch_metric_alarm" "synthetics_failed_requests" {
 }
 
 # 4xx
-resource "aws_cloudwatch_metric_alarm" "synthetics_4xx" {
+resource "aws_cloudwatch_metric_alarm" "synthetics_4xx_warning" {
   alarm_name          = "${local.common_name}_synthetics_error_responses-4xx--warning"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
@@ -41,7 +41,7 @@ resource "aws_cloudwatch_metric_alarm" "synthetics_4xx" {
 }
 
 # 5xx
-resource "aws_cloudwatch_metric_alarm" "synthetics_5xx" {
+resource "aws_cloudwatch_metric_alarm" "synthetics_5xx_warning" {
   alarm_name          = "${local.common_name}_synthetics_fault_responses_5xx--warning"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
@@ -62,7 +62,7 @@ resource "aws_cloudwatch_metric_alarm" "synthetics_5xx" {
 }
 
 # Failure on execution of Cananry   
-resource "aws_cloudwatch_metric_alarm" "synthetics_Cananry" {
+resource "aws_cloudwatch_metric_alarm" "synthetics_Cananry_warning" {
   alarm_name          = "${local.common_name}_synthetics_canary_failure--warning"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
