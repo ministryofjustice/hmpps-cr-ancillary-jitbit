@@ -79,6 +79,6 @@ Prod environment configured to use Justice office 365 mailbox and credentials ar
 
 Logs are shipped to AWS Cloudwatch. Dashboards are configured to show service performance. Alerts are configured to notify of service degradation.
 
-## FailOver
+## Failover
 
 [Process Details](https://dsdmoj.atlassian.net/wiki/spaces/DAM/pages/3540025345/Failover)
