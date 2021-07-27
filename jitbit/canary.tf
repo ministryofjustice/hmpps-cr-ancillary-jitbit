@@ -30,6 +30,7 @@ locals {
   private_subnet_ids = data.terraform_remote_state.common.outputs.private_subnet_ids
 }
 
+# Active
 module "blue" {
   source = "../modules/asg"
 
@@ -38,6 +39,7 @@ module "blue" {
   subnet_ids = [local.private_subnet_ids[0]]
 }
 
+# Passive
 module "green" {
   source = "../modules/asg"
 

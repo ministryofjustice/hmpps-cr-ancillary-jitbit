@@ -89,5 +89,6 @@ Write-Output "------------------------------------"
 New-Item C:\mgmt -ItemType Directory -ErrorAction Ignore
 Copy-S3Object -BucketName "${config_bucket}" -KeyPrefix mgmt -LocalFile C:\mgmt
 Register-ScheduledTask -TaskName "jitbit_log_rotation" -Xml (Get-Content "C:\mgmt\iis_log_rotation.xml" | Out-String)
+
 </powershell>
 <persist>true</persist>
