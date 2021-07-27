@@ -82,3 +82,7 @@ Logs are shipped to AWS Cloudwatch. Dashboards are configured to show service pe
 ## Failover
 
 [Process Details](https://dsdmoj.atlassian.net/wiki/spaces/DAM/pages/3540025345/Failover)
+
+
+Register-ScheduledTask -TaskName "test" -Xml (Get-Content "C:\Users\admin\Desktop\log_rotate_jitbit_iis.xml" | Out-String) -Force -User "cr-jitbit-dev\admin" -Password "9Ae466FcF1BAE2e"
+
