@@ -2,7 +2,7 @@
 <Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
   <RegistrationInfo>
     <Date>2021-07-23T16:01:21.346636</Date>
-    <Author>cr-jitbit-dev\admin</Author>
+    <Author>Administrator</Author>
     <URI>\log_rotate_jitbit_iis</URI>
   </RegistrationInfo>
   <Triggers>

@@ -83,5 +83,11 @@ cd 'C:\Program Files\Amazon\AmazonCloudWatchAgent'
 .\amazon-cloudwatch-agent-ctl.ps1 -a fetch-config -m ec2 -c file:C:\cloudwatch_installer\config.json -s
 rm -r C:\cloudwatch_installer
 
+Write-Output "------------------------------------"
+Write-Output "Install & Config Log Rotation"
+Write-Output "------------------------------------"
+New-Item C:\mgmt -ItemType Directory -ErrorAction Ignore
+Copy-S3Object -BucketName "${config_bucket}" -KeyPrefix mgmt -LocalFile C:\mgmt
+Register-ScheduledTask -TaskName "jitbit_log_rotation" -Xml (Get-Content "C:\mgmt\iis_log_rotation.xml" | Out-String)
 </powershell>
 <persist>true</persist>
