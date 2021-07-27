@@ -1,5 +1,5 @@
 data "template_file" "userdata" {
-  template = file("../user_data/jitbit_instance.tpl")
+  template = file("${path.module}/user_data/jitbit_instance.tpl")
 
   vars = {
     ssm_adjoin_document_name = var.canary.ssm_adjoin_document_name
