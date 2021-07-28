@@ -86,14 +86,12 @@ rm -r C:\cloudwatch_installer
 Write-Output "------------------------------------"
 Write-Output "Install & Config Log Rotation"
 Write-Output "------------------------------------"
+$User     = "${common_name}" + '\' + $ad_username.Value
+$Password = $ad_password.Value
+Add-LocalGroupMember -Group "Administrators" -Member $User , "Add JitBit Service account"  
 New-Item C:\mgmt -ItemType Directory -ErrorAction Ignore
 Copy-S3Object -BucketName "${config_bucket}" -KeyPrefix mgmt -LocalFolder C:\mgmt
-
-$User     = ${common_name} + '\' + $ad_username.Value
-$Password = $ad_password.Value
 Register-ScheduledTask -TaskName "jitbit_log_rotation" -Xml (Get-Content "C:\mgmt\iis_log_rotation.xml" | Out-String)  -Force -User $User -Password $Password
-
-Add-LocalGroupMember -Group "Administrators" -Member $User , "Add JitBit Service account"  
 
 </powershell>
 <persist>true</persist>
