@@ -83,5 +83,15 @@ cd 'C:\Program Files\Amazon\AmazonCloudWatchAgent'
 .\amazon-cloudwatch-agent-ctl.ps1 -a fetch-config -m ec2 -c file:C:\cloudwatch_installer\config.json -s
 rm -r C:\cloudwatch_installer
 
+Write-Output "------------------------------------"
+Write-Output "Install & Config Log Rotation"
+Write-Output "------------------------------------"
+$User     = "${common_name}" + '\' + $ad_username.Value
+$Password = $ad_password.Value
+Add-LocalGroupMember -Group "Administrators" -Member $User , "Add JitBit Service account"  
+New-Item C:\mgmt -ItemType Directory -ErrorAction Ignore
+Copy-S3Object -BucketName "${config_bucket}" -KeyPrefix mgmt -LocalFolder C:\mgmt
+Register-ScheduledTask -TaskName "jitbit_log_rotation" -Xml (Get-Content "C:\mgmt\iis_log_rotation.xml" | Out-String)  -Force -User $User -Password $Password
+
 </powershell>
 <persist>true</persist>
