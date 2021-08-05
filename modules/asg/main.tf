@@ -37,6 +37,11 @@ resource "aws_launch_configuration" "instance" {
 
   lifecycle {
     create_before_destroy = true
+    ignore_changes = [
+      # Ignore changes to AMI ID because the EC2 instance should be cycled when tested
+      # instead of when AWS update the image as this may cause an outage.
+      image_id,
+    ]
   }
 }
 
