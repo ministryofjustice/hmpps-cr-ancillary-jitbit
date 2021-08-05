@@ -30,4 +30,9 @@ locals {
   bastion_public_ip                 = ["${data.terraform_remote_state.bastion.outputs.bastion_ip}/32"]
   fsx_integration_security_group_id = data.terraform_remote_state.fsx.outputs.fsx.fsx_details["integration_security_group_id"]
   config_bucket                     = data.terraform_remote_state.common.outputs.config_bucket["name"]
+  natgateway_public_ip              = [
+    "${data.terraform_remote_state.natgateway.outputs.natgateway.natgateway_common-nat-public-ip-az1}/32",
+    "${data.terraform_remote_state.natgateway.outputs.natgateway.natgateway_common-nat-public-ip-az2}/32",
+    "${data.terraform_remote_state.natgateway.outputs.natgateway.natgateway_common-nat-public-ip-az3}/32"
+    ]
 }

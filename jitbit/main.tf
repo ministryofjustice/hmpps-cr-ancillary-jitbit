@@ -51,6 +51,19 @@ data "terraform_remote_state" "vpc" {
 }
 
 #-------------------------------------------------------------
+### Getting the current natgateway
+#-------------------------------------------------------------
+data "terraform_remote_state" "natgateway" {
+  backend = "s3"
+
+  config = {
+    bucket = var.remote_state_bucket_name
+    key    = "natgateway/terraform.tfstate"
+    region = var.region
+  }
+}
+
+#-------------------------------------------------------------
 ### Getting the latest amazon ami
 #-------------------------------------------------------------
 
