@@ -98,6 +98,7 @@ resource "aws_security_group_rule" "self_in" {
   to_port           = 0
   protocol          = -1
   self              = true
+  description       = "self_in"
 }
 
 resource "aws_security_group_rule" "self_out" {
@@ -108,6 +109,7 @@ resource "aws_security_group_rule" "self_out" {
   to_port           = 0
   protocol          = -1
   self              = true
+  description       = "self_out"
 }
 
 # SES and WorkMail
