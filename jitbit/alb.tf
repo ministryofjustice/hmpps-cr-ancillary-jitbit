@@ -66,3 +66,16 @@ resource "aws_route53_record" "jitbit" {
     evaluate_target_health = false
   }
 }
+
+# Route53 internal entry to jitbit canary lb
+resource "aws_route53_record" "jitbit_internal" {
+  zone_id = local.private_zone_id
+  name    = "helpdesk.${local.internal_domain}"
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.jitbit.dns_name
+    zone_id                = aws_lb.jitbit.zone_id
+    evaluate_target_health = false
+  }
+}

@@ -17,6 +17,7 @@ locals {
   log_group_arn                     = data.terraform_remote_state.common.outputs.log_group["log_group_arn"]
   log_group_name                    = data.terraform_remote_state.common.outputs.log_group["log_group_name"]
   external_domain                   = data.terraform_remote_state.common.outputs.domain_info["external_domain"]
+  internal_domain                   = data.terraform_remote_state.common.outputs.domain_info["private_domain"]
   public_acm_arn                    = data.terraform_remote_state.common.outputs.domain_info["public_acm_arn"]
   private_domain                    = data.terraform_remote_state.common.outputs.domain_info["private_domain"]
   app_name                          = "jitbit"
@@ -27,6 +28,7 @@ locals {
   database_ssm_password             = data.terraform_remote_state.database.outputs.database_info["database_ssm_password"]
   database_security_group_id        = data.terraform_remote_state.database.outputs.database_info["security_group_id"]
   public_zone_id                    = data.terraform_remote_state.common.outputs.domain_info["external_domain_id"]
+  private_zone_id                   = data.terraform_remote_state.vpc.outputs.private_zone_id
   bastion_public_ip                 = ["${data.terraform_remote_state.bastion.outputs.bastion_ip}/32"]
   fsx_integration_security_group_id = data.terraform_remote_state.fsx.outputs.fsx.fsx_details["integration_security_group_id"]
   config_bucket                     = data.terraform_remote_state.common.outputs.config_bucket["name"]
