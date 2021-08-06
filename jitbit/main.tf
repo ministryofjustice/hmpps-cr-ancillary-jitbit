@@ -64,6 +64,20 @@ data "terraform_remote_state" "natgateway" {
 }
 
 #-------------------------------------------------------------
+### Getting vpn info
+#-------------------------------------------------------------
+data "terraform_remote_state" "vpn_vpc" {
+  backend = "s3"
+
+  config = {
+    bucket   = var.bastion_remote_state_bucket_name
+    key      = "vpn-vpc/terraform.tfstate"
+    region   = var.region
+    role_arn = var.bastion_role_arn
+  }
+}
+
+#-------------------------------------------------------------
 ### Getting the latest amazon ami
 #-------------------------------------------------------------
 
