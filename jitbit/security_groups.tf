@@ -166,3 +166,13 @@ resource "aws_security_group_rule" "application_access_https" {
   )
   description = "Application Access - Https"
 }
+
+resource "aws_security_group_rule" "jitbit_to_lb" {
+  security_group_id        = aws_security_group.lb.id
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "tcp"
+  type                     = "ingress"
+  description              = "jitbit to lb"
+  source_security_group_id = aws_security_group.instance.id
+}
