@@ -146,7 +146,8 @@ resource "aws_security_group_rule" "application_access_https" {
     local.bastion_public_ip,
     var.cr_ancillary_admin_cidrs,
     var.cr_ancillary_access_cidrs,
-    var.cr_ancillary_route53_healthcheck_access_cidrs
+    var.cr_ancillary_route53_healthcheck_access_cidrs,
+    local.natgateway_public_ip
   )
   ipv6_cidr_blocks = concat(
     var.cr_ancillary_route53_healthcheck_access_ipv6_cidrs
