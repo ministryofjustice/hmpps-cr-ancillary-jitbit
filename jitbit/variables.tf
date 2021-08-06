@@ -82,3 +82,7 @@ variable "bastion_role_arn" {
 variable "vpn_remote_state_bucket_name" {
   description = "Terraform remote state bucket name for VPN VPC"
 }
+
+variable "eng_role_arn" {
+  description = "arn to use for engineering platform terraform"
+}
