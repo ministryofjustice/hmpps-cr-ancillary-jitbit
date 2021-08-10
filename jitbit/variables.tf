@@ -61,6 +61,11 @@ variable "cr_ancillary_access_cidrs" {
   default = []
 }
 
+variable "cr_jitbit_access_cidrs" {
+  type    = list(any)
+  default = []
+}
+
 variable "cr_ancillary_route53_healthcheck_access_cidrs" {
   type    = list(any)
   default = []

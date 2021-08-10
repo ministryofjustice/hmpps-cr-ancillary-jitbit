@@ -159,6 +159,7 @@ resource "aws_security_group_rule" "application_access_https" {
     var.cr_ancillary_admin_cidrs,
     var.cr_ancillary_access_cidrs,
     var.cr_ancillary_route53_healthcheck_access_cidrs,
+    var.cr_jitbit_access_cidrs,
     local.natgateway_public_ip
   )
   ipv6_cidr_blocks = concat(
@@ -176,3 +177,5 @@ resource "aws_security_group_rule" "jitbit_to_lb" {
   description              = "jitbit to lb"
   source_security_group_id = aws_security_group.instance.id
 }
+
+
