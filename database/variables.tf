@@ -33,7 +33,7 @@ variable "cr_jitbit_rds_config" {
     performance_insights_retention_period = "7"
     backup_retention_period               = "14"
     backup_window                         = "05:00-08:00"
-    maintenance_window                    = "Sat:01:00-Wed:04:00"
+    maintenance_window                    = "Sat:01:00-Sat:04:00"
     character_set_name                    = "Latin1_General_CI_AS"
     timezone                              = "GMT Standard Time"
     monitoring_interval                   = "60"
@@ -85,4 +85,9 @@ variable "jitbit_timeouts" {
     update = "80m"
     delete = "60m"
   }
+}
+
+variable "rds_stop_resources_tag_phase1" {
+  description = "Autostop tag value used by lambda to stop RDS instances"
+  default     = "Phase1"
 }
