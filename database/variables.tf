@@ -34,7 +34,7 @@ variable "cr_jitbit_rds_config" {
     performance_insights_retention_period = "7"
     backup_retention_period               = "14"
     backup_window                         = "17:30-18:00"
-    maintenance_window                    = "Sat:01:00-Sat:01:30"
+    maintenance_window                    = "Sat:01:30-Sat:02:00"
     character_set_name                    = "Latin1_General_CI_AS"
     timezone                              = "GMT Standard Time"
     monitoring_interval                   = "60"
