@@ -7,7 +7,7 @@ resource "aws_lambda_function" "mgmt" {
   source_code_hash = filebase64sha256(data.archive_file.lambda_handler_zip.output_path)
   environment {
     variables = {
-      enable       = "true"
+      enable       = var.failover_lambda_enable
       listener_arn = var.listener_arn
     }
   }

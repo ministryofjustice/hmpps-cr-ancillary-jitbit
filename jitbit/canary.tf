@@ -1,7 +1,12 @@
 locals {
   common = {
     common_name = local.common_name
-    tags        = local.tags
+    tags = merge(
+      local.tags,
+      {
+        "autostop" = var.asg_stop_resources_tag_phase2
+      },
+    )
   }
   canary = {
     ssm_adjoin_document_name  = data.terraform_remote_state.fsx.outputs.fsx.ad_details["ssm_ad_auto_join_name"]
@@ -52,6 +57,7 @@ module "green" {
 module "mgmt" {
   source = "../modules/management"
 
-  common       = local.common
-  listener_arn = aws_lb_listener.jitbit.arn
+  common                 = local.common
+  listener_arn           = aws_lb_listener.jitbit.arn
+  failover_lambda_enable = var.failover_lambda_enable
 }

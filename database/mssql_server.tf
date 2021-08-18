@@ -129,7 +129,7 @@ module "db_instance" {
   option_group_name      = module.db_option_group.this_db_option_group_id
 
   availability_zone   = null
-  multi_az            = var.jitbit_data_import == true ? false : true
+  multi_az            = var.disable_multi_az || var.jitbit_data_import == true ? false : true
   iops                = local.cr_jitbit_rds_options["iops"]
   publicly_accessible = false
   ca_cert_identifier  = null
