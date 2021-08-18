@@ -150,7 +150,7 @@ module "db_instance" {
   performance_insights_retention_period = local.cr_jitbit_rds_options["performance_insights_retention_period"]
 
   replicate_source_db     = null
-  backup_retention_period = var.disable_multi_az || var.jitbit_data_import == true ? 0 : local.cr_jitbit_rds_options["backup_retention_period"]
+  backup_retention_period = var.jitbit_data_import == true ? 0 : local.cr_jitbit_rds_options["backup_retention_period"]
   backup_window           = local.cr_jitbit_rds_options["backup_window"]
   max_allocated_storage   = local.cr_jitbit_rds_options["max_allocated_storage"]
   monitoring_interval     = local.cr_jitbit_rds_options["monitoring_interval"]
