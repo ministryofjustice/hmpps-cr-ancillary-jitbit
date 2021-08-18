@@ -18,7 +18,7 @@ variable "create" {
 
 # https://aws.amazon.com/blogs/aws/amazon-rds-maintenance-windows-shortened/
 variable "cr_jitbit_rds_config" {
-  type = map
+  type = map(any)
   default = {
     credentials_ssm_path                  = "/cr-ancillary/jitbit/rds/database/db/admin"
     family                                = "sqlserver-se-15.0"
@@ -42,7 +42,7 @@ variable "cr_jitbit_rds_config" {
 }
 
 variable "cr_jitbit_rds_overrides" {
-  type    = map
+  type    = map(any)
   default = {}
 }
 
@@ -67,7 +67,7 @@ variable "jitbit_option_group_timeouts" {
 }
 
 variable "jitbit_enabled_cloudwatch_logs_exports" {
-  type = list
+  type = list(any)
   default = [
     "error"
   ]
