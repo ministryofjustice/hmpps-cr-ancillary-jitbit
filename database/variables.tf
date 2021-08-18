@@ -92,3 +92,8 @@ variable "rds_stop_resources_tag_phase1" {
   description = "Autostop tag value used by lambda to stop RDS instances"
   default     = "disable"
 }
+
+variable "disable_multi_az" {
+  type    = bool
+  default = false
+}
