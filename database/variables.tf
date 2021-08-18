@@ -16,6 +16,7 @@ variable "create" {
   type        = bool
 }
 
+# https://aws.amazon.com/blogs/aws/amazon-rds-maintenance-windows-shortened/
 variable "cr_jitbit_rds_config" {
   type = map
   default = {
@@ -32,8 +33,8 @@ variable "cr_jitbit_rds_config" {
     snapshot_identifier                   = ""
     performance_insights_retention_period = "7"
     backup_retention_period               = "14"
-    backup_window                         = "05:00-08:00"
-    maintenance_window                    = "Sat:01:00-Sat:04:00"
+    backup_window                         = "17:30-18:00"
+    maintenance_window                    = "Sat:01:00-Sat:01:30"
     character_set_name                    = "Latin1_General_CI_AS"
     timezone                              = "GMT Standard Time"
     monitoring_interval                   = "60"
@@ -89,5 +90,5 @@ variable "jitbit_timeouts" {
 
 variable "rds_stop_resources_tag_phase1" {
   description = "Autostop tag value used by lambda to stop RDS instances"
-  default     = "Phase1"
+  default     = "disable"
 }

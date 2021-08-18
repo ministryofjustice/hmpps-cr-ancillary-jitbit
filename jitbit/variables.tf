@@ -94,5 +94,5 @@ variable "eng_role_arn" {
 
 variable "asg_stop_resources_tag_phase2" {
   description = "Autostop tag value used by lambda to stop RDS instances"
-  default     = "Phase2"
+  default     = "disable"
 }
