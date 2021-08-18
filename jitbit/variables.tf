@@ -96,3 +96,8 @@ variable "asg_stop_resources_tag_phase2" {
   description = "Autostop tag value used by lambda to stop RDS instances"
   default     = "disable"
 }
+
+variable "failover_lambda_enable" {
+  description = "enable failover lambda"
+  default     = "true"
+}
