@@ -16,7 +16,7 @@ resource "aws_synthetics_canary" "synthetics" {
   }
 
   schedule {
-    expression = "rate(1 hour)"
+    expression = "rate(30 minute)"
   }
 
   tags = merge(
