@@ -74,3 +74,6 @@ utils
 docker-run.sh
 run.sh
 work_dir
+
+pageLoadBlueprint.py
+.zip
