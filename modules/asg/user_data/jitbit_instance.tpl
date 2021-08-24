@@ -52,7 +52,7 @@ $ad_password = Get-SSMParameter -Name /${common_name}/jitbit/ad/service_account/
 $domainusername = ConvertTo-SecureString $ad_username.Value -AsPlainText -Force
 $secpasswd = ConvertTo-SecureString $ad_password.Value -AsPlainText -Force
 
-$domaincreds = New-Object System.Management.Automation.PSCredential ($domainusername, $secpasswd) 
+$domaincreds = New-Object System.Management.Automation.PSCredential ("jitbit", $secpasswd) 
 
 New-SmbGlobalMapping -RemotePath "\\${filesystem_dns_name}\Share" -Persistent $true -Credential $domaincreds -LocalPath D:
 
