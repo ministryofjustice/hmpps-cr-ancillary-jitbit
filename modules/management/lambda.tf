@@ -7,8 +7,11 @@ resource "aws_lambda_function" "mgmt" {
   source_code_hash = filebase64sha256(data.archive_file.lambda_handler_zip.output_path)
   environment {
     variables = {
-      enable       = var.failover_lambda_enable
-      listener_arn = var.listener_arn
+      enable                 = var.failover_lambda_enable
+      listener_arn           = var.listener_arn
+      quiet_period_end_hour  = tostring(var.alarms_config.quiet_hours[1])
+      quiet_perod_start_hour = tostring(var.alarms_config.quiet_hours[0])
+      env_name               = var.common["common_name"]
     }
   }
 }

@@ -10,3 +10,14 @@ variable "failover_lambda_enable" {
   description = "enable failover lambda"
   default     = "true"
 }
+
+variable "alarms_config" {
+  type = object({
+    enabled     = bool
+    quiet_hours = tuple([number, number])
+  })
+  default = {
+    enabled     = true
+    quiet_hours = [23, 6]
+  }
+}
