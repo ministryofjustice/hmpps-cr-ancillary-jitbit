@@ -60,4 +60,5 @@ module "mgmt" {
   common                 = local.common
   listener_arn           = aws_lb_listener.jitbit.arn
   failover_lambda_enable = var.failover_lambda_enable
+  alarms_config          = var.alarms_config
 }
