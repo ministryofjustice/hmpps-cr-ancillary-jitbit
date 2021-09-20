@@ -92,7 +92,7 @@ resource "aws_autoscaling_group" "instance" {
 }
 
 resource "aws_lb_target_group" "instance" {
-  name                 = format("%s-tg-canary-%s", var.common.common_name, var.name)
+  name                 = format("%s-tg-can-%s", var.common.common_name, var.name)
   port                 = 443
   protocol             = "HTTPS"
   vpc_id               = var.canary.vpc_id

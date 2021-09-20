@@ -32,7 +32,7 @@ resource "aws_iam_role" "rds_iam_role" {
 ################################################################################
 
 resource "aws_iam_role" "rds_enhanced_monitoring" {
-  name_prefix        = "${local.common_name}-rds-monitoring-"
+  name_prefix        = "${local.common_name}-rds-monit-"
   assume_role_policy = data.aws_iam_policy_document.rds_enhanced_monitoring.json
 }
 
