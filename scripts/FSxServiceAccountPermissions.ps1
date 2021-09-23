@@ -27,7 +27,7 @@ $domainName = $environmentName.Value
 #============================================================
 # Getting FSx FileSystem Powershell Endpoint via AWS Powershell
 #============================================================
-$FileSystem = Get-FsxFileSystem | ? {$_.Tags.Key -eq "sub-project" -and $_.Tags.Value -eq "jitbit"}
+$FileSystem = Get-FsxFileSystem | ? {$_.Tags.Key -eq "environment-name" -and $_.Tags.Value -eq $domainName}
 #$FileSystem
 $FileSystemId = $FileSystem.FileSystemId
 #Write-Output "FileSystemId: $FileSystemId"
