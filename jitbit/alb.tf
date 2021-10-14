@@ -35,23 +35,39 @@ resource "aws_lb_listener" "jitbit" {
   ssl_policy        = "ELBSecurityPolicy-2016-08"
   certificate_arn   = element(local.public_acm_arn, 0)
 
-  default_action {
-    type = "forward"
-    forward {
-      stickiness {
-        duration = 1
-        enabled  = false
-      }
-      target_group {
-        arn    = module.blue.asg["aws_lb_target_group_arn"]
-        weight = 1
-      }
-      target_group {
-        arn    = module.green.asg["aws_lb_target_group_arn"]
-        weight = 0
+  dynamic "default_action" {
+    for_each = var.enable_landingpage ? [1] : []
+    content {
+      type = "fixed-response"
+      fixed_response {
+        content_type = "text/plain"
+        message_body = "Service taken down for maintenance. Please check back soon."
+        status_code  = "200"
       }
     }
   }
+
+  dynamic "default_action" {
+    for_each = var.enable_landingpage ? [] : [1]
+    content {
+      type = "forward"
+      forward {
+        stickiness {
+          duration = 1
+          enabled  = false
+        }
+        target_group {
+          arn    = module.blue.asg["aws_lb_target_group_arn"]
+          weight = 1
+        }
+        target_group {
+          arn    = module.green.asg["aws_lb_target_group_arn"]
+          weight = 0
+        }
+      }
+    }
+  }
+
 }
 
 # Route53 entry to jitbit canary lb

@@ -8,7 +8,7 @@ variable "listener_arn" {
 
 variable "failover_lambda_enable" {
   description = "enable failover lambda"
-  default     = "true"
+  default     = true
 }
 
 variable "alarms_config" {
