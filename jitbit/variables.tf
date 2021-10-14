@@ -99,7 +99,7 @@ variable "asg_stop_resources_tag_phase2" {
 
 variable "failover_lambda_enable" {
   description = "enable failover lambda"
-  default     = "true"
+  default     = true
 }
 
 variable "alarms_config" {
@@ -111,4 +111,9 @@ variable "alarms_config" {
     enabled     = true
     quiet_hours = [23, 6]
   }
+}
+
+variable "enable_landingpage" {
+  description = "enable landing page"
+  default     = false
 }

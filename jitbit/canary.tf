@@ -32,7 +32,8 @@ locals {
     enabled_metrics           = var.enabled_metrics
     vpc_id                    = local.vpc_id
   }
-  private_subnet_ids = data.terraform_remote_state.common.outputs.private_subnet_ids
+  private_subnet_ids     = data.terraform_remote_state.common.outputs.private_subnet_ids
+  failover_lambda_enable = var.enable_landingpage ? false : var.failover_lambda_enable
 }
 
 # Active
@@ -59,6 +60,6 @@ module "mgmt" {
 
   common                 = local.common
   listener_arn           = aws_lb_listener.jitbit.arn
-  failover_lambda_enable = var.failover_lambda_enable
+  failover_lambda_enable = local.failover_lambda_enable
   alarms_config          = var.alarms_config
 }
