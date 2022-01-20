@@ -178,4 +178,12 @@ resource "aws_security_group_rule" "jitbit_to_lb" {
   source_security_group_id = aws_security_group.instance.id
 }
 
-
+resource "aws_security_group_rule" "bastion_to_instance" {
+  security_group_id = aws_security_group.instance.id
+  type              = "ingress"
+  from_port         = 3389
+  to_port           = 3389
+  protocol          = "tcp"
+  cidr_blocks       = local.bastion_cidr_ranges
+  description       = "ssh to jitbit instance"
+}
