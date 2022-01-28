@@ -111,8 +111,6 @@ $AdminTeamGroups = @("CN=AWS Delegated Administrators,OU=AWS Delegated Groups,DC
 write-output '================================================================================'
 write-output " Creating AD Admin Users and Adding to AD Domain Groups in ${domainname}.local"
 write-output '================================================================================'
- 
-
 foreach ($user in $AdminUsers) {
    
    $OUUserPath="CN=${user}${OUUsersPathSuffix}"
@@ -124,6 +122,26 @@ foreach ($user in $AdminUsers) {
      
    foreach ($group in $AdminTeamGroups) {
       Write-Output "Adding User '$user' to group '$AdminTeamGroups'"
+      AddGroupMember $user $group
+   }
+   Write-Output "Enabling user account ${user}"
+   Enable-ADAccount -Identity $user
+}
+
+# Service Management Users
+$ServiceMgmtUsers = @('StevenHorner')
+$ServiceMgmtGroups = @('ServiceMgmt')
+
+write-output '================================================================================'
+write-output " Creating Service Mgmt users and add to AD Domain Groups in ${domainname}.local"
+write-output '================================================================================'
+foreach ($user in $ServiceMgmtUsers) {
+   $SecureAccountPassword = New-RandomPassword -MinimumPasswordLength 10 -MaximumPasswordLength 15 -NumberOfAlphaNumericCharacters 6 -ConvertToSecureString
+
+   CreateADUser $user $SecureAccountPassword "Service Management Team"
+     
+   foreach ($group in $ServiceMgmtGroups) {
+      Write-Output "Adding User '$user' to group '$group'"
       AddGroupMember $user $group
    }
    Write-Output "Enabling user account ${user}"

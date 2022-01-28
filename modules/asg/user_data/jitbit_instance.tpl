@@ -87,10 +87,15 @@ Write-Output "Install & Config Log Rotation"
 Write-Output "------------------------------------"
 $User     = "${common_name}" + '\' + $ad_username.Value
 $Password = $ad_password.Value
-Add-LocalGroupMember -Group "Administrators" -Member $User , "Add JitBit Service account"  
+Add-LocalGroupMember -Group "Administrators" -Member $User
 New-Item C:\mgmt -ItemType Directory -ErrorAction Ignore
 Copy-S3Object -BucketName "${config_bucket}" -KeyPrefix mgmt -LocalFolder C:\mgmt
 Register-ScheduledTask -TaskName "jitbit_log_rotation" -Xml (Get-Content "C:\mgmt\iis_log_rotation.xml" | Out-String)  -Force -User $User -Password $Password
+
+Write-Output "------------------------------------"
+Write-Output "Adding Service Management Team"
+Write-Output "------------------------------------"
+Add-LocalGroupMember -Group "Administrators" -Member "$common_name\ServiceMgmt"
 
 </powershell>
 <persist>true</persist>
