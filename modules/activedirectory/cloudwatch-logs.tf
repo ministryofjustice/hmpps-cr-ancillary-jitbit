@@ -23,7 +23,7 @@ data "aws_iam_policy_document" "ad-log-policy" {
 
 resource "aws_cloudwatch_log_resource_policy" "active_directory-log-policy" {
   policy_document = data.aws_iam_policy_document.ad-log-policy.json
-  policy_name     = "ad-log-policy"
+  policy_name     = "ad-log-policy-${var.common.environment_name}"
 }
 
 resource "aws_directory_service_log_subscription" "active_directory" {
