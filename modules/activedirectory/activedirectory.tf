@@ -1,15 +1,15 @@
 resource "aws_directory_service_directory" "active_directory" {
-  name        = var.ad.name
-  short_name  = var.ad.short_name 
+  name       = var.ad.name
+  short_name = var.ad.short_name
 
   description = "Microsoft AD for ${var.common.environment_name}.local"
-  
-#   TO Do
-  password    = var.ad.admin_password
 
-  enable_sso  = false
-  type        = "MicrosoftAD"
-  edition     = "Standard"
+  #   TO Do
+  password = var.ad.admin_password
+
+  enable_sso = false
+  type       = "MicrosoftAD"
+  edition    = "Standard"
 
 
   vpc_settings {
