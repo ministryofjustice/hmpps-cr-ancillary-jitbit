@@ -64,20 +64,6 @@ data "terraform_remote_state" "natgateway" {
 }
 
 #-------------------------------------------------------------
-### Getting vpn info
-#-------------------------------------------------------------
-data "terraform_remote_state" "vpn_vpc" {
-  backend = "s3"
-
-  config = {
-    bucket   = var.vpn_remote_state_bucket_name
-    key      = "vpn-vpc/terraform.tfstate"
-    region   = var.region
-    role_arn = var.eng_role_arn
-  }
-}
-
-#-------------------------------------------------------------
 ### Getting the latest amazon ami
 #-------------------------------------------------------------
 
@@ -135,3 +121,4 @@ data "aws_ssm_parameter" "db_user_id" {
 data "aws_ssm_parameter" "db_user_password" {
   name = "/${local.common_name}/jitbit/rds/jitbit/user/password"
 }
+

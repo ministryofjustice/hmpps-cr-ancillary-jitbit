@@ -37,5 +37,4 @@ locals {
     "${data.terraform_remote_state.natgateway.outputs.natgateway_common-nat-public-ip-az2}/32",
     "${data.terraform_remote_state.natgateway.outputs.natgateway_common-nat-public-ip-az3}/32"
   ]
-  vpn_source_cidrs = [data.terraform_remote_state.vpn_vpc.outputs.vpc["cidr"]]
 }
