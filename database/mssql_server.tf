@@ -68,6 +68,57 @@ resource "aws_security_group" "rds" {
   }
 }
 
+# The following rules regarding multi az db cluster traffic follow Microsoft's recommendation that port 3343 must be open in order to utilize UDP and TCP traffic
+#   so that Windows Server Failover Cluster (WSFC) service can continue to communicate across the cluster nodes.
+#   "TCP and UDP traffic on port 3343, directionally in-bound and out-bound, need to be allowed in Network ACLs of your VPC as well as in the Security Group
+#   that is attached to your Amazon RDS for SQL Server Multi-AZ instance(s)."
+
+resource "aws_security_group_rule" "multi_az_db_cluster_tcp_traffic_in" {
+  count                    = var.create && !var.disable_multi_az && !var.jitbit_data_import ? 1 : 0
+  security_group_id        = aws_security_group.rds[0].id
+  from_port                = 3343
+  to_port                  = 3343
+  protocol                 = "tcp"
+  type                     = "ingress"
+  description              = "multi_az_db_cluster_tcp_traffic"
+  source_security_group_id = aws_security_group.rds[0].id
+}
+
+resource "aws_security_group_rule" "multi_az_db_cluster_udp_traffic_in" {
+  count                    = var.create && !var.disable_multi_az && !var.jitbit_data_import ? 1 : 0
+  security_group_id        = aws_security_group.rds[0].id
+  from_port                = 3343
+  to_port                  = 3343
+  protocol                 = "udp"
+  type                     = "ingress"
+  description              = "multi_az_db_cluster_udp_traffic"
+  source_security_group_id = aws_security_group.rds[0].id
+}
+
+resource "aws_security_group_rule" "multi_az_db_cluster_tcp_traffic_out" {
+  count                    = var.create && !var.disable_multi_az && !var.jitbit_data_import ? 1 : 0
+  security_group_id        = aws_security_group.rds[0].id
+  from_port                = 3343
+  to_port                  = 3343
+  protocol                 = "tcp"
+  type                     = "egress"
+  description              = "multi_az_db_cluster_tcp_traffic"
+  source_security_group_id = aws_security_group.rds[0].id
+}
+
+resource "aws_security_group_rule" "multi_az_db_cluster_udp_traffic_out" {
+  count                    = var.create && !var.disable_multi_az && !var.jitbit_data_import ? 1 : 0
+  security_group_id        = aws_security_group.rds[0].id
+  from_port                = 3343
+  to_port                  = 3343
+  protocol                 = "udp"
+  type                     = "egress"
+  description              = "multi_az_db_cluster_udp_traffic"
+  source_security_group_id = aws_security_group.rds[0].id
+}
+
+
+
 module "db_subnet_group" {
   source          = "../modules/rds/db_subnet_group"
   create          = true
