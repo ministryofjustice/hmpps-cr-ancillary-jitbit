@@ -55,8 +55,7 @@ try {
 
 if (! $isDomainJoined) {
     Set-DefaultAWSRegion -Region eu-west-2
-    Set-Variable -name instance_id -value $instanceId 
-    New-SSMAssociation -InstanceId $instance_id -Name "${ssm_adjoin_document_name}"
+    New-SSMAssociation -InstanceId $instanceId -Name "${ssm_adjoin_document_name}"
 } else {
     Write-Output "Instance has already been added to AD"
 } 
