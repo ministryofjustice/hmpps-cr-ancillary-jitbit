@@ -12,6 +12,7 @@ locals {
     ssm_adjoin_document_name  = data.terraform_remote_state.fsx.outputs.fsx.ad_details["ssm_ad_auto_join_name"]
     filesystem_dns_name       = data.terraform_remote_state.fsx.outputs.fsx.fsx_details["dns_name"]
     config_bucket             = local.config_bucket
+    installer_files_s3_prefix = local.installer_files_s3_prefix
     cloudwatch_config         = "cloudwatch/config.json"
     image_id                  = local.ami_id
     instance_type             = local.jitbit_configs["instance_type"]

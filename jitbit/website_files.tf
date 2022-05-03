@@ -1,5 +1,5 @@
-data "template_file" "webconfig" {
-  template = file("./files/Web.config")
+data "template_file" "appsettings" {
+  template = file("./files/appsettings.json")
   vars = {
     app_url          = aws_route53_record.jitbit.name
     db_source        = local.database_address
@@ -8,8 +8,8 @@ data "template_file" "webconfig" {
   }
 }
 
-resource "aws_s3_bucket_object" "webconfig" {
+resource "aws_s3_bucket_object" "appsettings" {
   bucket  = local.common_name
-  key     = "/installers/HelpDesk/Web.config"
-  content = data.template_file.webconfig.rendered
+  key     = "/${local.installer_files_s3_prefix}/HelpDesk/appsettings.json"
+  content = data.template_file.appsettings.rendered
 }

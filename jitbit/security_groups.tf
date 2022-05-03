@@ -58,16 +58,6 @@ resource "aws_security_group_rule" "jitbit_from_lb" {
   source_security_group_id = aws_security_group.lb.id
 }
 
-resource "aws_security_group_rule" "vpn_to_instance" {
-  security_group_id = aws_security_group.instance.id
-  from_port         = 3389
-  to_port           = 3389
-  protocol          = "tcp"
-  type              = "ingress"
-  description       = "vpn to jitbit instance"
-  cidr_blocks       = local.vpn_source_cidrs
-}
-
 # DB Rules
 resource "aws_security_group_rule" "db_out" {
   security_group_id        = aws_security_group.instance.id
