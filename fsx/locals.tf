@@ -21,7 +21,7 @@ locals {
     filesystem_name                    = var.environment_name
     preferred_subnet_id                = local.private_subnet_ids[0]
     storage_capacity                   = var.storage_capacity
-    throughput_capacity                = var.throughput_capacity  
+    throughput_capacity                = var.throughput_capacity
     active_directory_security_group_id = module.active_directory.active_directory["security_group_id"]
     sns_alarm_notification_arn         = data.terraform_remote_state.monitoring.outputs.aws_sns_topic_alarm_notification["arn"]
   }

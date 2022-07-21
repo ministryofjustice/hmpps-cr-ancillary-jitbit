@@ -12,10 +12,10 @@ variable "remote_state_bucket_name" {
 
 variable "storage_capacity" {
   description = "Storage capacity for FSx file system"
-  default = 32 # GiB
+  default     = 32 # GiB
 }
 
 variable "throughput_capacity" {
   description = "Throughput capacity for FSx file system"
-  default = 8 # MB/s
+  default     = 8 # MB/s
 }
