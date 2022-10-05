@@ -130,5 +130,17 @@ Write-Output "$(get-date) Adding Service Management Team"
 Write-Output "------------------------------------"
 Add-LocalGroupMember -Group "Administrators" -Member "$common_name\ServiceMgmt"
 
+Write-Output "------------------------------------"
+Write-Output "$(get-date) Installing SSMS if not already installed"
+Write-Output "------------------------------------"
+if (! (test-path 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Microsoft SQL Server Management Studio\')) {
+	write-host "Installing SSMS"
+	$ssmsInstaller = "c:\setup\SSMS-Setup-ENU.exe"
+	Invoke-WebRequest "https://aka.ms/ssmsfullsetup" -OutFile $ssmsInstaller
+	start $ssmsInstaller /Quiet
+} else {
+	write-host "SSMS already installed - nothing to do"
+}
+
 </powershell>
 <persist>true</persist>
