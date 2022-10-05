@@ -27,7 +27,7 @@ locals {
   database_ssm_user                 = data.terraform_remote_state.database.outputs.database_info["database_ssm_user"]
   database_ssm_password             = data.terraform_remote_state.database.outputs.database_info["database_ssm_password"]
   database_security_group_id        = data.terraform_remote_state.database.outputs.database_info["security_group_id"]
-  installer_files_s3_prefix         = "installers/HelpDesk_10.5"
+  installer_files_s3_prefix         = "installers/HelpDesk_10.8"
   public_zone_id                    = data.terraform_remote_state.common.outputs.domain_info["external_domain_id"]
   private_zone_id                   = data.terraform_remote_state.vpc.outputs.private_zone_id
   bastion_public_ip                 = ["${data.terraform_remote_state.bastion.outputs.bastion_ip}/32"]
