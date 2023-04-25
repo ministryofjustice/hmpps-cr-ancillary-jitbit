@@ -24,6 +24,7 @@ locals {
     throughput_capacity                = var.throughput_capacity
     active_directory_security_group_id = module.active_directory.active_directory["security_group_id"]
     sns_alarm_notification_arn         = data.terraform_remote_state.monitoring.outputs.aws_sns_topic_alarm_notification["arn"]
+    migration_bucket_name              = "delius-jitbit-development-20230124153927118900000002"
   }
   private_subnet_ids = data.terraform_remote_state.common.outputs.private_subnet_ids
 }
