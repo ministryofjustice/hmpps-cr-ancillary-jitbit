@@ -29,7 +29,7 @@ data "aws_iam_policy_document" "datasync_s3_access" {
       "s3:ListBucket",
       "s3:ListBucketMultipartUploads"
     ]
-    resources = ["arn:aws:s3:::${local.fsx.migration_bucket_name}"]
+    resources = ["arn:aws:s3:::${local.fsx.migration_bucket_names[var.environment_name]}"]
   }
   statement {
     effect = "Allow"
@@ -42,7 +42,7 @@ data "aws_iam_policy_document" "datasync_s3_access" {
       "s3:PutObjectTagging",
       "s3:PutObject"
     ]
-    resources = ["arn:aws:s3:::${local.fsx.migration_bucket_name}/*"]
+    resources = ["arn:aws:s3:::${local.fsx.migration_bucket_names[var.environment_name]}/*"]
   }
 }
 
@@ -59,7 +59,7 @@ resource "aws_iam_policy_attachment" "datasync_s3_attachment" {
 }
 
 resource "aws_datasync_location_s3" "bucket_location" {
-  s3_bucket_arn = "arn:aws:s3:::${local.fsx.migration_bucket_name}"
+  s3_bucket_arn = "arn:aws:s3:::${local.fsx.migration_bucket_names[var.environment_name]}"
   subdirectory  = "migration"
 
   s3_config {
