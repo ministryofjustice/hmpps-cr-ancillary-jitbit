@@ -14,7 +14,7 @@ data "aws_iam_policy_document" "datasync_s3_trust" {
     actions = ["sts:AssumeRole"]
 
     principals {
-      type = "Service"
+      type        = "Service"
       identifiers = ["datasync.amazonaws.com"]
     }
   }
@@ -47,8 +47,8 @@ data "aws_iam_policy_document" "datasync_s3_access" {
 }
 
 resource "aws_iam_policy" "datasync_s3_policy" {
-  name        = "datasync_s3_policy"
-  policy      = "${data.aws_iam_policy_document.datasync_s3_access.json}"
+  name   = "datasync_s3_policy"
+  policy = data.aws_iam_policy_document.datasync_s3_access.json
 }
 
 # Attach policy to the role
