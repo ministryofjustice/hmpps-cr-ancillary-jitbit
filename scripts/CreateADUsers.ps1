@@ -11,7 +11,7 @@ function New-RandomPassword {
         [Parameter()]
         [switch]$ConvertToSecureString
     )
-    
+
     Add-Type -AssemblyName 'System.Web'
     $length = Get-Random -Minimum $MinimumPasswordLength -Maximum $MaximumPasswordLength
     $password = [System.Web.Security.Membership]::GeneratePassword($length,$NumberOfAlphaNumericCharacters)
@@ -23,7 +23,7 @@ function New-RandomPassword {
 }
 
 function CreateADUser {
-    
+
     param (
         [string]$ADUserName,
         [securestring]$ADUserPassword,
@@ -32,13 +32,13 @@ function CreateADUser {
 
     try {
          $User = Get-ADUser -Identity $ADUserName
-	     #$User 
+	     #$User
          write-output "--- User $ADUserName already exists ---"
     }
     catch {
         write-output "---------------------------------------------------------------------------------"
         write-output "--- Creating AD User $ADUserName ---"
-	
+
         $AccountUserName    = "$ADUserName"
         $AccountDisplayName = "$ADUserName $TeamName User"
         $Description        = "$TeamName User $ADUserName"
@@ -54,18 +54,18 @@ function AddGroupMember {
         [string]$UserName,
         [string]$GroupName
     )
-        
+
     try {
-        $Group = Get-ADGroup -Identity $GroupName 
+        $Group = Get-ADGroup -Identity $GroupName
         write-output "---------------------------------------------------------------------------------"
         write-output "--- Adding $UserName to Group '$GroupName' ---"
-	    
-        Add-ADGroupMember -Identity $Group -Members $UserName    
+
+        Add-ADGroupMember -Identity $Group -Members $UserName
 
         write-output ""
     }
     catch {
-        Write-Output "Group $GroupName doesn't exist so can't add user to group"       
+        Write-Output "Group $GroupName doesn't exist so can't add user to group"
     }
 }
 
@@ -102,7 +102,7 @@ Write-Output "application:     $($application.Value)"
 $OUUsersPathSuffix=",OU=Users,OU=${domainname},DC=${domainname},DC=local"
 
 # Admin Users
-$AdminUsers      = @('BensonArokiadoss', 'DonNyambudzi', 'EddieNyambudzi', 'SteveJames', 'StuartWestbrook', 'ZakHamed')
+$AdminUsers      = @('AdrianWeetman', 'PiotrGrzeskowiak', 'SilvianaHorga', 'SebNorris', 'VincentCheung')
 $AdminTeamGroups = @("CN=AWS Delegated Administrators,OU=AWS Delegated Groups,DC=${domainname},DC=local")
 
 #TODO:// Add default password to SSM Parameter Store to set for users
@@ -112,14 +112,14 @@ write-output '==================================================================
 write-output " Creating AD Admin Users and Adding to AD Domain Groups in ${domainname}.local"
 write-output '================================================================================'
 foreach ($user in $AdminUsers) {
-   
+
    $OUUserPath="CN=${user}${OUUsersPathSuffix}"
    $OUUserPath
 
    $SecureAccountPassword = New-RandomPassword -MinimumPasswordLength 10 -MaximumPasswordLength 15 -NumberOfAlphaNumericCharacters 6 -ConvertToSecureString
 
    CreateADUser $user $SecureAccountPassword "Admin Team"
-     
+
    foreach ($group in $AdminTeamGroups) {
       Write-Output "Adding User '$user' to group '$AdminTeamGroups'"
       AddGroupMember $user $group
@@ -129,7 +129,7 @@ foreach ($user in $AdminUsers) {
 }
 
 # Service Management Users
-$ServiceMgmtUsers = @('StevenHorner')
+$ServiceMgmtUsers = @('StevenHorner', 'JonathanCraddock', 'MasKalembo')
 $ServiceMgmtGroups = @('ServiceMgmt')
 
 write-output '================================================================================'
@@ -139,7 +139,7 @@ foreach ($user in $ServiceMgmtUsers) {
    $SecureAccountPassword = New-RandomPassword -MinimumPasswordLength 10 -MaximumPasswordLength 15 -NumberOfAlphaNumericCharacters 6 -ConvertToSecureString
 
    CreateADUser $user $SecureAccountPassword "Service Management Team"
-     
+
    foreach ($group in $ServiceMgmtGroups) {
       Write-Output "Adding User '$user' to group '$group'"
       AddGroupMember $user $group
