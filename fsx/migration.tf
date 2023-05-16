@@ -60,7 +60,7 @@ resource "aws_iam_policy_attachment" "datasync_s3_attachment" {
 
 resource "aws_datasync_location_s3" "bucket_location" {
   s3_bucket_arn = "arn:aws:s3:::${local.fsx.migration_bucket_names[var.environment_name]}"
-  subdirectory  = "migration"
+  subdirectory  = ""
 
   s3_config {
     bucket_access_role_arn = aws_iam_role.datasync_s3_role.arn
