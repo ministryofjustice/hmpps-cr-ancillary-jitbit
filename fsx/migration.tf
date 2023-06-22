@@ -1,7 +1,7 @@
 resource "aws_iam_role" "datasync_s3_role" {
   count = contains(["cr-jitbit-dev", "cr-jitbit-training"], var.environment_name) ? 1 : 0
 
-  name = "jitbit-datasync-transfer-to-s3"
+  name = "${var.environment_name}-datasync-transfer-to-s3"
   path = "/"
 
   assume_role_policy = data.aws_iam_policy_document.datasync_s3_trust[count.index].json
@@ -54,7 +54,7 @@ data "aws_iam_policy_document" "datasync_s3_access" {
 resource "aws_iam_policy" "datasync_s3_policy" {
   count = contains(["cr-jitbit-dev", "cr-jitbit-training"], var.environment_name) ? 1 : 0
 
-  name   = "datasync_s3_policy"
+  name   = "${var.environment_name}-datasync_s3_policy"
   policy = data.aws_iam_policy_document.datasync_s3_access[count.index].json
 }
 
@@ -62,7 +62,7 @@ resource "aws_iam_policy" "datasync_s3_policy" {
 resource "aws_iam_policy_attachment" "datasync_s3_attachment" {
   count = contains(["cr-jitbit-dev", "cr-jitbit-training"], var.environment_name) ? 1 : 0
 
-  name       = "datasync_s3_attachment"
+  name       = "${var.environment_name}-datasync_s3_attachment"
   roles      = [aws_iam_role.datasync_s3_role[count.index].name]
   policy_arn = aws_iam_policy.datasync_s3_policy[count.index].arn
 }
@@ -92,7 +92,6 @@ resource "aws_datasync_task" "fsx_to_s3_migration" {
   count = contains(["cr-jitbit-dev", "cr-jitbit-training"], var.environment_name) ? 1 : 0
 
   destination_location_arn = aws_datasync_location_s3.bucket_location[count.index].arn
-  name                     = "fsx_to_s3_migration"
+  name                     = "${var.environment_name}-fsx_to_s3_migration"
   source_location_arn      = aws_datasync_location_fsx_windows_file_system.fsx_location[count.index].arn
-
 }
