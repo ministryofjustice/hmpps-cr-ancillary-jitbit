@@ -25,7 +25,7 @@ locals {
     active_directory_security_group_id = module.active_directory.active_directory["security_group_id"]
     sns_alarm_notification_arn         = data.terraform_remote_state.monitoring.outputs.aws_sns_topic_alarm_notification["arn"]
     migration_bucket_names = {
-      cr-jitbit-dev = "delius-jitbit-development-20230621100033732800000001"
+      cr-jitbit-dev      = "delius-jitbit-development-20230621100033732800000001"
       cr-jitbit-training = "delius-jitbit-test-20230621100034577700000001"
     }
   }
