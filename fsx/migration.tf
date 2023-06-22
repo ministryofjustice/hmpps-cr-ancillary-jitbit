@@ -94,4 +94,16 @@ resource "aws_datasync_task" "fsx_to_s3_migration" {
   destination_location_arn = aws_datasync_location_s3.bucket_location[count.index].arn
   name                     = "${var.environment_name}-fsx_to_s3_migration"
   source_location_arn      = aws_datasync_location_fsx_windows_file_system.fsx_location[count.index].arn
+
+  options {
+      atime                  = "BEST_EFFORT"
+      bytes_per_second       = -1
+      gid                    = "NONE"
+      mtime                  = "PRESERVE"
+      posix_permissions      = "NONE"
+      preserve_deleted_files = "PRESERVE"
+      preserve_devices       = "NONE"
+      uid                    = "NONE"
+      verify_mode            = "POINT_IN_TIME_CONSISTENT"
+  }
 }
