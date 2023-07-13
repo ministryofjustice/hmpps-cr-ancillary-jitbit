@@ -187,7 +187,7 @@ module "db_instance" {
 
   allow_major_version_upgrade = false
   auto_minor_version_upgrade  = false
-  apply_immediately           = false
+  apply_immediately           = true
   maintenance_window          = local.cr_jitbit_rds_options["maintenance_window"]
 
   snapshot_identifier              = local.cr_jitbit_rds_options["snapshot_identifier"]
