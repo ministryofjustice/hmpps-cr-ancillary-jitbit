@@ -28,7 +28,7 @@ variable "cr_jitbit_rds_config" {
     instance_class                        = "db.t3.xlarge"
     allocated_storage                     = "100"
     max_allocated_storage                 = "200"
-    storage_type                          = "gp2"
+    storage_type                          = "gp3"
     iops                                  = "0"
     snapshot_identifier                   = ""
     performance_insights_retention_period = "7"
