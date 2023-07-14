@@ -29,7 +29,7 @@ variable "cr_jitbit_rds_config" {
     allocated_storage                     = "100"
     max_allocated_storage                 = "200"
     storage_type                          = "gp3"
-    iops                                  = "0"
+    iops                                  = "3000"
     snapshot_identifier                   = ""
     performance_insights_retention_period = "7"
     backup_retention_period               = "14"
