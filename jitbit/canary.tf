@@ -25,9 +25,9 @@ locals {
     device_name               = local.jitbit_configs["cache_device_name"]
     volume_type               = local.jitbit_configs["cache_volume_type"]
     subnet_ids                = local.subnet_ids
-    min_size                  = local.jitbit_configs["asg_min_size"]
-    max_size                  = local.jitbit_configs["asg_max_size"]
-    desired_capacity          = local.jitbit_configs["asg_capacity"]
+    min_size                  = local.common_name == "cr-jitbit-training" ? 0 : local.jitbit_configs["asg_min_size"]
+    max_size                  = local.common_name == "cr-jitbit-training" ? 0 : local.jitbit_configs["asg_max_size"]
+    desired_capacity          = local.common_name == "cr-jitbit-training" ? 0 : local.jitbit_configs["asg_capacity"]
     health_check_grace_period = local.jitbit_configs["health_check_grace_period"]
     metrics_granularity       = var.metrics_granularity
     enabled_metrics           = var.enabled_metrics
@@ -61,6 +61,6 @@ module "mgmt" {
 
   common                 = local.common
   listener_arn           = aws_lb_listener.jitbit.arn
-  failover_lambda_enable = local.failover_lambda_enable
+  failover_lambda_enable = local.common_name == "cr-jitbit-training" ? false : local.failover_lambda_enable
   alarms_config          = var.alarms_config
 }
