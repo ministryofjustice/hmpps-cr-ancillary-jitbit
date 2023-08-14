@@ -121,3 +121,4 @@ data "aws_ssm_parameter" "db_user_id" {
 data "aws_ssm_parameter" "db_user_password" {
   name = "/${local.common_name}/jitbit/rds/jitbit/user/password"
 }
+
