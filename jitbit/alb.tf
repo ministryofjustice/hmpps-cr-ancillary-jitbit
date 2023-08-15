@@ -48,7 +48,7 @@ resource "aws_lb_listener" "jitbit" {
   }
 
   dynamic "default_action" {
-    for_each = var.enable_landingpage || local.common_name == "cr-jitbit-training" ? [] : [1]
+    for_each = var.enable_landingpage || contains(local.migrated_environments, local.common_name) ? [] : [1]
     content {
       type = "forward"
       forward {
@@ -68,9 +68,9 @@ resource "aws_lb_listener" "jitbit" {
     }
   }
 
-  # Temporary until pipelines for training are removed.
+  # Temporary until pipelines for migrated envs are removed.
   dynamic "default_action" {
-    for_each = local.common_name == "cr-jitbit-training" ? [1] : []
+    for_each = contains(local.migrated_environments, local.common_name) ? [1] : []
     content {
       type = "fixed-response"
       fixed_response {

@@ -1,5 +1,9 @@
+locals {
+  should_migrate_environment = contains(["cr-jitbit-dev", "cr-jitbit-training", "cr-jitbit-preprod", "cr-jitbit-prod"], var.environment_name)
+  migration_bucket_created   = try(local.fsx.migration_bucket_names[var.environment_name], null) != null
+}
 resource "aws_iam_role" "datasync_s3_role" {
-  count = contains(["cr-jitbit-dev", "cr-jitbit-training"], var.environment_name) ? 1 : 0
+  count = local.should_migrate_environment ? 1 : 0
 
   name = "${var.environment_name}-datasync-transfer-to-s3"
   path = "/"
@@ -9,7 +13,7 @@ resource "aws_iam_role" "datasync_s3_role" {
 
 # Create the trust policy to allow DataSync to access the datasync_s3_role:
 data "aws_iam_policy_document" "datasync_s3_trust" {
-  count = contains(["cr-jitbit-dev", "cr-jitbit-training"], var.environment_name) ? 1 : 0
+  count = local.should_migrate_environment ? 1 : 0
 
   statement {
     effect = "Allow"
@@ -25,7 +29,7 @@ data "aws_iam_policy_document" "datasync_s3_trust" {
 
 # Create the policy to allow DataSync to access S3
 data "aws_iam_policy_document" "datasync_s3_access" {
-  count = contains(["cr-jitbit-dev", "cr-jitbit-training"], var.environment_name) ? 1 : 0
+  count = local.should_migrate_environment && local.migration_bucket_created ? 1 : 0
 
   statement {
     effect = "Allow"
@@ -36,6 +40,7 @@ data "aws_iam_policy_document" "datasync_s3_access" {
     ]
     resources = ["arn:aws:s3:::${local.fsx.migration_bucket_names[var.environment_name]}"]
   }
+
   statement {
     effect = "Allow"
     actions = [
@@ -52,15 +57,14 @@ data "aws_iam_policy_document" "datasync_s3_access" {
 }
 
 resource "aws_iam_policy" "datasync_s3_policy" {
-  count = contains(["cr-jitbit-dev", "cr-jitbit-training"], var.environment_name) ? 1 : 0
-
+  count  = local.should_migrate_environment && local.migration_bucket_created ? 1 : 0
   name   = "${var.environment_name}-datasync_s3_policy"
   policy = data.aws_iam_policy_document.datasync_s3_access[count.index].json
 }
 
 # Attach policy to the role
 resource "aws_iam_policy_attachment" "datasync_s3_attachment" {
-  count = contains(["cr-jitbit-dev", "cr-jitbit-training"], var.environment_name) ? 1 : 0
+  count = local.should_migrate_environment && local.migration_bucket_created ? 1 : 0
 
   name       = "${var.environment_name}-datasync_s3_attachment"
   roles      = [aws_iam_role.datasync_s3_role[count.index].name]
@@ -68,8 +72,7 @@ resource "aws_iam_policy_attachment" "datasync_s3_attachment" {
 }
 
 resource "aws_datasync_location_s3" "bucket_location" {
-  count = contains(["cr-jitbit-dev", "cr-jitbit-training"], var.environment_name) ? 1 : 0
-
+  count         = local.should_migrate_environment && local.migration_bucket_created ? 1 : 0
   s3_bucket_arn = "arn:aws:s3:::${local.fsx.migration_bucket_names[var.environment_name]}"
   subdirectory  = ""
 
@@ -79,8 +82,7 @@ resource "aws_datasync_location_s3" "bucket_location" {
 }
 
 resource "aws_datasync_location_fsx_windows_file_system" "fsx_location" {
-  count = contains(["cr-jitbit-dev", "cr-jitbit-training"], var.environment_name) ? 1 : 0
-
+  count               = local.should_migrate_environment ? 1 : 0
   fsx_filesystem_arn  = module.fsx.fsx.file_system_arn
   subdirectory        = "/share/OfficeAdmin/"
   user                = "admin"
@@ -89,7 +91,8 @@ resource "aws_datasync_location_fsx_windows_file_system" "fsx_location" {
 }
 
 resource "aws_datasync_task" "fsx_to_s3_migration" {
-  count = contains(["cr-jitbit-dev", "cr-jitbit-training"], var.environment_name) ? 1 : 0
+  # count = contains(["cr-jitbit-dev", "cr-jitbit-training", "cr-jitbit-preprod"], var.environment_name) ? 1 : 0
+  count = try(local.fsx.migration_bucket_names[var.environment_name], null) != null ? 1 : 0
 
   destination_location_arn = aws_datasync_location_s3.bucket_location[count.index].arn
   name                     = "${var.environment_name}-fsx_to_s3_migration"
