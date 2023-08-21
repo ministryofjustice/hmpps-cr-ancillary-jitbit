@@ -91,8 +91,7 @@ resource "aws_datasync_location_fsx_windows_file_system" "fsx_location" {
 }
 
 resource "aws_datasync_task" "fsx_to_s3_migration" {
-  # count = contains(["cr-jitbit-dev", "cr-jitbit-training", "cr-jitbit-preprod"], var.environment_name) ? 1 : 0
-  count = try(local.fsx.migration_bucket_names[var.environment_name], null) != null ? 1 : 0
+  count = local.should_migrate_environment && local.migration_bucket_created ? 1 : 0
 
   destination_location_arn = aws_datasync_location_s3.bucket_location[count.index].arn
   name                     = "${var.environment_name}-fsx_to_s3_migration"

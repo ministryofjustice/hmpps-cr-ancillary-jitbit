@@ -39,5 +39,12 @@ locals {
     "${data.terraform_remote_state.natgateway.outputs.natgateway_common-nat-public-ip-az3}/32"
   ]
 
-  migrated_environments = ["cr-jitbit-training"]
+  migrated_environments  = ["cr-jitbit-training", "cr-jitbit-preprod"]
+  modPlatformUrlTemplate = "https://delius-jitbit.%s.modernisation-platform.service.justice.gov.uk/"
+  modplatformUrls = {
+    "cr-jitbit-dev" : format(local.modPlatformUrlTemplate, "hmpps-development"),
+    "cr-jitbit-training" : format(local.modPlatformUrlTemplate, "hmpps-test"),
+    "cr-jitbit-preprod" : format(local.modPlatformUrlTemplate, "hmpps-preproduction"),
+    "cr-jitbit-prod" : "https://helpdesk.jitbit.cr.probation.service.justice.gov.uk/"
+  }
 }

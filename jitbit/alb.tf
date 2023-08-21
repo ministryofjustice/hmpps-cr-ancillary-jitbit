@@ -75,7 +75,7 @@ resource "aws_lb_listener" "jitbit" {
       type = "fixed-response"
       fixed_response {
         content_type = "text/plain"
-        message_body = "Service has been migrated. Please use https://delius-jitbit.hmpps-test.modernisation-platform.service.justice.gov.uk/"
+        message_body = format("Service has been migrated. Please use %s", local.modplatformUrls[local.common_name])
         status_code  = "200"
       }
     }
